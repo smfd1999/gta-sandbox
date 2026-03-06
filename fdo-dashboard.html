@@ -1,0 +1,867 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>FDO Digital Twin Dashboard - Fermaca Digital Origins</title>
+<style>
+  *{margin:0;padding:0;box-sizing:border-box}
+  :root{--bg:#0a0e17;--surface:#111827;--surface2:#1a2235;--border:#2a3550;--accent:#76b900;--accent2:#00b4d8;--warn:#f59e0b;--danger:#ef4444;--text:#e2e8f0;--text2:#94a3b8;--success:#22c55e}
+  body{font-family:'Segoe UI',system-ui,sans-serif;background:var(--bg);color:var(--text);overflow-x:hidden}
+  .header{background:linear-gradient(135deg,#111827,#1a2235);border-bottom:1px solid var(--border);padding:16px 32px;display:flex;align-items:center;justify-content:space-between}
+  .header-left{display:flex;align-items:center;gap:16px}
+  .logo{width:40px;height:40px;background:var(--accent);border-radius:8px;display:flex;align-items:center;justify-content:center;font-weight:900;font-size:18px;color:#000}
+  .header h1{font-size:20px;font-weight:600} .header h1 span{color:var(--accent)}
+  .header-right{display:flex;gap:12px;align-items:center}
+  .status-badge{padding:4px 12px;border-radius:20px;font-size:12px;font-weight:600;background:rgba(118,185,0,.15);color:var(--accent);border:1px solid rgba(118,185,0,.3)}
+  .status-date{color:var(--text2);font-size:13px}
+  .nav{display:flex;gap:4px;padding:8px 32px;background:var(--surface);border-bottom:1px solid var(--border);overflow-x:auto}
+  .nav-btn{padding:8px 16px;border:none;background:transparent;color:var(--text2);cursor:pointer;border-radius:6px;font-size:13px;font-weight:500;white-space:nowrap;transition:all .2s}
+  .nav-btn:hover{background:var(--surface2);color:var(--text)}
+  .nav-btn.active{background:rgba(118,185,0,.15);color:var(--accent)}
+  .main{padding:24px 32px;max-width:1600px;margin:0 auto}
+  .section{display:none}.section.active{display:block}
+  .kpi-row{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:16px;margin-bottom:24px}
+  .kpi-card{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:16px 20px}
+  .kpi-label{font-size:12px;color:var(--text2);text-transform:uppercase;letter-spacing:.5px;margin-bottom:4px}
+  .kpi-value{font-size:28px;font-weight:700}.kpi-sub{font-size:12px;color:var(--text2);margin-top:2px}
+  .kpi-green{color:var(--accent)}.kpi-blue{color:var(--accent2)}.kpi-yellow{color:var(--warn)}.kpi-red{color:var(--danger)}
+  .grid-2{display:grid;grid-template-columns:1fr 1fr;gap:20px;margin-bottom:24px}
+  @media(max-width:900px){.grid-2{grid-template-columns:1fr}}
+  .panel{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:20px}
+  .panel-title{font-size:14px;font-weight:600;margin-bottom:16px;display:flex;align-items:center;gap:8px}
+  .panel-title .dot{width:8px;height:8px;border-radius:50%}
+  .dot-green{background:var(--accent)}.dot-blue{background:var(--accent2)}.dot-yellow{background:var(--warn)}.dot-red{background:var(--danger)}
+  .data-table{width:100%;border-collapse:collapse;font-size:13px}
+  .data-table th{text-align:left;padding:8px 12px;border-bottom:1px solid var(--border);color:var(--text2);font-weight:500;font-size:11px;text-transform:uppercase;letter-spacing:.5px}
+  .data-table td{padding:8px 12px;border-bottom:1px solid rgba(42,53,80,.5)}
+  .data-table tr:last-child td{border-bottom:none}
+  .tag{display:inline-block;padding:2px 8px;border-radius:4px;font-size:11px;font-weight:600}
+  .tag-green{background:rgba(34,197,94,.15);color:var(--success)}.tag-yellow{background:rgba(245,158,11,.15);color:var(--warn)}.tag-blue{background:rgba(0,180,216,.15);color:var(--accent2)}.tag-red{background:rgba(239,68,68,.15);color:var(--danger)}
+  .rack-grid{display:grid;grid-template-columns:repeat(9,1fr);gap:8px;padding:16px;background:#0d1320;border-radius:8px}
+  .rack{background:var(--surface2);border:2px solid var(--border);border-radius:6px;padding:8px;text-align:center;cursor:pointer;transition:all .2s;min-height:100px;display:flex;flex-direction:column;justify-content:space-between}
+  .rack:hover{border-color:var(--accent);transform:translateY(-2px);box-shadow:0 4px 12px rgba(118,185,0,.2)}
+  .rack-id{font-size:10px;color:var(--text2);font-weight:600}.rack-icon{font-size:24px;margin:4px 0}.rack-load{font-size:11px;font-weight:700;color:var(--accent)}.rack-type{font-size:9px;color:var(--text2)}.rack-temp{font-size:10px;color:var(--accent2)}
+  .row-label{grid-column:1/-1;text-align:center;font-size:11px;color:var(--text2);padding:4px;text-transform:uppercase;letter-spacing:1px}
+  .timeline-bar{display:flex;align-items:center;margin-bottom:6px;font-size:12px}
+  .timeline-label{width:180px;flex-shrink:0;color:var(--text2);text-align:right;padding-right:12px;font-size:11px}
+  .timeline-track{flex:1;height:22px;background:#0d1320;border-radius:4px;position:relative;overflow:hidden}
+  .timeline-fill{position:absolute;height:100%;border-radius:4px;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:600;color:#000}
+  .timeline-weeks{display:flex;justify-content:space-between;margin-left:180px;margin-top:4px;margin-bottom:12px}
+  .timeline-weeks span{font-size:10px;color:var(--text2)}
+  .net-layer{background:var(--surface2);border:1px solid var(--border);border-radius:8px;padding:14px;margin-bottom:12px}
+  .net-layer-title{font-size:11px;color:var(--text2);text-transform:uppercase;letter-spacing:.5px;margin-bottom:8px}
+  .net-devices{display:flex;gap:10px;flex-wrap:wrap;justify-content:center}
+  .net-device{background:var(--surface);border:1px solid var(--border);border-radius:6px;padding:8px 12px;text-align:center;min-width:100px}
+  .net-device .nd-name{font-size:11px;font-weight:600}.net-device .nd-spec{font-size:10px;color:var(--text2)}
+  .net-connector{text-align:center;color:var(--text2);font-size:18px;padding:4px 0}
+  .info-list{list-style:none}.info-list li{padding:6px 0;border-bottom:1px solid rgba(42,53,80,.3);font-size:13px;display:flex;justify-content:space-between}.info-list li:last-child{border-bottom:none}.info-list .il-label{color:var(--text2)}.info-list .il-value{font-weight:600;text-align:right}
+  .cool-flow{display:flex;align-items:center;justify-content:center;gap:12px;flex-wrap:wrap;padding:16px}
+  .cool-node{background:var(--surface2);border:2px solid var(--accent2);border-radius:8px;padding:12px 16px;text-align:center;min-width:110px}.cool-node .cn-name{font-size:12px;font-weight:600}.cool-node .cn-spec{font-size:10px;color:var(--text2);margin-top:2px}.cool-arrow{color:var(--accent2);font-size:20px}
+  .tooltip{display:none;position:fixed;background:var(--surface2);border:1px solid var(--accent);border-radius:8px;padding:12px;font-size:12px;z-index:100;max-width:280px;pointer-events:none;box-shadow:0 8px 24px rgba(0,0,0,.4)}.tooltip.show{display:block}.tooltip h4{color:var(--accent);margin-bottom:6px}.tooltip p{color:var(--text2);line-height:1.4}
+  .progress-ring{display:inline-flex;align-items:center;justify-content:center;position:relative}.progress-ring svg{transform:rotate(-90deg)}.progress-ring .ring-text{position:absolute;font-size:16px;font-weight:700}
+  ::-webkit-scrollbar{width:6px;height:6px}::-webkit-scrollbar-track{background:var(--bg)}::-webkit-scrollbar-thumb{background:var(--border);border-radius:3px}
+  .section-title{font-size:16px;font-weight:600;margin-bottom:16px}.mb-24{margin-bottom:24px}.text-sm{font-size:12px}.text-muted{color:var(--text2)}
+  .checklist{list-style:none}.checklist li{padding:8px 0;border-bottom:1px solid rgba(42,53,80,.3);font-size:13px;display:flex;align-items:center;gap:8px}.checklist li:last-child{border-bottom:none}
+  .check-icon{width:18px;height:18px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:11px;flex-shrink:0}.check-done{background:rgba(34,197,94,.2);color:var(--success)}.check-pending{background:rgba(245,158,11,.2);color:var(--warn)}.check-missing{background:rgba(239,68,68,.2);color:var(--danger)}
+</style>
+</head>
+<body>
+<div class="header">
+  <div class="header-left"><div class="logo">F</div><h1><span>FDO</span> Digital Twin Dashboard</h1></div>
+  <div class="header-right"><span class="status-badge">PRE-CONSTRUCTION</span><span class="status-date">COD Target: Q2 2026</span></div>
+</div>
+<nav class="nav" id="nav">
+  <button class="nav-btn active" data-section="overview">Overview</button>
+  <button class="nav-btn" data-section="power">Power &amp; Energy</button>
+  <button class="nav-btn" data-section="cooling">Cooling</button>
+  <button class="nav-btn" data-section="racks">Rack Layout</button>
+  <button class="nav-btn" data-section="network">Network</button>
+  <button class="nav-btn" data-section="facility">Facility</button>
+  <button class="nav-btn" data-section="timeline">Timeline</button>
+  <button class="nav-btn" data-section="financial">Financial</button>
+  <button class="nav-btn" data-section="capex">CAPEX</button>
+  <button class="nav-btn" data-section="opex">OPEX</button>
+  <button class="nav-btn" data-section="oem">OEM</button>
+  <button class="nav-btn" data-section="twin">Digital Twin</button>
+</nav>
+<div class="main">
+
+<!-- OVERVIEW -->
+<div class="section active" id="sec-overview">
+  <div class="kpi-row">
+    <div class="kpi-card"><div class="kpi-label">IT Capacity</div><div class="kpi-value kpi-green">1 MW</div><div class="kpi-sub">18 DDC S-Series v4 Cabinets</div></div>
+    <div class="kpi-card"><div class="kpi-label">GPU Nodes</div><div class="kpi-value kpi-green">72</div><div class="kpi-sub">NVIDIA B300 HGX (8 GPU/node)</div></div>
+    <div class="kpi-card"><div class="kpi-label">Total GPUs</div><div class="kpi-value kpi-blue">576</div><div class="kpi-sub">NVIDIA B300</div></div>
+    <div class="kpi-card"><div class="kpi-label">Target PUE</div><div class="kpi-value kpi-yellow">1.20</div><div class="kpi-sub">Air-cooled design</div></div>
+    <div class="kpi-card"><div class="kpi-label">Tier Level</div><div class="kpi-value">II</div><div class="kpi-sub">2N Electrical / N+1 Mechanical</div></div>
+    <div class="kpi-card"><div class="kpi-label">Total Power</div><div class="kpi-value kpi-yellow">1.5 MVA</div><div class="kpi-sub">Transformer capacity</div></div>
+  </div>
+
+  <div class="section-title" style="margin-top:24px">Project Overview — Mexico's First GPUaaS Offer</div>
+  <div class="panel mb-24" style="padding:20px">
+    <div style="font-size:13px;color:var(--text2);line-height:1.7">Fermaca Digital Origin (FDO) positions Mexico as a competitive global hub for AI workloads. This <span style="color:var(--accent);font-weight:700">$45M USD, 1 MW</span> facility combines NVIDIA Reference Architectures, next-gen cooling, and connectivity. Acting as the operational precursor to the <span style="color:var(--accent2);font-weight:700">250 MW Fermaca Digital City</span> and a key driver of the country's Sovereign AI agenda, this project secures the high-performance infrastructure required to launch the region's first NVIDIA Cloud Partner.</div>
+  </div>
+  <div class="grid-2">
+    <div class="panel">
+      <div class="panel-title"><span class="dot dot-green"></span> Built for AI: Key Infrastructure</div>
+      <ul class="info-list">
+        <li><span class="il-label">AI Factory</span><span class="il-value">1 MW for colocation &amp; GPUaaS powered by B300 clusters</span></li>
+        <li><span class="il-label">Scalable Design</span><span class="il-value">Modular architecture optimizing CAPEX &amp; OPEX</span></li>
+        <li><span class="il-label">Cloud Partner</span><span class="il-value">Strategic alliance with Hydra Host (Brokkr platform)</span></li>
+        <li><span class="il-label">GPU Generation</span><span class="il-value">First B300 deployment in LATAM</span></li>
+        <li><span class="il-label">Monetization</span><span class="il-value">GPUaaS for enterprises, telcos, AI-native companies</span></li>
+        <li><span class="il-label">Operational Date</span><span class="il-value">Q2 2026</span></li>
+      </ul>
+    </div>
+    <div class="panel">
+      <div class="panel-title"><span class="dot" style="background:#8b5cf6"></span> Strategic Business Value</div>
+      <ul class="info-list">
+        <li><span class="il-label">NVIDIA Partnership</span><span class="il-value">Reference Architectures + priority GPU access</span></li>
+        <li><span class="il-label">Market Position</span><span class="il-value">North America overflow + regional AI compute</span></li>
+        <li><span class="il-label">Govt. Support</span><span class="il-value">CFE utility + SEDECO (Mexico City econ. dev.)</span></li>
+        <li><span class="il-label">High-Density</span><span class="il-value">+130 kW/rack with advanced cooling</span></li>
+        <li><span class="il-label">Tax Incentives</span><span class="il-value">88-89% accelerated depreciation on fixed assets</span></li>
+        <li><span class="il-label">R&amp;D Deduction</span><span class="il-value">25% for labor training, innovation &amp; R&amp;D</span></li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="grid-2">
+    <div class="panel">
+      <div class="panel-title"><span class="dot dot-blue"></span> Mexico City as Strategic Location</div>
+      <ul class="info-list">
+        <li><span class="il-label">Energy Access</span><span class="il-value">Govt. agency &amp; state utility support for affordable power</span></li>
+        <li><span class="il-label">Secure Geography</span><span class="il-value">Fermaca HQ — certified mission-critical operations center</span></li>
+        <li><span class="il-label">Connectivity</span><span class="il-value">Redundant underground fiber for AI workloads</span></li>
+        <li><span class="il-label">Government</span><span class="il-value">Plan M&eacute;xico aligned, presidential-level visibility</span></li>
+        <li><span class="il-label">Permitting</span><span class="il-value">Fast-track via SEDECO backing</span></li>
+      </ul>
+    </div>
+    <div class="panel">
+      <div class="panel-title"><span class="dot dot-yellow"></span> Sovereign AI &amp; Government Alignment</div>
+      <ul class="info-list">
+        <li><span class="il-label">Plan M&eacute;xico</span><span class="il-value">Federal strategy: nearshoring, industrialization to 2030</span></li>
+        <li><span class="il-label">SEDECO</span><span class="il-value">Full backing from Mexico City's Sec. of Economic Dev.</span></li>
+        <li><span class="il-label">NVIDIA Sovereign AI</span><span class="il-value">Enrolled in NVIDIA AI Nations program</span></li>
+        <li><span class="il-label">NCP Status</span><span class="il-value">Set to become Preferred NVIDIA Cloud Partner</span></li>
+        <li><span class="il-label">Sovereign Use Cases</span><span class="il-value">Health, Safety, Education, Citizen Services</span></li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="grid-2">
+    <div class="panel">
+      <div class="panel-title"><span class="dot dot-red"></span> Why This Project Matters</div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;padding:10px">
+        <div style="background:rgba(118,185,0,.08);border:1px solid rgba(118,185,0,.3);border-radius:8px;padding:14px;text-align:center"><div style="font-size:12px;font-weight:700;color:var(--accent)">First of its Kind</div><div style="font-size:10px;color:var(--text2);margin-top:4px">First AI Factory in Mexico &amp; LATAM</div></div>
+        <div style="background:rgba(0,180,216,.08);border:1px solid rgba(0,180,216,.3);border-radius:8px;padding:14px;text-align:center"><div style="font-size:12px;font-weight:700;color:var(--accent2)">Innovation Hub</div><div style="font-size:10px;color:var(--text2);margin-top:4px">Startups, universities, enterprises &amp; govt.</div></div>
+        <div style="background:rgba(245,158,11,.08);border:1px solid rgba(245,158,11,.3);border-radius:8px;padding:14px;text-align:center"><div style="font-size:12px;font-weight:700;color:var(--warn)">Plan M&eacute;xico</div><div style="font-size:10px;color:var(--text2);margin-top:4px">Core component of national AI strategy</div></div>
+        <div style="background:rgba(139,92,246,.08);border:1px solid rgba(139,92,246,.3);border-radius:8px;padding:14px;text-align:center"><div style="font-size:12px;font-weight:700;color:#8b5cf6">Digital City Foundation</div><div style="font-size:10px;color:var(--text2);margin-top:4px">Blueprint for multi-MW expansion</div></div>
+      </div>
+    </div>
+    <div class="panel">
+      <div class="panel-title"><span class="dot" style="background:#22c55e"></span> Capital &amp; Development Highlights</div>
+      <ul class="info-list">
+        <li><span class="il-label">Infra Assets</span><span class="il-value">70% project debt / 30% equity (~$6M USD)</span></li>
+        <li><span class="il-label">GPU Assets</span><span class="il-value">70-80% LTV (~$35M USD)</span></li>
+        <li><span class="il-label">Tax Efficiency</span><span class="il-value">88-89% accelerated depreciation + 25% R&amp;D</span></li>
+        <li><span class="il-label">FX Posture</span><span class="il-value">Dollarized revenues via Brokkr platform</span></li>
+        <li><span class="il-label">Total Investment</span><span class="il-value">$45M USD</span></li>
+        <li><span class="il-label">Bilateral Value</span><span class="il-value">Strengthens North America AI leadership</span></li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="panel mb-24" style="margin-top:16px">
+    <div class="panel-title"><span class="dot dot-blue"></span> Fermaca Dreams Group — Track Record</div>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:10px;padding:10px">
+      <div style="background:rgba(118,185,0,.08);border-radius:8px;padding:14px;text-align:center"><div style="font-size:20px;font-weight:700;color:var(--accent)">60+</div><div style="font-size:10px;color:var(--text2)">Years of Operations</div></div>
+      <div style="background:rgba(0,180,216,.08);border-radius:8px;padding:14px;text-align:center"><div style="font-size:20px;font-weight:700;color:var(--accent2)">$1B+</div><div style="font-size:10px;color:var(--text2)">Equity Capital Raised</div></div>
+      <div style="background:rgba(245,158,11,.08);border-radius:8px;padding:14px;text-align:center"><div style="font-size:20px;font-weight:700;color:var(--warn)">$2B+</div><div style="font-size:10px;color:var(--text2)">Debt Capital Secured</div></div>
+      <div style="background:rgba(139,92,246,.08);border-radius:8px;padding:14px;text-align:center"><div style="font-size:20px;font-weight:700;color:#8b5cf6">$4B</div><div style="font-size:10px;color:var(--text2)">Commercial Value</div></div>
+      <div style="background:rgba(239,68,68,.08);border-radius:8px;padding:14px;text-align:center"><div style="font-size:20px;font-weight:700;color:var(--danger)">3,000+</div><div style="font-size:10px;color:var(--text2)">KM Contracted ROW</div></div>
+    </div>
+    <div style="font-size:11px;color:var(--text2);padding:8px 14px;border-top:1px solid var(--border)">Fermaca Dreams has presence in Telecommunications, Petrochemical, Engineering &amp; Construction, Energy, and Marine sectors. Founded in 1960 by Fernando Calvillo Sr. Co-founders Fernando &amp; Manuel Calvillo lead the group today. Esentia Energy Systems (ESENTIAII.MX) successfully launched its IPO on the Mexican Stock Exchange.</div>
+  </div>
+
+  <div class="grid-2">
+    <div class="panel"><div class="panel-title"><span class="dot dot-green"></span> Facility Identity</div><ul class="info-list"><li><span class="il-label">Project</span><span class="il-value">Fermaca Digital Origins (FDO)</span></li><li><span class="il-label">Location</span><span class="il-value">CDMX, Mexico (2,395m ASL)</span></li><li><span class="il-label">Building</span><span class="il-value">Fermaca HQ</span></li><li><span class="il-label">Data Center Area</span><span class="il-value">538 m2</span></li><li><span class="il-label">EPC Partner</span><span class="il-value">ATN Ingenieria y Servicios</span></li><li><span class="il-label">Construction</span><span class="il-value">24 weeks (6 months)</span></li><li><span class="il-label">Cabinet Vendor</span><span class="il-value">DDC (S-Series v4 NEMA 3R)</span></li><li><span class="il-label">GPU Platform</span><span class="il-value">NVIDIA B300 HGX</span></li></ul></div>
+    <div class="panel"><div class="panel-title"><span class="dot dot-blue"></span> Climate &amp; Environmental</div><ul class="info-list"><li><span class="il-label">Elevation</span><span class="il-value">2,395 m ASL</span></li><li><span class="il-label">Max Ambient Temp</span><span class="il-value">33.3 C (dry bulb)</span></li><li><span class="il-label">Design Wet Bulb</span><span class="il-value">16.0 C</span></li><li><span class="il-label">Avg Annual Temp</span><span class="il-value">16.6 C</span></li><li><span class="il-label">Seismic Zone</span><span class="il-value">Zone D (high)</span></li><li><span class="il-label">Max Wind</span><span class="il-value">100 km/h</span></li><li><span class="il-label">Atm. Pressure</span><span class="il-value">~77.5 kPa (altitude adj.)</span></li><li><span class="il-label">Chilled Water Supply</span><span class="il-value">14 C (57 F)</span></li></ul></div>
+  </div>
+  <div class="panel mb-24"><div class="panel-title"><span class="dot dot-yellow"></span> System Summary</div><div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:16px"><div><h4 style="font-size:13px;color:var(--warn);margin-bottom:8px">Electrical</h4><ul class="info-list"><li><span class="il-label">Utility Feed</span><span class="il-value">CFE 23kV</span></li><li><span class="il-label">Transformer</span><span class="il-value">1.5 MVA dry (23kV/480V)</span></li><li><span class="il-label">Generators</span><span class="il-value">3x 600kW diesel (N+1)</span></li><li><span class="il-label">UPS</span><span class="il-value">2x 1,000 kW Li-ion (N+1)</span></li><li><span class="il-label">UPS Autonomy</span><span class="il-value">10 minutes</span></li><li><span class="il-label">PDUs</span><span class="il-value">4 units</span></li></ul></div><div><h4 style="font-size:13px;color:var(--accent2);margin-bottom:8px">Cooling</h4><ul class="info-list"><li><span class="il-label">Chillers</span><span class="il-value">3x 145 ton (N+1)</span></li><li><span class="il-label">CRAC Units</span><span class="il-value">4x 3T</span></li><li><span class="il-label">Cooling Type</span><span class="il-value">Chilled water, closed-loop</span></li><li><span class="il-label">Water Flow/Cab</span><span class="il-value">36.4 GPM</span></li><li><span class="il-label">Noise Target</span><span class="il-value">60 dB (ultra quiet)</span></li></ul></div><div><h4 style="font-size:13px;color:var(--accent);margin-bottom:8px">IT Load</h4><ul class="info-list"><li><span class="il-label">Cabinets</span><span class="il-value">18x DDC S-Series v4</span></li><li><span class="il-label">GPU Nodes</span><span class="il-value">72 (4 nodes per cabinet)</span></li><li><span class="il-label">GPUs Total</span><span class="il-value">576x NVIDIA B300 (8/node)</span></li><li><span class="il-label">Per-Cabinet Load</span><span class="il-value">~55-65 kW</span></li><li><span class="il-label">Cabinet Rating</span><span class="il-value">50-85 kW</span></li></ul></div></div></div>
+</div>
+
+<!-- POWER & ENERGY (merged) -->
+<div class="section" id="sec-power">
+  <div class="section-title">Power Architecture &amp; Energy</div>
+  <div class="kpi-row">
+    <div class="kpi-card"><div class="kpi-label">Utility Feed</div><div class="kpi-value kpi-yellow">23 kV</div><div class="kpi-sub">CFE Medium Voltage</div></div>
+    <div class="kpi-card"><div class="kpi-label">Transformer</div><div class="kpi-value kpi-yellow">1.5 MVA</div><div class="kpi-sub">Driescher 23kV/480V</div></div>
+    <div class="kpi-card"><div class="kpi-label">Generators</div><div class="kpi-value kpi-red">1,800 kW</div><div class="kpi-sub">3x 600kW Diesel (N+1)</div></div>
+    <div class="kpi-card"><div class="kpi-label">UPS Capacity</div><div class="kpi-value kpi-green">2,000 kW</div><div class="kpi-sub">2x 1,000kW Li-ion (N+1)</div></div>
+    <div class="kpi-card"><div class="kpi-label">Battery Runtime</div><div class="kpi-value kpi-blue">10 min</div><div class="kpi-sub">Li-ion, full load</div></div>
+    <div class="kpi-card"><div class="kpi-label">All-In Energy</div><div class="kpi-value kpi-yellow">$1.87</div><div class="kpi-sub">MXN/kWh avg (IBD)</div></div>
+  </div>
+  <div class="grid-2 mb-24">
+    <div class="panel"><div class="panel-title"><span class="dot dot-yellow"></span> Power Flow Diagram</div><canvas id="powerCanvas" height="400"></canvas></div>
+    <div class="panel"><div class="panel-title"><span class="dot dot-blue"></span> Project Location</div>
+      <div style="text-align:center;margin-bottom:16px"><div style="font-size:32px;margin-bottom:4px">&#127757;</div><div style="font-size:18px;font-weight:700;color:var(--accent)">Fermaca HQ</div><div style="font-size:13px;color:var(--text2)">Mexico City, Mexico</div></div>
+      <ul class="info-list">
+        <li><span class="il-label">Coordinates</span><span class="il-value" style="font-family:monospace;font-size:12px">19.3224&#176;N, 99.2198&#176;W</span></li>
+        <li><span class="il-label">Elevation</span><span class="il-value">2,395 m ASL (7,858 ft)</span></li>
+        <li><span class="il-label">Seismic Zone</span><span class="il-value" style="color:var(--danger)">Zone D (High)</span></li>
+        <li><span class="il-label">Avg Annual Temp</span><span class="il-value">16.6 &#176;C (62 &#176;F)</span></li>
+        <li><span class="il-label">Max Dry Bulb</span><span class="il-value">33.3 &#176;C (92 &#176;F)</span></li>
+        <li><span class="il-label">Design Wet Bulb</span><span class="il-value">16.0 &#176;C (61 &#176;F)</span></li>
+        <li><span class="il-label">Atm. Pressure</span><span class="il-value">~77.5 kPa (altitude adj.)</span></li>
+        <li><span class="il-label">Max Wind</span><span class="il-value">100 km/h</span></li>
+        <li><span class="il-label">Utility Provider</span><span class="il-value">CFE (23 kV MV)</span></li>
+        <li><span class="il-label">Energy Supplier</span><span class="il-value">Iberdrola (Pass-Through IBD)</span></li>
+        <li><span class="il-label">Municipality</span><span class="il-value">&#193;lvaro Obreg&#243;n, CDMX</span></li>
+        <li><span class="il-label">Building Area</span><span class="il-value">538 m&#178; data center</span></li>
+      </ul>
+    </div>
+  </div>
+  <div class="panel mb-24"><div class="panel-title"><span class="dot dot-red"></span> Power Budget Breakdown (1.2 MW Facility at PUE 1.2)</div><canvas id="powerBudgetCanvas" height="220"></canvas></div>
+  <div class="grid-2">
+    <div class="panel"><div class="panel-title"><span class="dot dot-yellow"></span> Electrical Equipment (Basement 1)</div><table class="data-table"><thead><tr><th>Equipment</th><th>Specification</th><th>Redundancy</th></tr></thead><tbody><tr><td>MV Switchgear</td><td>Driescher 1,500 kW</td><td><span class="tag tag-green">2N</span></td></tr><tr><td>Transformer</td><td>1.5 MVA Dry-type 23kV/480V</td><td><span class="tag tag-yellow">N</span></td></tr><tr><td>Generator 1</td><td>600 kW Prime Diesel</td><td rowspan="3"><span class="tag tag-green">N+1</span></td></tr><tr><td>Generator 2</td><td>600 kW Prime Diesel</td></tr><tr><td>Generator 3</td><td>600 kW Prime Diesel</td></tr><tr><td>ATS</td><td>Automatic Transfer Switch</td><td><span class="tag tag-green">2N</span></td></tr></tbody></table></div>
+    <div class="panel"><div class="panel-title"><span class="dot dot-green"></span> Electrical Equipment (Ground Floor)</div><table class="data-table"><thead><tr><th>Equipment</th><th>Specification</th><th>Location</th></tr></thead><tbody><tr><td>UPS 1</td><td>1,000 kW Li-ion</td><td>Electrical Room 01</td></tr><tr><td>UPS 2</td><td>1,000 kW Li-ion</td><td>Electrical Room 01</td></tr><tr><td>Battery Bank 1</td><td>Li-ion, 10 min</td><td>Battery Room</td></tr><tr><td>Battery Bank 2</td><td>Li-ion, 10 min</td><td>Battery Room</td></tr><tr><td>PDU 1-4</td><td>4x Power Distribution</td><td>Electrical Room 01</td></tr><tr><td>Switchgear/ATS</td><td>Main boards, QDPacs</td><td>Electrical Room 02</td></tr></tbody></table></div>
+  </div>
+  <div class="section-title" style="margin-top:24px">CFE Oficio Resolutivo — Utility Connection</div>
+  <div class="kpi-row">
+    <div class="kpi-card"><div class="kpi-label">Oficio No.</div><div class="kpi-value" style="font-size:16px">0659/2026</div><div class="kpi-sub">Solicitud 00000696/2026</div></div>
+    <div class="kpi-card"><div class="kpi-label">Demand Approved</div><div class="kpi-value kpi-green">1,434 kVA</div><div class="kpi-sub">1,300 kW</div></div>
+    <div class="kpi-card"><div class="kpi-label">Connected Load</div><div class="kpi-value kpi-blue">1,534 kVA</div><div class="kpi-sub">1,400 kW</div></div>
+    <div class="kpi-card"><div class="kpi-label">Total CFE Cost</div><div class="kpi-value kpi-red">$7.69M</div><div class="kpi-sub">MXN incl. IVA ($447K USD)</div></div>
+    <div class="kpi-card"><div class="kpi-label">Construction Time</div><div class="kpi-value kpi-yellow">6 months</div><div class="kpi-sub">From payment date</div></div>
+  </div>
+  <div class="grid-2">
+    <div class="panel">
+      <div class="panel-title"><span class="dot dot-yellow"></span> CFE Service Characteristics</div>
+      <ul class="info-list">
+        <li><span class="il-label">Entity</span><span class="il-value">FERMACA DOMES SA DE CV</span></li>
+        <li><span class="il-label">Division</span><span class="il-value">Valle M&eacute;xico Sur — Zona Lomas</span></li>
+        <li><span class="il-label">Address</span><span class="il-value" style="font-size:11px">Blvd Ruiz Cortinez 3433 P6, San Jer&oacute;nimo L&iacute;dice</span></li>
+        <li><span class="il-label">Alcald&iacute;a</span><span class="il-value">Magdalena Contreras, CDMX</span></li>
+        <li><span class="il-label">Supply Voltage</span><span class="il-value">23 kV &plusmn;5%</span></li>
+        <li><span class="il-label">Frequency</span><span class="il-value">60 Hz &plusmn;0.5%</span></li>
+        <li><span class="il-label">Phases</span><span class="il-value">3F4H (three-phase, four-wire)</span></li>
+        <li><span class="il-label">Tariff</span><span class="il-value" style="color:var(--warn);font-weight:700">H-M3 (Medium Voltage)</span></li>
+        <li><span class="il-label">Metering Level</span><span class="il-value">Media Tensi&oacute;n</span></li>
+        <li><span class="il-label">Budget Validity</span><span class="il-value">2 months from delivery</span></li>
+      </ul>
+    </div>
+    <div class="panel">
+      <div class="panel-title"><span class="dot dot-red"></span> CFE Cost Breakdown (Aportaci&oacute;n)</div>
+      <table class="data-table">
+        <thead><tr><th>Concept</th><th style="text-align:right">Amount (MXN)</th></tr></thead>
+        <tbody>
+          <tr><td style="font-weight:600">Expansion Charge</td><td style="text-align:right">$3,870,100.00</td></tr>
+          <tr><td style="font-size:11px;color:var(--text2);padding-left:20px">1,300 kVA &times; $2,977/kVA</td><td></td></tr>
+          <tr><td style="font-weight:600">Specific Works (Duct Bank + Transition)</td><td style="text-align:right">$331,644.16</td></tr>
+          <tr><td style="font-size:11px;color:var(--text2);padding-left:20px">21m duct bank, aerial-underground transition, 3F-4H</td><td></td></tr>
+          <tr><td>Pedestal Switchgear (STP-27)</td><td style="text-align:right">$1,891,000.50</td></tr>
+          <tr><td>Monopolar Switches (existing transition)</td><td style="text-align:right">$95,960.00</td></tr>
+          <tr><td>MV Metering Equipment (new + relocation)</td><td style="text-align:right">$411,126.16</td></tr>
+          <tr><td>Supervision (MV/LV + commissioning)</td><td style="text-align:right">$29,154.24</td></tr>
+          <tr style="font-weight:700;border-top:2px solid var(--border)"><td>Sub-Total</td><td style="text-align:right">$6,628,985.06</td></tr>
+          <tr><td>IVA (16%)</td><td style="text-align:right">$1,060,637.60</td></tr>
+          <tr style="font-weight:700;border-top:2px solid var(--accent);background:rgba(239,68,68,.05)"><td style="color:var(--danger)">Total Aportaci&oacute;n</td><td style="text-align:right;color:var(--danger);font-size:15px">$7,689,622.66</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+  <div class="panel mb-24">
+    <div class="panel-title"><span class="dot dot-blue"></span> Required Works (Obras Espec&iacute;ficas)</div>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:16px">
+      <div style="background:var(--surface2);border-radius:8px;padding:16px"><div style="font-size:11px;color:var(--text2);text-transform:uppercase;margin-bottom:6px">Duct Bank &amp; Transition</div><div style="font-size:13px">21m underground duct bank with aerial-to-underground transition (3F-4H), cable AL-XLP 1/0 - 1/0 CU, concrete pole (PCR-13-600)</div></div>
+      <div style="background:var(--surface2);border-radius:8px;padding:16px"><div style="font-size:11px;color:var(--text2);text-transform:uppercase;margin-bottom:6px">Switchgear &amp; Protection</div><div style="font-size:13px">Pedestal switchgear STP-27-1V/600-2V/200, monopolar switches at existing transition, MV metering equipment installation</div></div>
+      <div style="background:var(--surface2);border-radius:8px;padding:16px"><div style="font-size:11px;color:var(--text2);text-transform:uppercase;margin-bottom:6px">Compliance Requirements</div><div style="font-size:13px">NOM-001-SEDE-2012 verification, CFE specs VH000-11, VM000-51, VM000-74, DCSEEEGA. Option to self-build via PROTER-registered contractor</div></div>
+    </div>
+  </div>
+
+  <div class="section-title" style="margin-top:24px">Energy - Iberdrola Pass-Through Tariff (IBD)</div>
+  <div class="kpi-row">
+    <div class="kpi-card"><div class="kpi-label">Monthly Energy</div><div class="kpi-value kpi-yellow">$1.79M</div><div class="kpi-sub">MXN/month</div></div>
+    <div class="kpi-card"><div class="kpi-label">Annual Energy</div><div class="kpi-value kpi-red">$21.4M</div><div class="kpi-sub">MXN/year</div></div>
+    <div class="kpi-card"><div class="kpi-label">USD/kWh Avg</div><div class="kpi-value kpi-blue">$0.109</div><div class="kpi-sub">Pass-Through IBD</div></div>
+    <div class="kpi-card"><div class="kpi-label">Supplier</div><div class="kpi-value" style="font-size:18px">Iberdrola</div><div class="kpi-sub">Qualified supply (MEM)</div></div>
+  </div>
+  <div class="grid-2">
+    <div class="panel"><div class="panel-title"><span class="dot dot-yellow"></span> Monthly All-In Energy Cost (MXN/kWh)</div><canvas id="energyMonthlyChart" height="300"></canvas></div>
+    <div class="panel"><div class="panel-title"><span class="dot dot-blue"></span> Tariff Component Breakdown</div><canvas id="tariffDonutChart" height="300"></canvas></div>
+  </div>
+  <div class="panel mb-24"><div class="panel-title"><span class="dot dot-green"></span> Monthly Tariff Components Stacked (MXN/kWh)</div><canvas id="energyStackedChart" height="300"></canvas></div>
+  <div class="grid-2">
+    <div class="panel"><div class="panel-title"><span class="dot dot-green"></span> IBD vs Bloque Tariff (USD/kWh)</div><canvas id="energyUsdChart" height="250"></canvas></div>
+    <div class="panel"><div class="panel-title"><span class="dot dot-yellow"></span> Annual Cost: Tariff Comparison</div><canvas id="energySavingsChart" height="250"></canvas></div>
+  </div>
+  <div class="grid-2">
+    <div class="panel"><div class="panel-title"><span class="dot dot-blue"></span> Energy as % of Total OPEX</div><div style="text-align:center;padding:20px"><div class="progress-ring"><svg width="160" height="160"><circle cx="80" cy="80" r="70" stroke="var(--border)" stroke-width="12" fill="none"/><circle cx="80" cy="80" r="70" stroke="var(--warn)" stroke-width="12" fill="none" stroke-dasharray="440" stroke-dashoffset="237" stroke-linecap="round"/></svg><span class="ring-text" style="color:var(--warn)">46.2%</span></div><div style="margin-top:12px;font-size:13px;color:var(--text2)">Energy is the largest OPEX component<br/>$21.4M MXN / $1.25M USD per year</div></div></div>
+    <div class="panel"><div class="panel-title"><span class="dot dot-yellow"></span> Key Energy Parameters</div><ul class="info-list"><li><span class="il-label">IT Load</span><span class="il-value">1,000 kW</span></li><li><span class="il-label">PUE</span><span class="il-value">1.2</span></li><li><span class="il-label">Total Facility Load</span><span class="il-value">1,200 kW</span></li><li><span class="il-label">Monthly Consumption</span><span class="il-value">~876,000 kWh</span></li><li><span class="il-label">Annual Consumption</span><span class="il-value">~10,512,000 kWh</span></li><li><span class="il-label">Supplier</span><span class="il-value">Iberdrola (Qualified)</span></li><li><span class="il-label">Market</span><span class="il-value">MEM (Wholesale)</span></li><li><span class="il-label">Utility Feed</span><span class="il-value">CFE 23kV</span></li><li><span class="il-label">Cost Range (MXN/kWh)</span><span class="il-value">$1.78 - $2.23</span></li><li><span class="il-label">Cost Range (USD/kWh)</span><span class="il-value">$0.103 - $0.130</span></li></ul></div>
+  </div>
+  <div class="panel mb-24"><div class="panel-title"><span class="dot dot-yellow"></span> Pass-Through IBD Tariff Detail</div><table class="data-table"><thead><tr><th>Component</th><th>Type</th><th>Avg MXN/kWh</th><th>% of Total</th></tr></thead><tbody><tr><td style="color:var(--warn)">Capacity Charge</td><td><span class="tag tag-blue">Regulated / Fixed</span></td><td style="text-align:right">$0.61</td><td style="text-align:right">32.6%</td></tr><tr><td style="color:var(--accent)">Energy (CAP)</td><td><span class="tag tag-green">Negotiable / Variable</span></td><td style="text-align:right">$0.54</td><td style="text-align:right">28.9%</td></tr><tr><td style="color:var(--accent2)">Regulated &amp; MEM</td><td><span class="tag tag-blue">Regulated / Variable</span></td><td style="text-align:right">$0.51</td><td style="text-align:right">27.3%</td></tr><tr><td style="color:var(--danger)">Congestion</td><td><span class="tag tag-blue">Regulated / Variable</span></td><td style="text-align:right">$0.16</td><td style="text-align:right">8.6%</td></tr><tr><td style="color:#8b5cf6">CELs (Clean Energy)</td><td><span class="tag tag-green">Negotiable / Variable</span></td><td style="text-align:right">$0.05</td><td style="text-align:right">2.7%</td></tr><tr style="font-weight:700;border-top:2px solid var(--border)"><td>Total All-In</td><td></td><td style="text-align:right;color:var(--warn)">$1.87</td><td style="text-align:right">100%</td></tr></tbody></table></div>
+</div>
+
+<!-- COOLING -->
+<div class="section" id="sec-cooling">
+  <div class="section-title">Cooling System</div>
+  <div class="kpi-row"><div class="kpi-card"><div class="kpi-label">Total Cooling</div><div class="kpi-value kpi-blue">435 T</div><div class="kpi-sub">3x 145 ton chillers</div></div><div class="kpi-card"><div class="kpi-label">Supply Temp</div><div class="kpi-value kpi-blue">14 C</div><div class="kpi-sub">57 F chilled water</div></div><div class="kpi-card"><div class="kpi-label">Flow / Cabinet</div><div class="kpi-value kpi-blue">36.4</div><div class="kpi-sub">GPM per DDC cabinet</div></div><div class="kpi-card"><div class="kpi-label">CRAC Units</div><div class="kpi-value">4</div><div class="kpi-sub">3T units, Ground Floor</div></div><div class="kpi-card"><div class="kpi-label">Noise Level</div><div class="kpi-value kpi-green">60 dB</div><div class="kpi-sub">Ultra noise reduction</div></div></div>
+  <div class="panel mb-24"><div class="panel-title"><span class="dot dot-blue"></span> Cooling Flow Diagram</div><div class="cool-flow"><div class="cool-node"><div class="cn-name">Chiller 1</div><div class="cn-spec">145 T</div></div><div class="cool-node"><div class="cn-name">Chiller 2</div><div class="cn-spec">145 T</div></div><div class="cool-node"><div class="cn-name">Chiller 3</div><div class="cn-spec">145 T (N+1)</div></div></div><div style="text-align:center;padding:8px"><span style="color:var(--accent2);font-size:24px">&#8595; &#8595; &#8595;</span><div class="text-sm text-muted">Chilled Water Supply (14C / 57F)</div></div><div class="cool-flow"><div class="cool-node" style="border-color:var(--warn)"><div class="cn-name">Pump System</div><div class="cn-spec">Closed-loop</div></div><span class="cool-arrow">&#8594;</span><div class="cool-node"><div class="cn-name">CRAC 1-4</div><div class="cn-spec">4x 3T units</div></div><span class="cool-arrow">&#8594;</span><div class="cool-node" style="border-color:var(--accent)"><div class="cn-name">DDC Cabinets</div><div class="cn-spec">18x Dual Coil</div></div></div><div style="text-align:center;padding:8px"><span style="color:var(--danger);font-size:24px">&#8593; &#8593; &#8593;</span><div class="text-sm text-muted">Return Water (warm)</div></div></div>
+  <div class="grid-2"><div class="panel"><div class="panel-title"><span class="dot dot-blue"></span> DDC Cabinet Water Requirements</div><ul class="info-list"><li><span class="il-label">Connection Size</span><span class="il-value">1.25" NPT</span></li><li><span class="il-label">Water Flow (per cab)</span><span class="il-value">36.4 GPM</span></li><li><span class="il-label">Total Flow (18 cabs)</span><span class="il-value">655.2 GPM</span></li><li><span class="il-label">Supply Temp</span><span class="il-value">14 C (57 F)</span></li><li><span class="il-label">Max Pressure</span><span class="il-value">60 PSI</span></li><li><span class="il-label">pH Range</span><span class="il-value">7.0 - 9.0</span></li><li><span class="il-label">Glycol</span><span class="il-value">Not recommended</span></li><li><span class="il-label">Heat Rejection</span><span class="il-value">Dual chilled water coils</span></li></ul></div><div class="panel"><div class="panel-title"><span class="dot dot-blue"></span> Chiller Specifications</div><table class="data-table"><thead><tr><th>Parameter</th><th>Value</th></tr></thead><tbody><tr><td>Quantity</td><td>3 (N+1)</td></tr><tr><td>Capacity Each</td><td>145 tons (510 kW)</td></tr><tr><td>Total Capacity</td><td>435 tons (1,530 kW)</td></tr><tr><td>Active Capacity</td><td>290 tons (1,020 kW)</td></tr><tr><td>Location</td><td>Ground Floor</td></tr><tr><td>Noise Rating</td><td>60 dB (ultra quiet)</td></tr><tr><td>Redundancy</td><td>N+1</td></tr></tbody></table></div></div>
+</div>
+
+<!-- RACKS -->
+<div class="section" id="sec-racks">
+  <div class="section-title">Rack Layout - Data Hall (18 DDC S-Series v4 Cabinets)</div>
+  <div class="kpi-row"><div class="kpi-card"><div class="kpi-label">Cabinets</div><div class="kpi-value kpi-green">18</div><div class="kpi-sub">DDC S-Series v4 NEMA 3R</div></div><div class="kpi-card"><div class="kpi-label">Per Cabinet</div><div class="kpi-value kpi-blue">~65 kW</div><div class="kpi-sub">4 nodes x 8 GPU each</div></div><div class="kpi-card"><div class="kpi-label">Cabinet Dims</div><div class="kpi-value" style="font-size:20px">127"x36"x82"</div><div class="kpi-sub">H x W x D</div></div><div class="kpi-card"><div class="kpi-label">Weight (loaded)</div><div class="kpi-value kpi-yellow">~860 lb</div><div class="kpi-sub">Per cabinet</div></div></div>
+  <div class="panel mb-24"><div class="panel-title"><span class="dot dot-green"></span> Data Hall Layout (Top View) - Hover for details</div><div style="text-align:center;margin-bottom:12px"><span class="text-sm text-muted">HOT AISLE</span></div><div class="rack-grid" id="rackGrid"></div><div style="text-align:center;margin-top:12px"><span class="text-sm text-muted">COLD AISLE</span></div></div>
+  <div class="grid-2"><div class="panel"><div class="panel-title"><span class="dot dot-green"></span> DDC S-Series v4 Specifications</div><ul class="info-list"><li><span class="il-label">Form Factor</span><span class="il-value">NEMA 3R Enclosed</span></li><li><span class="il-label">Height</span><span class="il-value">127" (3,226 mm)</span></li><li><span class="il-label">Width</span><span class="il-value">36" (914 mm)</span></li><li><span class="il-label">Depth</span><span class="il-value">82" (2,083 mm)</span></li><li><span class="il-label">Weight (empty)</span><span class="il-value">~860 lb (390 kg)</span></li><li><span class="il-label">Power Range</span><span class="il-value">50 - 85 kW</span></li><li><span class="il-label">Cooling</span><span class="il-value">Dual chilled water coils</span></li><li><span class="il-label">Power Feed</span><span class="il-value">208V 3-ph 30A</span></li><li><span class="il-label">Water Connection</span><span class="il-value">1.25" NPT</span></li><li><span class="il-label">DCIM Interface</span><span class="il-value">RJ45 Ethernet</span></li></ul></div><div class="panel"><div class="panel-title"><span class="dot dot-blue"></span> Per-Cabinet IT Configuration</div><table class="data-table"><thead><tr><th>Component</th><th>Qty</th><th>Power</th></tr></thead><tbody><tr><td>NVIDIA B300 HGX Node (8 GPU)</td><td>4</td><td>~52 kW</td></tr><tr><td>Management Switch</td><td>1</td><td>~0.5 kW</td></tr><tr><td>InfiniBand Switch</td><td>1</td><td>~2 kW</td></tr><tr><td>Top-of-Rack Switch</td><td>1</td><td>~0.5 kW</td></tr><tr><td>Cabinet Cooling (fans)</td><td>-</td><td>~4 kW</td></tr><tr><td>DDC Controller</td><td>1</td><td>~0.2 kW</td></tr><tr><td colspan="2" style="font-weight:700">Total per Cabinet</td><td style="font-weight:700;color:var(--accent)">~59-65 kW</td></tr></tbody></table></div></div>
+</div>
+
+<!-- NETWORK -->
+<div class="section" id="sec-network">
+  <div class="section-title">Network Topology</div>
+  <div class="kpi-row"><div class="kpi-card"><div class="kpi-label">InfiniBand Switches</div><div class="kpi-value kpi-green">12</div><div class="kpi-sub">NVIDIA Q3400-X800</div></div><div class="kpi-card"><div class="kpi-label">Ethernet Switches</div><div class="kpi-value kpi-blue">4</div><div class="kpi-sub">NVIDIA SN5610</div></div><div class="kpi-card"><div class="kpi-label">Edge Routers</div><div class="kpi-value kpi-yellow">4</div><div class="kpi-sub">Hydra Edge Routers</div></div><div class="kpi-card"><div class="kpi-label">Uplinks</div><div class="kpi-value">4x100G</div><div class="kpi-sub">QSFP28 to upstream</div></div></div>
+  <div class="panel mb-24"><div class="panel-title"><span class="dot dot-green"></span> Network Architecture</div><div class="net-layer" style="border-color:rgba(245,158,11,.3)"><div class="net-layer-title" style="color:var(--warn)">North/South (External) - BGP Peering</div><div class="net-devices"><div class="net-device"><div class="nd-name">Upstream ISP</div><div class="nd-spec">4x 100Gb QSFP28</div></div></div><div class="net-connector">|</div><div class="net-devices"><div class="net-device"><div class="nd-name">Hydra Router 1</div><div class="nd-spec">Edge</div></div><div class="net-device"><div class="nd-name">Hydra Router 2</div><div class="nd-spec">Edge</div></div><div class="net-device"><div class="nd-name">Hydra Router 3</div><div class="nd-spec">Edge</div></div><div class="net-device"><div class="nd-name">Hydra Router 4</div><div class="nd-spec">Edge</div></div></div><div class="net-connector">|</div><div class="net-devices"><div class="net-device"><div class="nd-name">SN5610-1</div><div class="nd-spec">Ethernet</div></div><div class="net-device"><div class="nd-name">SN5610-2</div><div class="nd-spec">Ethernet</div></div><div class="net-device"><div class="nd-name">SN5610-3</div><div class="nd-spec">Ethernet</div></div><div class="net-device"><div class="nd-name">SN5610-4</div><div class="nd-spec">Ethernet</div></div></div></div><div class="net-connector" style="font-size:24px">&#8595;</div><div class="net-layer" style="border-color:rgba(118,185,0,.3)"><div class="net-layer-title" style="color:var(--accent)">East/West (GPU Fabric) - InfiniBand NDR</div><div class="net-devices"><div class="net-device" style="border-color:rgba(118,185,0,.4)"><div class="nd-name">Q3400-X800 #1</div><div class="nd-spec">IB NDR</div></div><div class="net-device" style="border-color:rgba(118,185,0,.4)"><div class="nd-name">Q3400-X800 #2</div><div class="nd-spec">IB NDR</div></div><div class="net-device" style="border-color:rgba(118,185,0,.4)"><div class="nd-name">Q3400-X800 #3</div><div class="nd-spec">IB NDR</div></div><div class="net-device" style="border-color:rgba(118,185,0,.4)"><div class="nd-name">...</div><div class="nd-spec">x12 total</div></div></div><div class="net-connector">|</div><div class="net-devices"><div class="net-device" style="border-color:rgba(118,185,0,.4)"><div class="nd-name">B300 HGX Nodes</div><div class="nd-spec">72 nodes x 8 GPU</div></div></div></div></div>
+  <div class="grid-2"><div class="panel"><div class="panel-title"><span class="dot dot-yellow"></span> Upstream Handoff Requirements</div><ul class="info-list"><li><span class="il-label">Uplink Ports</span><span class="il-value">4x 100Gb QSFP28</span></li><li><span class="il-label">Protocol</span><span class="il-value">BGP (eBGP peering)</span></li><li><span class="il-label">IPv4 Subnet</span><span class="il-value">/25</span></li><li><span class="il-label">NAT</span><span class="il-value">DNAT</span></li><li><span class="il-label">MMR Location</span><span class="il-value">Ground Floor</span></li></ul></div><div class="panel"><div class="panel-title"><span class="dot dot-green"></span> GPU Fabric Details</div><ul class="info-list"><li><span class="il-label">IB Switches</span><span class="il-value">12x Q3400-X800</span></li><li><span class="il-label">IB Generation</span><span class="il-value">NDR (Next Data Rate)</span></li><li><span class="il-label">Fabric Type</span><span class="il-value">Full fat-tree</span></li><li><span class="il-label">GPU-to-GPU BW</span><span class="il-value">400 Gbps per port</span></li><li><span class="il-label">Total GPU Endpoints</span><span class="il-value">576 GPUs</span></li></ul></div></div>
+  <div class="section-title" style="margin-top:24px">Network &amp; Connectivity OPEX</div>
+  <div class="kpi-row">
+    <div class="kpi-card"><div class="kpi-label">Telecom OPEX</div><div class="kpi-value kpi-blue">$655K</div><div class="kpi-sub">MXN/month</div></div>
+    <div class="kpi-card"><div class="kpi-label">Annual Telecom</div><div class="kpi-value kpi-blue">$7.86M</div><div class="kpi-sub">MXN/year ($457K USD)</div></div>
+    <div class="kpi-card"><div class="kpi-label">% of Total OPEX</div><div class="kpi-value kpi-yellow">17%</div><div class="kpi-sub">2nd largest OPEX item</div></div>
+    <div class="kpi-card"><div class="kpi-label">Total Uplink</div><div class="kpi-value kpi-green">400 Gbps</div><div class="kpi-sub">4x 100Gb QSFP28</div></div>
+  </div>
+  <div class="grid-2">
+    <div class="panel">
+      <div class="panel-title"><span class="dot dot-blue"></span> Connectivity Services (Monthly OPEX)</div>
+      <table class="data-table">
+        <thead><tr><th>Service</th><th>Specification</th><th>MXN/mo</th><th>MXN/yr</th></tr></thead>
+        <tbody>
+          <tr><td style="font-weight:600;color:var(--accent2)">Internet/Transit 100 Gb</td><td>4x 100Gb QSFP28 uplinks, BGP peering</td><td style="text-align:right;font-weight:700">560,000</td><td style="text-align:right">6,720,000</td></tr>
+          <tr><td>/25 IPv4 Subnet</td><td>128 public IPs, DNAT</td><td style="text-align:right">55,200</td><td style="text-align:right">662,400</td></tr>
+          <tr><td>Internet/Transit 1 Gb</td><td>Management / OOB network</td><td style="text-align:right">39,780</td><td style="text-align:right">477,360</td></tr>
+          <tr style="font-weight:700;border-top:2px solid var(--border)"><td>Total Telecom</td><td></td><td style="text-align:right;color:var(--accent2)">654,980</td><td style="text-align:right;color:var(--accent2)">7,859,760</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="panel">
+      <div class="panel-title"><span class="dot dot-green"></span> Network Infrastructure (CAPEX — already deployed)</div>
+      <table class="data-table">
+        <thead><tr><th>Equipment</th><th>Qty</th><th>Role</th></tr></thead>
+        <tbody>
+          <tr><td style="color:var(--accent)">NVIDIA Q3400-X800</td><td style="text-align:center">12</td><td>InfiniBand NDR switches (GPU fabric)</td></tr>
+          <tr><td style="color:var(--accent2)">NVIDIA SN5610</td><td style="text-align:center">4</td><td>Ethernet switches (mgmt + storage)</td></tr>
+          <tr><td style="color:var(--warn)">Hydra Edge Routers</td><td style="text-align:center">4</td><td>BGP edge routers (N/S traffic)</td></tr>
+          <tr><td>MMR Patch Panels</td><td style="text-align:center">—</td><td>Meet-Me Room fiber handoff</td></tr>
+          <tr><td>OOB Management</td><td style="text-align:center">—</td><td>1 Gb out-of-band network</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+  <div class="grid-2">
+    <div class="panel">
+      <div class="panel-title"><span class="dot dot-yellow"></span> Bandwidth Requirements</div>
+      <ul class="info-list">
+        <li><span class="il-label">North/South (External)</span><span class="il-value">4x 100 Gbps (400G total)</span></li>
+        <li><span class="il-label">East/West (GPU Fabric)</span><span class="il-value">400 Gbps/port IB NDR</span></li>
+        <li><span class="il-label">Peering Protocol</span><span class="il-value">eBGP (multi-homed)</span></li>
+        <li><span class="il-label">IP Addressing</span><span class="il-value">/25 IPv4 (128 IPs) + DNAT</span></li>
+        <li><span class="il-label">Management Network</span><span class="il-value">1 Gbps OOB dedicated</span></li>
+        <li><span class="il-label">Carrier Handoff</span><span class="il-value">MMR (Ground Floor)</span></li>
+      </ul>
+    </div>
+    <div class="panel">
+      <div class="panel-title"><span class="dot dot-red"></span> Network OPEX Breakdown</div>
+      <canvas id="netOpexChart2" height="200"></canvas>
+    </div>
+  </div>
+</div>
+
+<!-- FACILITY -->
+<div class="section" id="sec-facility">
+  <div class="section-title">Facility Layout</div>
+  <div class="panel mb-24"><div class="panel-title"><span class="dot dot-green"></span> Ground Floor (PB) Layout</div><div style="display:flex;align-items:center;justify-content:center;padding:60px 20px;background:rgba(245,158,11,.06);border:2px dashed var(--warn);border-radius:8px"><div style="text-align:center"><div style="font-size:48px;margin-bottom:12px">&#128679;</div><div style="font-size:18px;font-weight:700;color:var(--warn);margin-bottom:6px">Floor Plan Pending</div><div style="font-size:13px;color:var(--text2);max-width:400px">Awaiting 3D CAD files and as-built site renders for accurate floor plan visualization. Will be updated once architectural drawings are received.</div></div></div></div>
+  <div class="grid-2"><div class="panel"><div class="panel-title"><span class="dot dot-green"></span> Ground Floor Rooms</div><table class="data-table"><thead><tr><th>Room</th><th>Function</th></tr></thead><tbody><tr><td>Data Hall</td><td>18x DDC Cabinets</td></tr><tr><td>Electrical Room 01</td><td>UPS x2, PDU x4, CRAC x4</td></tr><tr><td>Electrical Room 02</td><td>Switchgear, ATS, QDPacs</td></tr><tr><td>Battery Room</td><td>Li-ion battery banks x2</td></tr><tr><td>MMR &amp; Carriers</td><td>Meet-Me Room, fiber handoff</td></tr><tr><td>NOC</td><td>Network Operations Center</td></tr><tr><td>Staging Room</td><td>Equipment staging/receiving</td></tr><tr><td>Inlet Lock</td><td>Security vestibule</td></tr><tr><td>Chillers Area</td><td>3x 145T chillers + pumps</td></tr><tr><td>Restrooms</td><td>Facilities</td></tr></tbody></table></div><div class="panel"><div class="panel-title"><span class="dot dot-yellow"></span> Basement 1 (Sotano 1)</div><table class="data-table"><thead><tr><th>Equipment</th><th>Specification</th></tr></thead><tbody><tr><td>Generator 1</td><td>600 kW Prime Diesel + base tank</td></tr><tr><td>Generator 2</td><td>600 kW Prime Diesel + base tank</td></tr><tr><td>Generator 3</td><td>600 kW Prime Diesel + base tank</td></tr><tr><td>MV Switchgear</td><td>Driescher 1,500 kW</td></tr><tr><td>Transformer</td><td>1.5 MVA Dry-type 23kV/480V</td></tr><tr><td>Fuel Storage</td><td>24-hour diesel supply</td></tr></tbody></table></div></div>
+  <div class="panel mb-24"><div class="panel-title"><span class="dot dot-blue"></span> Structural &amp; Load Data</div><ul class="info-list"><li><span class="il-label">Total Equipment Weight</span><span class="il-value">128.2 tons</span></li><li><span class="il-label">Data Center Area</span><span class="il-value">538 m2</span></li><li><span class="il-label">Seismic Zone</span><span class="il-value">Zone D (high seismicity)</span></li><li><span class="il-label">Building Type</span><span class="il-value">Existing HQ (retrofit)</span></li><li><span class="il-label">Vehicle Access</span><span class="il-value">Dedicated entrance</span></li><li><span class="il-label">Emergency Egress</span><span class="il-value">Emergency stairs + evacuation route</span></li></ul></div>
+</div>
+
+<!-- TIMELINE -->
+<div class="section" id="sec-timeline">
+  <div class="section-title">Construction Timeline - 24 Weeks (6 Months)</div>
+  <div class="kpi-row"><div class="kpi-card"><div class="kpi-label">Duration</div><div class="kpi-value kpi-green">24 wk</div><div class="kpi-sub">6 months total</div></div><div class="kpi-card"><div class="kpi-label">Commissioning</div><div class="kpi-value kpi-blue">Wk 22-23</div><div class="kpi-sub">2-week window</div></div><div class="kpi-card"><div class="kpi-label">EPC Partner</div><div class="kpi-value" style="font-size:16px">ATN Ingenieria</div><div class="kpi-sub">28+ years experience</div></div><div class="kpi-card"><div class="kpi-label">COD Target</div><div class="kpi-value kpi-yellow">Q2 2026</div><div class="kpi-sub">Commercial Operation Date</div></div></div>
+  <div class="panel mb-24"><div class="panel-title"><span class="dot dot-green"></span> Gantt Chart</div><div id="ganttChart" style="padding:8px 0"></div><div class="timeline-weeks" id="ganttWeeks"></div></div>
+  <div class="panel mb-24"><div class="panel-title"><span class="dot dot-yellow"></span> Critical Path Items</div><table class="data-table"><thead><tr><th>Milestone</th><th>Start</th><th>End</th><th>Duration</th><th>Status</th></tr></thead><tbody><tr><td>Administrative / Documentation</td><td>Wk 1</td><td>Wk 24</td><td>24 weeks</td><td><span class="tag tag-yellow">Planned</span></td></tr><tr><td>FEED &amp; Detail Engineering</td><td>Wk 2</td><td>Wk 6</td><td>5 weeks</td><td><span class="tag tag-yellow">Planned</span></td></tr><tr><td>Civil Works</td><td>Wk 6</td><td>Wk 24</td><td>19 weeks</td><td><span class="tag tag-yellow">Planned</span></td></tr><tr><td>Chiller System</td><td>Wk 1</td><td>Wk 24</td><td>24 weeks</td><td><span class="tag tag-red">Long Lead</span></td></tr><tr><td>Generators + ATS</td><td>Wk 6</td><td>Wk 19</td><td>14 weeks</td><td><span class="tag tag-yellow">Planned</span></td></tr><tr><td>UPS &amp; Batteries</td><td>Wk 6</td><td>Wk 19</td><td>14 weeks</td><td><span class="tag tag-yellow">Planned</span></td></tr><tr><td>Electromechanical</td><td>Wk 3</td><td>Wk 20</td><td>18 weeks</td><td><span class="tag tag-yellow">Planned</span></td></tr><tr><td>Telecom</td><td>Wk 8</td><td>Wk 22</td><td>15 weeks</td><td><span class="tag tag-yellow">Planned</span></td></tr><tr><td>Commissioning</td><td>Wk 22</td><td>Wk 23</td><td>2 weeks</td><td><span class="tag tag-blue">Final</span></td></tr></tbody></table></div>
+</div>
+
+<!-- FINANCIAL -->
+<div class="section" id="sec-financial">
+  <div class="section-title">Financial - Financing &amp; Partners</div>
+  <div class="kpi-row"><div class="kpi-card"><div class="kpi-label">Total Project</div><div class="kpi-value kpi-green">$46.2M</div><div class="kpi-sub">USD Sources &amp; Uses</div></div><div class="kpi-card"><div class="kpi-label">GPU Debt</div><div class="kpi-value kpi-yellow">$31.2M</div><div class="kpi-sub">80% LTV, 15%, 3yr</div></div><div class="kpi-card"><div class="kpi-label">DC CAPEX Debt</div><div class="kpi-value kpi-blue">$3.3M</div><div class="kpi-sub">80% LTV, 8%, 10yr</div></div><div class="kpi-card"><div class="kpi-label">Equity Gap</div><div class="kpi-value kpi-red">$8.5M</div><div class="kpi-sub">New investor needed</div></div></div>
+  <div class="grid-2">
+    <div class="panel"><div class="panel-title"><span class="dot dot-yellow"></span> Debt Financing Terms</div><table class="data-table"><thead><tr><th>Parameter</th><th>GPU Financing</th><th>DC CAPEX</th></tr></thead><tbody><tr><td>LTV</td><td style="text-align:right">80%</td><td style="text-align:right">80%</td></tr><tr><td>Interest Rate</td><td style="text-align:right">15%</td><td style="text-align:right">8%</td></tr><tr><td>Tenor</td><td style="text-align:right">3 years</td><td style="text-align:right">10 years</td></tr><tr><td>Monthly Payment</td><td style="text-align:right;color:var(--warn)">$1,081,558</td><td style="text-align:right;color:var(--warn)">$39,990</td></tr><tr><td>Loan Amount</td><td style="text-align:right">$31,200,000</td><td style="text-align:right">$3,296,000</td></tr></tbody></table></div>
+    <div class="panel"><div class="panel-title"><span class="dot" style="background:#8b5cf6"></span> Equity Partners</div><table class="data-table"><thead><tr><th>Entity</th><th>Fund Type</th><th>Ticket Size</th><th>Status</th></tr></thead><tbody><tr><td style="font-weight:600;color:var(--accent)">Olayan Group</td><td>Middle East Family Office</td><td>$5-10M</td><td><span class="tag tag-yellow">Active</span></td></tr><tr><td style="font-weight:600;color:var(--accent)">ERA Funds</td><td>AI Equity / Debt</td><td>$5-10M</td><td><span class="tag tag-blue">Intro Call</span></td></tr><tr><td style="font-weight:600;color:var(--accent)">Phillipe Sourofim</td><td>PE / VC</td><td>$5-10M</td><td><span class="tag tag-blue">Intro Call</span></td></tr></tbody></table></div>
+  </div>
+  <div class="panel mb-24"><div class="panel-title"><span class="dot dot-yellow"></span> Debt &amp; Credit Financing Partners</div><table class="data-table"><thead><tr><th>Entity</th><th>Financing Type</th><th>Collateral</th><th>Rate</th><th>Comment</th><th>Status</th></tr></thead><tbody><tr><td style="font-weight:600;color:var(--accent)">Permian Labs</td><td>Simple Credit</td><td>Asset Backed</td><td>10-15%</td><td>70-80% LTV, 3yr term, compute stack only</td><td><span class="tag tag-green">TSA Signed</span></td></tr><tr><td>Dell Financing</td><td>Lease / Credit (4 modalities)</td><td>Corporate Guarantee</td><td>3-9%</td><td>Cannot perform asset-backed financing</td><td><span class="tag tag-yellow">Under Review</span></td></tr><tr><td>SMBC</td><td>Simple Credit</td><td>Asset Backed</td><td>TBD</td><td>Information sent, awaiting response</td><td><span class="tag tag-blue">Meeting 06/03/2026</span></td></tr><tr><td>Metaversal</td><td>Bridge Financing</td><td>Asset Backed</td><td>TBD</td><td>Waiting for NDA signature, then due diligence</td><td><span class="tag tag-blue">NDA Signature</span></td></tr><tr><td>Chuck Leaver</td><td>Simple Credit</td><td>Asset Backed</td><td>12%</td><td>70-80% LTV, 3yr term, compute stack only</td><td><span class="tag tag-red">On Hold</span></td></tr><tr><td>Altum Capital</td><td>Simple Credit</td><td>Asset Backed</td><td>TBD</td><td>Pending kickoff call</td><td><span class="tag tag-red">On Hold</span></td></tr><tr><td>Beel Capital</td><td>Simple Credit</td><td>Asset Backed</td><td>TBD</td><td>Info sent, waiting for follow up</td><td><span class="tag tag-red">On Hold</span></td></tr><tr><td>VFI</td><td>Multiple Modalities</td><td>Corporate Guarantee</td><td>TBD</td><td>Cannot offer financing in Mexico</td><td><span class="tag tag-yellow">Under Review</span></td></tr><tr><td>Trinity</td><td>Simple Credit</td><td>Corp. / Asset Backed</td><td>10-12%</td><td>Cannot offer financing in Mexico</td><td><span class="tag tag-red">N/A</span></td></tr><tr><td>Corporate Guarantee</td><td>Contractual (AAA)</td><td>AAA Backed</td><td>—</td><td>Initial talks w/ Sabino Escobedo (World Bank)</td><td><span class="tag tag-blue">Initial Talks</span></td></tr></tbody></table></div>
+  <div class="panel mb-24"><div class="panel-title"><span class="dot dot-blue"></span> Bridge Financing — GPU Procurement (Metaversal)</div><table class="data-table"><thead><tr><th>Parameter</th><th>Bridge (6 mo)</th><th>Permanent (3 yr)</th></tr></thead><tbody><tr><td>Loan Amount</td><td style="text-align:right">$27,300,000</td><td style="text-align:right">$31,200,000</td></tr><tr><td>LTV</td><td style="text-align:right">70%</td><td style="text-align:right">80%</td></tr><tr><td>Interest Rate</td><td style="text-align:right">10%</td><td style="text-align:right">15%</td></tr><tr><td>Tenor</td><td style="text-align:right">6 months</td><td style="text-align:right">3 years</td></tr><tr><td>Monthly Payment</td><td style="text-align:right;color:var(--accent2)">$227,500 (interest only)</td><td style="text-align:right;color:var(--warn)">$1,081,558</td></tr><tr><td>Origination Fee</td><td style="text-align:right">1% ($273K)</td><td style="text-align:right">—</td></tr><tr><td>Total Cost of Bridge</td><td style="text-align:right;color:var(--danger)">$1,638,000 (6%)</td><td style="text-align:right">—</td></tr><tr><td>Collateral</td><td colspan="2" style="text-align:center">GPU Hardware (Asset Backed)</td></tr></tbody></table></div>
+  <div class="section-title" style="margin-top:24px">Sources &amp; Uses — $46.2M USD</div>
+  <div class="grid-2">
+    <div class="panel"><div class="panel-title"><span class="dot dot-green"></span> Sources</div><table class="data-table"><thead><tr><th>Source</th><th>Description</th><th style="text-align:right">Amount (USD)</th><th style="text-align:right">%</th></tr></thead><tbody><tr><td style="font-weight:600;color:var(--accent)">Debt Financing GPUs</td><td>Financing amount for GPUs</td><td style="text-align:right">$31,200,000</td><td style="text-align:right">67.6%</td></tr><tr><td style="font-weight:600;color:var(--accent2)">Bridge Financing</td><td>Short-term GPU bridge (Metaversal)</td><td style="text-align:right">$27,300,000</td><td style="text-align:right">59.1%</td></tr><tr><td style="font-weight:600;color:var(--warn)">New Investor Equity</td><td>New investor needs</td><td style="text-align:right">$8,497,399</td><td style="text-align:right">18.4%</td></tr><tr><td>Debt Financing DC CAPEX</td><td>Financing amount for DC CAPEX</td><td style="text-align:right">$3,296,000</td><td style="text-align:right">7.1%</td></tr><tr><td style="color:var(--accent)">Fermaca Equity</td><td>Equity from within</td><td style="text-align:right">$3,000,000</td><td style="text-align:right">6.5%</td></tr><tr><td>EPC Financing</td><td>10% EPC financing</td><td style="text-align:right">$167,670</td><td style="text-align:right">0.4%</td></tr><tr style="font-weight:700;border-top:2px solid var(--accent)"><td>Total Sources</td><td></td><td style="text-align:right;color:var(--accent)">$46,161,069</td><td style="text-align:right">100%</td></tr></tbody></table></div>
+    <div class="panel"><div class="panel-title"><span class="dot dot-yellow"></span> Uses</div><table class="data-table"><thead><tr><th>Use</th><th>Description</th><th style="text-align:right">Amount (USD)</th><th style="text-align:right">%</th></tr></thead><tbody><tr><td style="font-weight:600;color:var(--accent)">GPUs</td><td>Dell/Supermicro w/ NVIDIA B300 (HPC)</td><td style="text-align:right">$39,000,000</td><td style="text-align:right">84.5%</td></tr><tr><td style="font-weight:600;color:var(--accent2)">Auxiliary CAPEX</td><td>Cooling, electrical, plumbing, telecom</td><td style="text-align:right">$4,120,000</td><td style="text-align:right">8.9%</td></tr><tr><td>Non-Financeable CAPEX</td><td>Dev, engineering, construction</td><td style="text-align:right">$2,562,588</td><td style="text-align:right">5.6%</td></tr><tr><td>Contingency</td><td>7% contingency</td><td style="text-align:right">$468,481</td><td style="text-align:right">1.0%</td></tr><tr><td>Permits &amp; Studies</td><td>Local permits, structural studies</td><td style="text-align:right">$10,000</td><td style="text-align:right">0.0%</td></tr><tr style="font-weight:700;border-top:2px solid var(--warn)"><td>Total Uses</td><td></td><td style="text-align:right;color:var(--warn)">$46,161,069</td><td style="text-align:right">100%</td></tr></tbody></table></div>
+  </div>
+  <div class="grid-2">
+    <div class="panel"><div class="panel-title"><span class="dot dot-blue"></span> Uses — Non-Financeable CAPEX Breakdown</div><table class="data-table"><thead><tr><th>Item</th><th>Description</th><th style="text-align:right">Amount (USD)</th></tr></thead><tbody><tr><td>Construction</td><td>FDO Construction</td><td style="text-align:right">$1,586,700</td></tr><tr><td>BCYSA Feasibility &amp; Dev</td><td>BCYSA Quote</td><td style="text-align:right">$250,000</td></tr><tr><td>CFE Commitments</td><td>CFE quote for capacity increase</td><td style="text-align:right">$248,020</td></tr><tr><td>BCYSA Owners Engineer</td><td>BCYSA Quote</td><td style="text-align:right">$237,868</td></tr><tr><td>Commissioning</td><td>Tests</td><td style="text-align:right">$150,000</td></tr><tr><td>Engineering</td><td>Engineering</td><td style="text-align:right">$90,000</td></tr><tr><td>Permits &amp; Studies</td><td>Local permits, structural studies</td><td style="text-align:right">$10,000</td></tr><tr style="font-weight:700;border-top:2px solid var(--border)"><td>Total</td><td></td><td style="text-align:right">$2,562,588</td></tr></tbody></table></div>
+    <div class="panel"><div class="panel-title"><span class="dot dot-red"></span> Sources &amp; Uses — Key Assumptions</div><table class="data-table"><thead><tr><th>Parameter</th><th>GPU Financing</th><th>DC CAPEX</th></tr></thead><tbody><tr><td>LTV</td><td style="text-align:right">80%</td><td style="text-align:right">80%</td></tr><tr><td>Interest Rate (I/Y)</td><td style="text-align:right">15%</td><td style="text-align:right">8%</td></tr><tr><td>Tenor</td><td style="text-align:right">3 years</td><td style="text-align:right">10 years</td></tr><tr><td>Monthly Payment</td><td style="text-align:right;color:var(--warn)">$1,081,558</td><td style="text-align:right;color:var(--warn)">$39,990</td></tr><tr><td>EPC Financing</td><td colspan="2" style="text-align:center">10%</td></tr><tr><td>DSRA</td><td colspan="2" style="text-align:center">0 months</td></tr><tr><td>Contingency</td><td colspan="2" style="text-align:center">7%</td></tr></tbody></table></div>
+  </div>
+</div>
+
+<!-- OPEX -->
+<div class="section" id="sec-opex">
+  <div class="section-title">OPEX - Annual Operating Expenditure</div>
+  <div class="kpi-row"><div class="kpi-card"><div class="kpi-label">Monthly OPEX</div><div class="kpi-value kpi-yellow">$3.52M</div><div class="kpi-sub">MXN/month</div></div><div class="kpi-card"><div class="kpi-label">Annual OPEX</div><div class="kpi-value kpi-blue">$2.7M</div><div class="kpi-sub">USD/year ($46.4M MXN)</div></div><div class="kpi-card"><div class="kpi-label">OPEX/kW-month</div><div class="kpi-value kpi-green">$3,521</div><div class="kpi-sub">MXN/kW-month</div></div><div class="kpi-card"><div class="kpi-label">Energy Share</div><div class="kpi-value kpi-red">46%</div><div class="kpi-sub">Largest OPEX driver</div></div></div>
+  <div class="grid-2">
+    <div class="panel"><div class="panel-title"><span class="dot dot-yellow"></span> OPEX by Category (Annual USD)</div><canvas id="opexPieChart" height="320"></canvas></div>
+    <div class="panel"><div class="panel-title"><span class="dot dot-green"></span> OPEX Treemap (Annual MXN)</div><canvas id="opexTreemapChart" height="320"></canvas></div>
+  </div>
+  <div class="section-title" style="margin-top:24px">Energy Spending (OPEX)</div>
+  <div class="kpi-row">
+    <div class="kpi-card"><div class="kpi-label">Energy OPEX</div><div class="kpi-value kpi-yellow">$1.79M</div><div class="kpi-sub">MXN/month</div></div>
+    <div class="kpi-card"><div class="kpi-label">Annual Energy</div><div class="kpi-value kpi-yellow">$21.4M</div><div class="kpi-sub">MXN/year ($1.25M USD)</div></div>
+    <div class="kpi-card"><div class="kpi-label">% of Total OPEX</div><div class="kpi-value kpi-red">46%</div><div class="kpi-sub">Largest OPEX driver</div></div>
+    <div class="kpi-card"><div class="kpi-label">Avg Rate</div><div class="kpi-value kpi-blue">$0.109</div><div class="kpi-sub">USD/kWh (IBD pass-through)</div></div>
+  </div>
+  <div class="grid-2">
+    <div class="panel">
+      <div class="panel-title"><span class="dot dot-yellow"></span> Energy Cost Breakdown (Monthly OPEX)</div>
+      <table class="data-table">
+        <thead><tr><th>Component</th><th>Specification</th><th>MXN/mo</th><th>MXN/yr</th></tr></thead>
+        <tbody>
+          <tr><td style="font-weight:600;color:var(--warn)">IT Load Electricity</td><td>1,000 kW IT @ PUE 1.0</td><td style="text-align:right">1,489,200</td><td style="text-align:right">17,870,400</td></tr>
+          <tr><td style="color:var(--danger)">Cooling Overhead</td><td>200 kW (PUE 1.2 overhead)</td><td style="text-align:right">297,840</td><td style="text-align:right">3,574,080</td></tr>
+          <tr style="font-weight:700;border-top:2px solid var(--border)"><td>Total Energy</td><td>1,200 kW facility load</td><td style="text-align:right;color:var(--warn)">1,787,040</td><td style="text-align:right;color:var(--warn)">21,444,480</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="panel">
+      <div class="panel-title"><span class="dot dot-green"></span> Energy Supply Details</div>
+      <ul class="info-list">
+        <li><span class="il-label">Supplier</span><span class="il-value">Iberdrola (Qualified)</span></li>
+        <li><span class="il-label">Tariff Type</span><span class="il-value">Pass-Through IBD</span></li>
+        <li><span class="il-label">Market</span><span class="il-value">MEM (Wholesale)</span></li>
+        <li><span class="il-label">Utility Feed</span><span class="il-value">CFE 23 kV Medium Voltage</span></li>
+        <li><span class="il-label">MXN/kWh Range</span><span class="il-value">$1.78 – $2.23</span></li>
+        <li><span class="il-label">USD/kWh Range</span><span class="il-value">$0.103 – $0.130</span></li>
+        <li><span class="il-label">Monthly Consumption</span><span class="il-value">~876,000 kWh</span></li>
+        <li><span class="il-label">Annual Consumption</span><span class="il-value">~10,512,000 kWh</span></li>
+      </ul>
+    </div>
+  </div>
+  <div class="grid-2">
+    <div class="panel">
+      <div class="panel-title"><span class="dot dot-blue"></span> Energy Tariff Components</div>
+      <table class="data-table">
+        <thead><tr><th>Component</th><th>Type</th><th style="text-align:right">Avg MXN/kWh</th><th style="text-align:right">% of Tariff</th></tr></thead>
+        <tbody>
+          <tr><td style="color:var(--warn)">Capacity Charge</td><td>Regulated / Fixed</td><td style="text-align:right">$0.61</td><td style="text-align:right">32.6%</td></tr>
+          <tr><td style="color:var(--accent)">Energy (CAP)</td><td>Negotiable / Variable</td><td style="text-align:right">$0.54</td><td style="text-align:right">28.9%</td></tr>
+          <tr><td style="color:var(--accent2)">Regulated &amp; MEM</td><td>Regulated / Variable</td><td style="text-align:right">$0.51</td><td style="text-align:right">27.3%</td></tr>
+          <tr><td style="color:var(--danger)">Congestion</td><td>Regulated / Variable</td><td style="text-align:right">$0.16</td><td style="text-align:right">8.6%</td></tr>
+          <tr><td style="color:#8b5cf6">CELs (Clean Energy)</td><td>Negotiable / Variable</td><td style="text-align:right">$0.05</td><td style="text-align:right">2.7%</td></tr>
+          <tr style="font-weight:700;border-top:2px solid var(--border)"><td>Total All-In</td><td></td><td style="text-align:right;color:var(--warn)">$1.87</td><td style="text-align:right">100%</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="panel">
+      <div class="panel-title"><span class="dot dot-red"></span> Energy OPEX vs Other OPEX</div>
+      <canvas id="energyOpexChart" height="200"></canvas>
+    </div>
+  </div>
+
+  <div class="section-title" style="margin-top:24px">Network &amp; Connectivity Requirements (OPEX)</div>
+  <div class="kpi-row">
+    <div class="kpi-card"><div class="kpi-label">Telecom OPEX</div><div class="kpi-value kpi-blue">$655K</div><div class="kpi-sub">MXN/month</div></div>
+    <div class="kpi-card"><div class="kpi-label">Annual Telecom</div><div class="kpi-value kpi-blue">$7.86M</div><div class="kpi-sub">MXN/year ($457K USD)</div></div>
+    <div class="kpi-card"><div class="kpi-label">% of Total OPEX</div><div class="kpi-value kpi-yellow">17%</div><div class="kpi-sub">2nd largest OPEX item</div></div>
+    <div class="kpi-card"><div class="kpi-label">Total Uplink</div><div class="kpi-value kpi-green">400 Gbps</div><div class="kpi-sub">4x 100Gb QSFP28</div></div>
+  </div>
+  <div class="grid-2">
+    <div class="panel">
+      <div class="panel-title"><span class="dot dot-blue"></span> Connectivity Services (Monthly OPEX)</div>
+      <table class="data-table">
+        <thead><tr><th>Service</th><th>Specification</th><th>MXN/mo</th><th>MXN/yr</th></tr></thead>
+        <tbody>
+          <tr><td style="font-weight:600;color:var(--accent2)">Internet/Transit 100 Gb</td><td>4x 100Gb QSFP28 uplinks, BGP peering</td><td style="text-align:right;font-weight:700">560,000</td><td style="text-align:right">6,720,000</td></tr>
+          <tr><td>/25 IPv4 Subnet</td><td>128 public IPs, DNAT</td><td style="text-align:right">55,200</td><td style="text-align:right">662,400</td></tr>
+          <tr><td>Internet/Transit 1 Gb</td><td>Management / OOB network</td><td style="text-align:right">39,780</td><td style="text-align:right">477,360</td></tr>
+          <tr style="font-weight:700;border-top:2px solid var(--border)"><td>Total Telecom</td><td></td><td style="text-align:right;color:var(--accent2)">654,980</td><td style="text-align:right;color:var(--accent2)">7,859,760</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="panel">
+      <div class="panel-title"><span class="dot dot-green"></span> Network Infrastructure (CAPEX — already deployed)</div>
+      <table class="data-table">
+        <thead><tr><th>Equipment</th><th>Qty</th><th>Role</th></tr></thead>
+        <tbody>
+          <tr><td style="color:var(--accent)">NVIDIA Q3400-X800</td><td style="text-align:center">12</td><td>InfiniBand NDR switches (GPU fabric)</td></tr>
+          <tr><td style="color:var(--accent2)">NVIDIA SN5610</td><td style="text-align:center">4</td><td>Ethernet switches (mgmt + storage)</td></tr>
+          <tr><td style="color:var(--warn)">Hydra Edge Routers</td><td style="text-align:center">4</td><td>BGP edge routers (N/S traffic)</td></tr>
+          <tr><td>MMR Patch Panels</td><td style="text-align:center">—</td><td>Meet-Me Room fiber handoff</td></tr>
+          <tr><td>OOB Management</td><td style="text-align:center">—</td><td>1 Gb out-of-band network</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+  <div class="grid-2">
+    <div class="panel">
+      <div class="panel-title"><span class="dot dot-yellow"></span> Bandwidth Requirements</div>
+      <ul class="info-list">
+        <li><span class="il-label">North/South (External)</span><span class="il-value">4x 100 Gbps (400G total)</span></li>
+        <li><span class="il-label">East/West (GPU Fabric)</span><span class="il-value">400 Gbps/port IB NDR</span></li>
+        <li><span class="il-label">Peering Protocol</span><span class="il-value">eBGP (multi-homed)</span></li>
+        <li><span class="il-label">IP Addressing</span><span class="il-value">/25 IPv4 (128 IPs) + DNAT</span></li>
+        <li><span class="il-label">Management Network</span><span class="il-value">1 Gbps OOB dedicated</span></li>
+        <li><span class="il-label">Carrier Handoff</span><span class="il-value">MMR (Ground Floor)</span></li>
+      </ul>
+    </div>
+    <div class="panel">
+      <div class="panel-title"><span class="dot dot-red"></span> Network OPEX vs Other OPEX</div>
+      <canvas id="netOpexChart" height="200"></canvas>
+    </div>
+  </div>
+
+  <div class="panel mb-24" style="margin-top:20px">
+    <div class="panel-title"><span class="dot dot-blue"></span> OPEX Line Items</div>
+    <div style="max-height:600px;overflow-y:auto"><table class="data-table" style="font-size:12px"><thead><tr><th>Category</th><th>Item</th><th>MXN/mo</th><th>MXN/yr</th></tr></thead><tbody><tr style="background:rgba(245,158,11,.05)"><td colspan="2" style="font-weight:700;color:var(--warn)">ENERGY</td><td style="text-align:right;font-weight:700">1,787,040</td><td style="text-align:right;font-weight:700">21,444,480</td></tr><tr><td></td><td>Electricity (IT 1MW, PUE 1.2)</td><td style="text-align:right">1,787,040</td><td style="text-align:right">21,444,480</td></tr><tr style="background:rgba(0,180,216,.05)"><td colspan="2" style="font-weight:700;color:var(--accent2)">TELECOM</td><td style="text-align:right;font-weight:700">654,980</td><td style="text-align:right;font-weight:700">7,859,760</td></tr><tr><td></td><td>Internet/Transit 1 Gb</td><td style="text-align:right">39,780</td><td style="text-align:right">477,360</td></tr><tr><td></td><td>Internet/Transit 100 Gb</td><td style="text-align:right">560,000</td><td style="text-align:right">6,720,000</td></tr><tr><td></td><td>/25 Subnet</td><td style="text-align:right">55,200</td><td style="text-align:right">662,400</td></tr><tr style="background:rgba(118,185,0,.05)"><td colspan="2" style="font-weight:700;color:var(--accent)">O&amp;M INFRA</td><td style="text-align:right;font-weight:700">454,000</td><td style="text-align:right;font-weight:700">5,448,000</td></tr><tr><td></td><td>Chillers/CDU/CRAH (PM+chemicals)</td><td style="text-align:right">140,000</td><td style="text-align:right">1,680,000</td></tr><tr><td></td><td>UPS (PM+spares)</td><td style="text-align:right">90,000</td><td style="text-align:right">1,080,000</td></tr><tr><td></td><td>Generators (PM)</td><td style="text-align:right">60,000</td><td style="text-align:right">720,000</td></tr><tr><td></td><td>BMS/EPMS</td><td style="text-align:right">40,000</td><td style="text-align:right">480,000</td></tr><tr><td></td><td>Other O&amp;M items</td><td style="text-align:right">124,000</td><td style="text-align:right">1,488,000</td></tr><tr style="background:rgba(139,92,246,.05)"><td colspan="2" style="font-weight:700;color:#8b5cf6">PERSONNEL (6 FTE)</td><td style="text-align:right;font-weight:700">410,000</td><td style="text-align:right;font-weight:700">4,920,000</td></tr><tr style="background:rgba(239,68,68,.05)"><td colspan="2" style="font-weight:700;color:var(--danger)">INSURANCE</td><td style="text-align:right;font-weight:700">350,000</td><td style="text-align:right;font-weight:700">4,200,000</td></tr><tr style="background:rgba(34,197,94,.05)"><td colspan="2" style="font-weight:700;color:var(--success)">OEM SUPPORT</td><td style="text-align:right;font-weight:700">145,000</td><td style="text-align:right;font-weight:700">1,740,000</td></tr><tr style="background:rgba(100,116,139,.05)"><td colspan="2" style="font-weight:700">OTHER (NOC,FSCA,Brokkr,etc)</td><td style="text-align:right;font-weight:700">187,000</td><td style="text-align:right;font-weight:700">2,244,000</td></tr></tbody></table></div>
+  </div>
+</div>
+
+<!-- CAPEX -->
+<div class="section" id="sec-capex">
+  <div class="section-title">CAPEX Deep Dive - $51.6M USD Total Investment</div>
+  <div class="kpi-row"><div class="kpi-card"><div class="kpi-label">Total CAPEX</div><div class="kpi-value kpi-green">$51.6M</div><div class="kpi-sub">USD all-in</div></div><div class="kpi-card"><div class="kpi-label">Servers (72x B300)</div><div class="kpi-value kpi-blue">$34.6M</div><div class="kpi-sub">66.9% of CAPEX</div></div><div class="kpi-card"><div class="kpi-label">EPC Construction</div><div class="kpi-value kpi-yellow">$3.4M</div><div class="kpi-sub">ATN Ingenieria</div></div><div class="kpi-card"><div class="kpi-label">Critical Equipment</div><div class="kpi-value kpi-red">$4.0M</div><div class="kpi-sub">UPS, chillers, generators</div></div><div class="kpi-card"><div class="kpi-label">$/kW Installed</div><div class="kpi-value" style="color:#8b5cf6">$51,631</div><div class="kpi-sub">Per kW IT capacity</div></div></div>
+  <div class="grid-2">
+    <div class="panel"><div class="panel-title"><span class="dot dot-green"></span> Uses Waterfall (Sources &amp; Uses — $46.2M)</div><canvas id="capexWaterfallChart" height="320"></canvas></div>
+    <div class="panel"><div class="panel-title"><span class="dot dot-blue"></span> Uses Allocation (S&amp;U — $46.2M)</div><canvas id="capexDonutChart" height="320"></canvas></div>
+  </div>
+
+  <div class="section-title" style="margin-top:24px">EPC Contractor — ATN Ingenier&iacute;a y Servicios</div>
+  <div class="grid-2">
+    <div class="panel">
+      <div class="panel-title"><span class="dot dot-green"></span> Company Profile</div>
+      <ul class="info-list">
+        <li><span class="il-label">Company</span><span class="il-value">ATN Ingenier&iacute;a y Servicios S.A. de C.V.</span></li>
+        <li><span class="il-label">Founded</span><span class="il-value">Monterrey, N.L. — 100% Mexican</span></li>
+        <li><span class="il-label">Experience</span><span class="il-value">28+ years in Data Center design, construction &amp; operations</span></li>
+        <li><span class="il-label">Track Record</span><span class="il-value">150+ mission-critical projects completed</span></li>
+        <li><span class="il-label">Area Built</span><span class="il-value">200,000+ m&sup2; of data center facilities</span></li>
+        <li><span class="il-label">Services</span><span class="il-value">Design, Construction, Maintenance &amp; Operations</span></li>
+        <li><span class="il-label">Relationship</span><span class="il-value">15-month partnership with BCYSA / Fermaca</span></li>
+        <li><span class="il-label">Reference Project</span><span class="il-value">ITESM Monterrey Data Center (2026)</span></li>
+      </ul>
+    </div>
+    <div class="panel">
+      <div class="panel-title"><span class="dot dot-yellow"></span> FDO Construction Scope</div>
+      <ul class="info-list">
+        <li><span class="il-label">Project Duration</span><span class="il-value">24 weeks (6 months)</span></li>
+        <li><span class="il-label">IT Load Target</span><span class="il-value">1 MW operational</span></li>
+        <li><span class="il-label">Contract Type</span><span class="il-value">Fixed price, single point of responsibility</span></li>
+        <li><span class="il-label">Delivery</span><span class="il-value">Controlled schedule with defined milestones</span></li>
+        <li><span class="il-label">Approach</span><span class="il-value">Partner model (not vendor-client)</span></li>
+        <li><span class="il-label">Post-COD</span><span class="il-value">Operations &amp; maintenance continuity</span></li>
+      </ul>
+      <div style="margin-top:12px;padding:10px;background:rgba(118,185,0,.06);border-radius:6px;font-size:12px;color:var(--text2);line-height:1.6">
+        <span style="color:var(--accent);font-weight:700">ATN Value Proposition:</span> Fixed scope, fixed price, controlled delivery date, single responsible party. Minimizes risk of cost overruns and rework post-commissioning. ATN assumes full responsibility for final performance — not just equipment supply.
+      </div>
+    </div>
+  </div>
+
+  <div class="panel mb-24" style="margin-top:16px">
+    <div class="panel-title"><span class="dot dot-blue"></span> Construction Program — 16 Milestones (24 Weeks)</div>
+    <table class="data-table">
+      <thead><tr><th>Milestone</th><th>Description</th><th>Start</th><th>End</th><th>Duration</th></tr></thead>
+      <tbody>
+        <tr><td>1</td><td>Administrative procedures &amp; documentation</td><td>Wk 1</td><td>Wk 24</td><td>24 weeks</td></tr>
+        <tr><td>2</td><td>FEED &amp; detailed engineering</td><td>Wk 2</td><td>Wk 6</td><td>5 weeks</td></tr>
+        <tr><td>3</td><td>Civil works</td><td>Wk 6</td><td>Wk 24</td><td>19 weeks</td></tr>
+        <tr><td>4</td><td>Backup generation system (3x 600kW generators)</td><td>Wk 6</td><td>Wk 19</td><td>14 weeks</td></tr>
+        <tr><td>5</td><td>Automatic Transfer Switch (ATS)</td><td>Wk 6</td><td>Wk 19</td><td>14 weeks</td></tr>
+        <tr><td>6</td><td>Main transformer (1.5 MVA)</td><td>Wk 6</td><td>Wk 15</td><td>10 weeks</td></tr>
+        <tr><td>7</td><td>UPS &amp; batteries (2x 1,000 kW)</td><td>Wk 6</td><td>Wk 19</td><td>14 weeks</td></tr>
+        <tr><td>8</td><td>Battery bank</td><td>Wk 4</td><td>Wk 15</td><td>12 weeks</td></tr>
+        <tr><td>9</td><td>Medium voltage switchgear (Driescher)</td><td>Wk 8</td><td>Wk 19</td><td>12 weeks</td></tr>
+        <tr><td>10</td><td>Switchgear</td><td>Wk 8</td><td>Wk 19</td><td>12 weeks</td></tr>
+        <tr><td>11</td><td>Modular cabinet cooling system (3x 145T chillers)</td><td>Wk 1</td><td>Wk 24</td><td>24 weeks</td></tr>
+        <tr><td>12</td><td>Electromechanical works</td><td>Wk 3</td><td>Wk 20</td><td>18 weeks</td></tr>
+        <tr><td>13</td><td>Telecommunications</td><td>Wk 8</td><td>Wk 22</td><td>15 weeks</td></tr>
+        <tr><td>14</td><td>Security systems</td><td>Wk 8</td><td>Wk 19</td><td>12 weeks</td></tr>
+        <tr><td>15</td><td>Commissioning &amp; testing</td><td>Wk 22</td><td>Wk 23</td><td>2 weeks</td></tr>
+        <tr><td>16</td><td>Additional equipment (beyond BCYSA spec)</td><td>Wk 3</td><td>Wk 24</td><td>22 weeks</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="panel mb-24">
+    <div class="panel-title"><span class="dot dot-red"></span> ATN Competitive Differentiators</div>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:10px;padding:10px">
+      <div style="background:rgba(118,185,0,.08);border:1px solid rgba(118,185,0,.3);border-radius:8px;padding:14px;text-align:center"><div style="font-size:20px;margin-bottom:4px">&#9989;</div><div style="font-size:12px;font-weight:700;color:var(--accent)">Fully Defined Scope</div><div style="font-size:10px;color:var(--text2);margin-top:4px">Complete scope eliminates ambiguity</div></div>
+      <div style="background:rgba(0,180,216,.08);border:1px solid rgba(0,180,216,.3);border-radius:8px;padding:14px;text-align:center"><div style="font-size:20px;margin-bottom:4px">&#128176;</div><div style="font-size:12px;font-weight:700;color:var(--accent2)">Fixed Price</div><div style="font-size:10px;color:var(--text2);margin-top:4px">Minimizes cost deviation risk</div></div>
+      <div style="background:rgba(245,158,11,.08);border:1px solid rgba(245,158,11,.3);border-radius:8px;padding:14px;text-align:center"><div style="font-size:20px;margin-bottom:4px">&#128197;</div><div style="font-size:12px;font-weight:700;color:var(--warn)">Controlled Delivery</div><div style="font-size:10px;color:var(--text2);margin-top:4px">24-week schedule with milestones</div></div>
+      <div style="background:rgba(139,92,246,.08);border:1px solid rgba(139,92,246,.3);border-radius:8px;padding:14px;text-align:center"><div style="font-size:20px;margin-bottom:4px">&#128737;</div><div style="font-size:12px;font-weight:700;color:#8b5cf6">Single Responsible Party</div><div style="font-size:10px;color:var(--text2);margin-top:4px">Performance accountability, not just supply</div></div>
+    </div>
+  </div>
+</div>
+
+<!-- OEM -->
+<div class="section" id="sec-oem">
+  <div class="section-title">OEM Proposals &amp; Vendor Analysis</div>
+  <div class="kpi-row">
+    <div class="kpi-card"><div class="kpi-label">Primary OEM</div><div class="kpi-value" style="font-size:18px;color:var(--accent)">Dell Technologies</div><div class="kpi-sub">PowerEdge XE9780</div></div>
+    <div class="kpi-card"><div class="kpi-label">GPU Platform</div><div class="kpi-value" style="font-size:16px;color:var(--accent)">NVIDIA B300 HGX</div><div class="kpi-sub">8 GPU/node, air-cooled</div></div>
+    <div class="kpi-card"><div class="kpi-label">Server Quote</div><div class="kpi-value kpi-yellow">$39.7M</div><div class="kpi-sub">USD incl. IVA (72 nodes)</div></div>
+    <div class="kpi-card"><div class="kpi-label">Unit Price</div><div class="kpi-value kpi-blue">$475,429</div><div class="kpi-sub">USD per node (pre-tax)</div></div>
+    <div class="kpi-card"><div class="kpi-label">Cabinet Vendor</div><div class="kpi-value" style="font-size:16px">DDC</div><div class="kpi-sub">S-Series v4 NEMA 3R</div></div>
+    <div class="kpi-card"><div class="kpi-label">Energy Supplier</div><div class="kpi-value" style="font-size:16px;color:var(--accent2)">Iberdrola</div><div class="kpi-sub">Pass-Through IBD (MEM)</div></div>
+  </div>
+
+  <div class="section-title" style="margin-top:8px">OEM Quote Comparison (72x B300 HGX Nodes)</div>
+  <div class="panel mb-24">
+    <div class="panel-title"><span class="dot dot-green"></span> Head-to-Head Pricing Comparison</div>
+    <table class="data-table">
+      <thead><tr><th>Parameter</th><th style="color:var(--accent)">Dell XE9780 (PSP MC)</th><th style="color:var(--accent)">Dell XE9780 (NBD)</th><th style="color:var(--accent2)">Supermicro 822GS</th><th style="color:var(--warn)">Lenovo SR680a V4</th></tr></thead>
+      <tbody>
+        <tr><td>Quote No.</td><td>3000198333240.3</td><td>3000198333248.3</td><td>8601460133</td><td>Config only (no price)</td></tr>
+        <tr><td>Date / Expiry</td><td>29/01/26 &rarr; 12/02/26</td><td>29/01/26 &rarr; 12/02/26</td><td>28/01/26 &rarr; 27/02/26</td><td>28/02/2026</td></tr>
+        <tr><td>Unit Price (pre-tax)</td><td style="font-weight:700">$475,429</td><td style="font-weight:700">$469,169</td><td style="font-weight:700">$525,649</td><td style="color:var(--text2)">TBD</td></tr>
+        <tr><td>Subtotal (72 nodes)</td><td>$34,230,887</td><td>$33,780,167</td><td>$37,846,701</td><td style="color:var(--text2)">TBD</td></tr>
+        <tr><td>Tax</td><td>$5,476,942 (IVA 16%)</td><td>$5,404,827 (IVA 16%)</td><td>$0 (ships to US)</td><td style="color:var(--text2)">TBD</td></tr>
+        <tr style="font-weight:700;background:rgba(118,185,0,.05)"><td>Total</td><td style="color:var(--warn)">$39,707,828</td><td style="color:var(--warn)">$39,184,993</td><td style="color:var(--accent2)">$37,846,701*</td><td style="color:var(--text2)">TBD</td></tr>
+        <tr><td>Ship To</td><td>Mexico (CDMX)</td><td>Mexico (CDMX)</td><td>Dallas, TX (USA)</td><td style="color:var(--text2)">TBD</td></tr>
+        <tr><td>Support Level</td><td style="color:var(--accent)">ProSupport Plus MC 7x24 4hr</td><td>ProSupport NBD</td><td>3yr Onsite NBD</td><td>Premier 24x7 4hr</td></tr>
+        <tr><td>Deployment</td><td>ProDeploy Plus</td><td>—</td><td>Assembly fee included</td><td>—</td></tr>
+        <tr><td>DPU / SmartNIC</td><td style="color:var(--danger)">Not included</td><td style="color:var(--danger)">Not included</td><td style="color:var(--accent)">144x BF3 400G incl.</td><td style="color:var(--accent)">144x BF3 400G incl.</td></tr>
+        <tr><td>Software Stack</td><td>iDRAC 10 DC</td><td>iDRAC 10 DC</td><td>SDDC Monitor</td><td>EveryScale HPC/AI + XClarity Pro</td></tr>
+      </tbody>
+    </table>
+    <div style="margin-top:8px;font-size:11px;color:var(--text2)">* Supermicro price excludes Mexican IVA &amp; import duties (ships to US). Effective landed cost in Mexico would be higher. BF3 DPUs included in Supermicro &amp; Lenovo but not in Dell quotes.</div>
+  </div>
+
+  <div class="grid-2">
+    <div class="panel">
+      <div class="panel-title"><span class="dot dot-red"></span> OEM Cost Comparison</div>
+      <canvas id="dellCostChart" height="240"></canvas>
+    </div>
+    <div class="panel">
+      <div class="panel-title"><span class="dot dot-blue"></span> Hardware Spec Comparison (Per Node)</div>
+      <table class="data-table" style="font-size:11px">
+        <thead><tr><th>Component</th><th>Dell XE9780</th><th>Supermicro 822GS</th><th>Lenovo SR680a V4</th></tr></thead>
+        <tbody>
+          <tr><td style="font-weight:600">Form Factor</td><td>10U</td><td>8U</td><td>8U (2U compute)</td></tr>
+          <tr><td style="font-weight:600;color:var(--accent)">GPU</td><td colspan="3" style="text-align:center">HGX B300 NVL8 SXM, 8 GPU, air-cooled, 1100W</td></tr>
+          <tr><td>CPU</td><td>2x Xeon 6747P 48C 2.7G 330W</td><td>2x Xeon 6768P 64C 2.4G 330W</td><td>2x Xeon 6767P 64C 2.4G 350W</td></tr>
+          <tr><td>Memory</td><td>32x 96GB = 3,072 GB</td><td>32x 96GB = 3,072 GB</td><td>32x 64GB = 2,048 GB</td></tr>
+          <tr><td>NVMe Storage</td><td>8x 3.84TB E3.s Gen5</td><td>8x 3.84TB E1.S Gen5</td><td>8x 3.84TB U.2 Gen5</td></tr>
+          <tr><td>Boot</td><td>BOSS-N1 2x 960GB M.2</td><td>2x 960GB M.2 NVMe</td><td>2x 960GB M.2 NVMe</td></tr>
+          <tr><td>IB (E/W)</td><td>2x CX-7 NDR 400G</td><td>2x CX-7 NDR 400G</td><td>2x CX-7 NDR 400G (via card)</td></tr>
+          <tr><td>DPU</td><td style="color:var(--danger)">None</td><td style="color:var(--accent)">2x BF3 400G</td><td style="color:var(--accent)">2x BF3 400G</td></tr>
+          <tr><td>Ethernet (N/S)</td><td>Broadcom 2x 25G</td><td>—</td><td>CX-6 Lx 2x 25G</td></tr>
+          <tr><td>PSU</td><td>6+6 3200W Titanium</td><td>8x 3200W Titanium</td><td>8x 3200W Titanium</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="section-title" style="margin-top:24px">Dell Quotes Detail</div>
+  <div class="grid-2">
+    <div class="panel">
+      <div class="panel-title"><span class="dot dot-green"></span> Dell PSP MC — ProSupport Plus Mission Critical</div>
+      <ul class="info-list">
+        <li><span class="il-label">Quote</span><span class="il-value">3000198333240.3</span></li>
+        <li><span class="il-label">Unit Price</span><span class="il-value">$475,428.98</span></li>
+        <li><span class="il-label">Subtotal</span><span class="il-value">$34,230,886.56</span></li>
+        <li><span class="il-label">IVA</span><span class="il-value">$5,476,941.85</span></li>
+        <li><span class="il-label">Total</span><span class="il-value" style="font-weight:700;color:var(--warn)">$39,707,828.41</span></li>
+        <li><span class="il-label">Support</span><span class="il-value" style="color:var(--accent)">ProSupport Plus 7x24 4hr, 3yr</span></li>
+        <li><span class="il-label">Deploy</span><span class="il-value">ProDeploy Plus included</span></li>
+        <li><span class="il-label">Delivery</span><span class="il-value">14/07/2026 (~40 biz days)</span></li>
+      </ul>
+    </div>
+    <div class="panel">
+      <div class="panel-title"><span class="dot dot-yellow"></span> Dell NBD — ProSupport Next Business Day</div>
+      <ul class="info-list">
+        <li><span class="il-label">Quote</span><span class="il-value">3000198333248.3</span></li>
+        <li><span class="il-label">Unit Price</span><span class="il-value">$469,168.98</span></li>
+        <li><span class="il-label">Subtotal</span><span class="il-value">$33,780,166.56</span></li>
+        <li><span class="il-label">IVA</span><span class="il-value">$5,404,826.65</span></li>
+        <li><span class="il-label">Total</span><span class="il-value" style="font-weight:700;color:var(--warn)">$39,184,993.21</span></li>
+        <li><span class="il-label">Support</span><span class="il-value">ProSupport NBD, 3yr</span></li>
+        <li><span class="il-label">Deploy</span><span class="il-value">Not included</span></li>
+        <li><span class="il-label">Savings vs PSP MC</span><span class="il-value" style="color:var(--accent)">$522,835 (-1.3%)</span></li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="section-title" style="margin-top:24px">Supermicro &amp; Lenovo Quotes Detail</div>
+  <div class="grid-2">
+    <div class="panel">
+      <div class="panel-title"><span class="dot dot-blue"></span> Supermicro SYS-822GS-NB3RT (Q#8601460133)</div>
+      <ul class="info-list">
+        <li><span class="il-label">Model</span><span class="il-value">SYS-822GS-NB3RT 8U X14 HGX 8GPU</span></li>
+        <li><span class="il-label">Unit Price</span><span class="il-value">$525,648.63</span></li>
+        <li><span class="il-label">Total (72 nodes)</span><span class="il-value" style="font-weight:700;color:var(--accent2)">$37,846,701.36</span></li>
+        <li><span class="il-label">Tax</span><span class="il-value">$0 (ships to US)</span></li>
+        <li><span class="il-label">Ship To</span><span class="il-value">Hydra Host, Dallas TX</span></li>
+        <li><span class="il-label">Support</span><span class="il-value">3yr Onsite NBD + NVIDIA ENT CX7</span></li>
+        <li><span class="il-label">Includes BF3</span><span class="il-value" style="color:var(--accent)">144x BlueField-3 400G DPUs</span></li>
+        <li><span class="il-label">Sales Rep</span><span class="il-value">Firas Khayat</span></li>
+        <li><span class="il-label">Terms</span><span class="il-value">T/T in advance, Ex Works</span></li>
+      </ul>
+    </div>
+    <div class="panel">
+      <div class="panel-title"><span class="dot dot-yellow"></span> Lenovo ThinkSystem SR680a V4 (Config)</div>
+      <ul class="info-list">
+        <li><span class="il-label">Model</span><span class="il-value">7DMKCTO1WW SR680a V4</span></li>
+        <li><span class="il-label">Price</span><span class="il-value" style="color:var(--text2)">Pending (config only)</span></li>
+        <li><span class="il-label">Config Date</span><span class="il-value">28/02/2026</span></li>
+        <li><span class="il-label">Support</span><span class="il-value">Premier 24x7 4hr Response, 3yr</span></li>
+        <li><span class="il-label">SW Stack</span><span class="il-value" style="color:var(--accent)">EveryScale HPC/AI + NVIDIA SW</span></li>
+        <li><span class="il-label">Management</span><span class="il-value">XClarity Pro 3yr S&amp;S</span></li>
+        <li><span class="il-label">Includes BF3</span><span class="il-value" style="color:var(--accent)">144x BlueField-3 400G DPUs</span></li>
+        <li><span class="il-label">Power (70% load)</span><span class="il-value">640 kW (72 nodes)</span></li>
+        <li><span class="il-label">Power (max rated)</span><span class="il-value">877 kW (72 nodes)</span></li>
+        <li><span class="il-label">Memory</span><span class="il-value" style="color:var(--danger)">2,048 GB/node (vs 3,072 others)</span></li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="section-title" style="margin-top:24px">Multi-OEM Strategy</div>
+  <div class="panel mb-24">
+    <div class="panel-title"><span class="dot dot-green"></span> OEM Comparison &amp; Strategy</div>
+    <table class="data-table">
+      <thead><tr><th>Vendor</th><th>Role</th><th>Product</th><th>Status</th><th>Key Considerations</th></tr></thead>
+      <tbody>
+        <tr><td style="font-weight:700;color:var(--accent)">Dell Technologies</td><td>Compute OEM (Primary)</td><td>PowerEdge XE9780 (72 nodes)</td><td><span class="tag tag-green">Quoted</span></td><td>First Dell quote of this type in Mexico. $475K/node. ProSupport Plus 3yr. Est. delivery Jul 2026</td></tr>
+        <tr><td style="font-weight:700;color:var(--accent2)">Supermicro</td><td>Compute OEM (Alternative)</td><td>GPU server (B300 compatible)</td><td><span class="tag tag-yellow">Quoting</span></td><td>Actively quoting for competitive pricing and supply assurance. Multi-OEM strategy for flexibility</td></tr>
+        <tr><td style="font-weight:700;color:var(--warn)">NVIDIA</td><td>GPU &amp; Networking</td><td>B300 HGX, Q3400-X800, SN5610, ConnectX-7</td><td><span class="tag tag-green">Defined</span></td><td>72 nodes x 8 GPU = 576 B300 GPUs. 12x IB NDR switches. NCP partner path</td></tr>
+        <tr><td style="font-weight:700">ATN Ingenieria</td><td>EPC Contractor</td><td>DC Construction ($3.4M)</td><td><span class="tag tag-green">Selected</span></td><td>28+ years experience. 24-week program. Civil, mechanical, electrical, commissioning</td></tr>
+        <tr><td style="font-weight:700">BCYSA</td><td>Owner's Engineer</td><td>Feasibility &amp; Development</td><td><span class="tag tag-green">Engaged</span></td><td>Engineering supervision, feasibility studies, owner's representative ($488K)</td></tr>
+        <tr><td style="font-weight:700">CFE</td><td>Utility Provider</td><td>23 kV MV Connection</td><td><span class="tag tag-yellow">Oficio Issued</span></td><td>1,300 kW demand approved. $7.69M MXN aportaci&oacute;n. H-M3 tariff. 6-month construction</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+</div>
+
+<!-- DIGITAL TWIN -->
+<div class="section" id="sec-twin">
+  <div class="section-title">NVIDIA Digital Twin Readiness</div>
+  <div class="kpi-row"><div class="kpi-card"><div class="kpi-label">Data Completeness</div><div class="kpi-value kpi-yellow">72%</div><div class="kpi-sub">Of required parameters</div></div><div class="kpi-card"><div class="kpi-label">Documents Processed</div><div class="kpi-value kpi-green">16</div><div class="kpi-sub">PDF sources analyzed</div></div><div class="kpi-card"><div class="kpi-label">3D Model</div><div class="kpi-value kpi-red">0%</div><div class="kpi-sub">Awaiting CAD / renders</div></div><div class="kpi-card"><div class="kpi-label">API Access</div><div class="kpi-value kpi-red">Pending</div><div class="kpi-sub">NVIDIA Omniverse</div></div></div>
+  <div class="grid-2">
+    <div class="panel"><div class="panel-title"><span class="dot dot-green"></span> Data Available (Ready)</div><ul class="checklist"><li><span class="check-icon check-done">&#10003;</span> IT Load profile (1 MW, 18 cabs, 72 nodes)</li><li><span class="check-icon check-done">&#10003;</span> GPU specifications (B300 HGX, 8 GPU/node)</li><li><span class="check-icon check-done">&#10003;</span> Cabinet specs (DDC S-Series v4)</li><li><span class="check-icon check-done">&#10003;</span> Power architecture (utility, xfmr, gen, UPS)</li><li><span class="check-icon check-done">&#10003;</span> Cooling system (3x 145T chillers)</li><li><span class="check-icon check-done">&#10003;</span> Network topology (IB + Ethernet + Edge)</li><li><span class="check-icon check-done">&#10003;</span> Room-by-room layout (GF + Basement)</li><li><span class="check-icon check-done">&#10003;</span> Climate &amp; environmental data</li><li><span class="check-icon check-done">&#10003;</span> Construction timeline (24 weeks)</li><li><span class="check-icon check-done">&#10003;</span> Financial model (CAPEX, OPEX, S&amp;U)</li></ul></div>
+    <div class="panel"><div class="panel-title"><span class="dot dot-red"></span> Data Needed (Pending)</div><ul class="checklist"><li><span class="check-icon check-missing">!</span> 3D CAD files / site renders (OpenUSD)</li><li><span class="check-icon check-missing">!</span> NVIDIA Omniverse API access</li><li><span class="check-icon check-pending">~</span> Single-line electrical diagram (detailed)</li><li><span class="check-icon check-pending">~</span> BMS/DCIM protocol specs</li><li><span class="check-icon check-pending">~</span> Sensor placement map</li><li><span class="check-icon check-pending">~</span> Piping &amp; instrumentation diagram</li><li><span class="check-icon check-pending">~</span> Fire suppression details</li><li><span class="check-icon check-missing">!</span> As-built dimensions</li><li><span class="check-icon check-pending">~</span> DCIM software selection</li></ul></div>
+  </div>
+  <div class="panel mb-24" style="margin-top:20px"><div class="panel-title"><span class="dot dot-blue"></span> NVIDIA Digital Twin Pipeline</div><div style="display:flex;gap:12px;flex-wrap:wrap;justify-content:center;padding:16px"><div style="background:rgba(118,185,0,.1);border:2px solid var(--accent);border-radius:10px;padding:16px;text-align:center;flex:1;min-width:150px"><div style="font-size:24px;margin-bottom:4px">1</div><div style="font-weight:600;font-size:13px">BUILD</div><div style="font-size:11px;color:var(--text2);margin-top:4px">Create OpenUSD 3D model<br/>Import CAD/renders</div><div style="margin-top:8px"><span class="tag tag-yellow">In Progress</span></div></div><div style="color:var(--text2);display:flex;align-items:center;font-size:24px">&#8594;</div><div style="background:rgba(0,180,216,.1);border:2px solid var(--border);border-radius:10px;padding:16px;text-align:center;flex:1;min-width:150px"><div style="font-size:24px;margin-bottom:4px">2</div><div style="font-weight:600;font-size:13px">TEST</div><div style="font-size:11px;color:var(--text2);margin-top:4px">Validate thermal/power<br/>Run simulations</div><div style="margin-top:8px"><span class="tag tag-blue">Pending</span></div></div><div style="color:var(--text2);display:flex;align-items:center;font-size:24px">&#8594;</div><div style="background:rgba(239,68,68,.1);border:2px solid var(--border);border-radius:10px;padding:16px;text-align:center;flex:1;min-width:150px"><div style="font-size:24px;margin-bottom:4px">3</div><div style="font-weight:600;font-size:13px">SIMULATE</div><div style="font-size:11px;color:var(--text2);margin-top:4px">Live monitoring<br/>Predictive analytics</div><div style="margin-top:8px"><span class="tag tag-red">Future</span></div></div></div></div>
+</div>
+
+</div>
+<div class="tooltip" id="tooltip"></div>
+
+<script>
+// roundRect polyfill
+if (typeof CanvasRenderingContext2D !== 'undefined' && !CanvasRenderingContext2D.prototype.roundRect) {
+  CanvasRenderingContext2D.prototype.roundRect = function(x,y,w,h,r) {
+    r = typeof r === 'number' ? r : 0;
+    this.moveTo(x+r,y);this.lineTo(x+w-r,y);this.quadraticCurveTo(x+w,y,x+w,y+r);
+    this.lineTo(x+w,y+h-r);this.quadraticCurveTo(x+w,y+h,x+w-r,y+h);
+    this.lineTo(x+r,y+h);this.quadraticCurveTo(x,y+h,x,y+h-r);
+    this.lineTo(x,y+r);this.quadraticCurveTo(x,y,x+r,y);this.closePath();return this;
+  };
+}
+function rRect(ctx,x,y,w,h,r){ctx.beginPath();ctx.roundRect(x,y,w,h,r);ctx.fill();}
+function setupCanvas(id,logicalH){const cv=document.getElementById(id);if(!cv)return null;const dpr=window.devicePixelRatio||1;const w=cv.parentElement.clientWidth-40;cv.style.width=w+'px';cv.style.height=logicalH+'px';cv.width=w*dpr;cv.height=logicalH*dpr;const ctx=cv.getContext('2d');ctx.scale(dpr,dpr);return{cv,ctx,w,h:logicalH};}
+
+// NAV
+document.querySelectorAll('.nav-btn').forEach(btn=>{btn.addEventListener('click',()=>{document.querySelectorAll('.nav-btn').forEach(b=>b.classList.remove('active'));document.querySelectorAll('.section').forEach(s=>s.classList.remove('active'));btn.classList.add('active');document.getElementById('sec-'+btn.dataset.section).classList.add('active');const sec=btn.dataset.section;const fns=sectionCharts[sec];if(fns)setTimeout(()=>fns.forEach(f=>f()),50);})});
+
+// RACKS
+(function(){
+const g=document.getElementById('rackGrid');
+const rd=[];for(let i=1;i<=18;i++)rd.push({id:'CAB-'+String(i).padStart(2,'0'),nodes:4,gpus:32,load:Math.round(55+Math.random()*10),temp:Math.round(18+Math.random()*4),flow:36.4});
+function addRow(label,start,end){const l=document.createElement('div');l.className='row-label';l.textContent=label;g.appendChild(l);for(let i=start;i<end;i++){const r=rd[i],el=document.createElement('div');el.className='rack';el.innerHTML='<div class="rack-id">'+r.id+'</div><div class="rack-icon">&#9608;&#9608;</div><div class="rack-load">'+r.load+' kW</div><div class="rack-type">4x B300 (8 GPU ea)</div><div class="rack-temp">'+r.temp+'C | '+r.flow+' GPM</div>';el.addEventListener('mouseenter',e=>{const t=document.getElementById('tooltip');t.innerHTML='<h4>'+r.id+'</h4><p><b>IT Load:</b> '+r.load+' kW<br><b>GPU Nodes:</b> '+r.nodes+'x B300 HGX (8 GPU ea)<br><b>Total GPUs:</b> '+r.gpus+'x NVIDIA B300<br><b>Inlet Temp:</b> '+r.temp+'C<br><b>Water Flow:</b> '+r.flow+' GPM<br><b>Cabinet:</b> DDC S-Series v4<br><b>Power:</b> 208V 3-ph 30A</p>';t.classList.add('show');t.style.left=(e.clientX+16)+'px';t.style.top=(e.clientY-10)+'px';});el.addEventListener('mouseleave',()=>document.getElementById('tooltip').classList.remove('show'));g.appendChild(el)}}
+addRow('Row A (Front)',0,9);addRow('Row B (Rear)',9,18);
+})();
+
+// GANTT
+function drawGantt(){const c=document.getElementById('ganttChart'),w=document.getElementById('ganttWeeks');if(!c)return;const ms=[{l:'Admin/Docs',s:1,e:24,c:'#94a3b8'},{l:'FEED Engineering',s:2,e:6,c:'#8b5cf6'},{l:'Civil Works',s:6,e:24,c:'#f59e0b'},{l:'Chiller System',s:1,e:24,c:'#00b4d8'},{l:'Generators',s:6,e:19,c:'#ef4444'},{l:'ATS',s:6,e:19,c:'#ef4444'},{l:'Transformer',s:6,e:15,c:'#f59e0b'},{l:'UPS & Batteries',s:6,e:19,c:'#76b900'},{l:'Battery Bank',s:4,e:15,c:'#76b900'},{l:'MV Switchgear',s:8,e:19,c:'#f59e0b'},{l:'Electromechanical',s:3,e:20,c:'#8b5cf6'},{l:'Telecom',s:8,e:22,c:'#06b6d4'},{l:'Security',s:8,e:19,c:'#64748b'},{l:'Commissioning',s:22,e:23,c:'#22c55e'}];c.innerHTML='';ms.forEach(m=>{const left=((m.s-1)/24*100).toFixed(1),width=((m.e-m.s+1)/24*100).toFixed(1);const d=document.createElement('div');d.className='timeline-bar';d.innerHTML='<div class="timeline-label">'+m.l+'</div><div class="timeline-track"><div class="timeline-fill" style="left:'+left+'%;width:'+width+'%;background:'+m.c+'">Wk '+m.s+'-'+m.e+'</div></div>';c.appendChild(d)});w.innerHTML='';for(let i=1;i<=24;i+=2){const s=document.createElement('span');s.textContent='W'+i;w.appendChild(s)}}
+
+// HELPER: Donut
+function drawDonut(id,data,colors,center,lh){const s=setupCanvas(id,lh||280);if(!s)return;const{ctx,w,h}=s;const cx=w*.32,cy=h*.5,r=Math.min(w*.28,h*.42);const total=data.reduce((a,b)=>a+b.v,0);let angle=-Math.PI/2;data.forEach((item,i)=>{const sa=(item.v/total)*Math.PI*2;ctx.beginPath();ctx.moveTo(cx,cy);ctx.arc(cx,cy,r,angle,angle+sa);ctx.closePath();ctx.fillStyle=colors[i%colors.length];ctx.fill();ctx.strokeStyle='#0a0e17';ctx.lineWidth=2;ctx.stroke();angle+=sa});ctx.beginPath();ctx.arc(cx,cy,r*.55,0,Math.PI*2);ctx.fillStyle='#111827';ctx.fill();if(center){ctx.fillStyle='#e2e8f0';ctx.font='bold 14px Segoe UI';ctx.textAlign='center';ctx.fillText(center,cx,cy+5)}const lx=w*.66;let ly=Math.max(16,h*.5-data.length*11);data.forEach((item,i)=>{const y=ly+i*22;ctx.fillStyle=colors[i%colors.length];ctx.fillRect(lx,y,12,12);ctx.fillStyle='#e2e8f0';ctx.font='11px Segoe UI';ctx.textAlign='left';ctx.fillText(item.l+' ('+Math.round(item.v/total*100)+'%)',lx+18,y+10)})}
+
+// HELPER: Horizontal bars
+function drawHBars(id,items,lh,opts){const s=setupCanvas(id,lh);if(!s)return;const{ctx,w,h}=s;const maxV=Math.max(...items.map(x=>x.v));const bH=opts?.bH||24,gap=opts?.gap||8,sY=opts?.sY||10,lW=opts?.lW||160,rP=opts?.rP||130;items.forEach((item,i)=>{const y=sY+i*(bH+gap),bw=Math.max(2,(item.v/maxV)*(w-lW-rP));ctx.fillStyle='#94a3b8';ctx.font='11px Segoe UI';ctx.textAlign='right';ctx.fillText(item.l,lW-8,y+bH*.65);ctx.fillStyle=item.c||'#76b900';rRect(ctx,lW,y,bw,bH,4);ctx.fillStyle='#e2e8f0';ctx.font='bold 11px Segoe UI';ctx.textAlign='left';ctx.fillText('$'+(item.v>=1e6?(item.v/1e6).toFixed(1)+'M':Math.round(item.v/1e3)+'K'),lW+bw+8,y+bH*.65)})}
+
+// POWER FLOW
+function drawPowerFlow(){const s=setupCanvas('powerCanvas',400);if(!s)return;const{ctx,w,h}=s;const nodes=[{x:w*.1,y:30,w:140,h:50,l:'CFE Utility',s:'23 kV Medium Voltage',c:'#f59e0b'},{x:w*.55,y:30,w:160,h:50,l:'Generators (3x)',s:'600 kW Prime Diesel',c:'#ef4444'},{x:w*.33,y:110,w:160,h:50,l:'MV Switchgear',s:'Driescher + ATS',c:'#f59e0b'},{x:w*.33,y:190,w:160,h:50,l:'Transformer',s:'1.5 MVA 23kV/480V',c:'#f59e0b'},{x:w*.15,y:270,w:130,h:50,l:'UPS 1',s:'1,000 kW Li-ion',c:'#76b900'},{x:w*.5,y:270,w:130,h:50,l:'UPS 2',s:'1,000 kW Li-ion',c:'#76b900'},{x:w*.33,y:350,w:160,h:50,l:'PDUs (4x)',s:'Power Distribution',c:'#76b900'}];ctx.strokeStyle='rgba(118,185,0,.4)';ctx.lineWidth=2;ctx.setLineDash([6,4]);function conn(a,b){ctx.beginPath();ctx.moveTo(a.x+a.w/2,a.y+a.h);ctx.lineTo(b.x+b.w/2,b.y);ctx.stroke()}conn(nodes[0],nodes[2]);conn(nodes[1],nodes[2]);conn(nodes[2],nodes[3]);conn(nodes[3],nodes[4]);conn(nodes[3],nodes[5]);conn(nodes[4],nodes[6]);conn(nodes[5],nodes[6]);ctx.setLineDash([]);nodes.forEach(n=>{ctx.fillStyle='#1a2235';ctx.strokeStyle=n.c;ctx.lineWidth=2;ctx.beginPath();ctx.roundRect(n.x,n.y,n.w,n.h,6);ctx.fill();ctx.stroke();ctx.fillStyle='#e2e8f0';ctx.font='bold 12px Segoe UI';ctx.textAlign='center';ctx.fillText(n.l,n.x+n.w/2,n.y+22);ctx.fillStyle='#94a3b8';ctx.font='10px Segoe UI';ctx.fillText(n.s,n.x+n.w/2,n.y+38)});const p=nodes[6];ctx.fillStyle='#76b900';ctx.font='bold 11px Segoe UI';ctx.textAlign='right';ctx.fillText('18x DDC',p.x-20,p.y+p.h/2);ctx.fillText('Cabinets',p.x-20,p.y+p.h/2+14);ctx.textAlign='left';ctx.fillText('1 MW',p.x+p.w+20,p.y+p.h/2);ctx.fillText('IT Load',p.x+p.w+20,p.y+p.h/2+14)}
+
+// POWER BUDGET
+function drawPowerBudget(){const s=setupCanvas('powerBudgetCanvas',220);if(!s)return;const{ctx,w,h}=s;const items=[{l:'GPU Compute (72 nodes)',v:750,c:'#76b900'},{l:'Cabinet Cooling (fans, coils)',v:72,c:'#06b6d4'},{l:'Networking (IB + Ethernet)',v:60,c:'#00b4d8'},{l:'Storage / Management',v:30,c:'#8b5cf6'},{l:'DDC Controllers',v:8,c:'#f59e0b'},{l:'Lighting / Misc',v:10,c:'#94a3b8'},{l:'Cooling Overhead (PUE 1.2)',v:200,c:'#ef4444'},{l:'UPS / Distribution Losses',v:70,c:'#64748b'}];const total=items.reduce((a,b)=>a+b.v,0);const lW=200,rP=120,bH=22,gap=6,sY=10;items.forEach((item,i)=>{const y=sY+i*(bH+gap),bw=Math.max(2,(item.v/total)*(w-lW-rP));ctx.fillStyle='#94a3b8';ctx.font='12px Segoe UI';ctx.textAlign='right';ctx.fillText(item.l,lW-12,y+15);ctx.fillStyle=item.c;rRect(ctx,lW,y,bw,bH,4);ctx.fillStyle='#e2e8f0';ctx.font='bold 11px Segoe UI';ctx.textAlign='left';ctx.fillText(item.v+' kW ('+Math.round(item.v/total*100)+'%)',lW+bw+8,y+15)});ctx.fillStyle='#e2e8f0';ctx.font='bold 13px Segoe UI';ctx.textAlign='right';ctx.fillText('Total: '+total+' kW (1.0 MW IT + 200 kW overhead = 1.2 MW)',w-20,sY+items.length*(bH+gap)+16)}
+
+// FLOOR PLAN
+function drawFloorPlan(){const s=setupCanvas('floorCanvas',400);if(!s)return;const{ctx,w}=s;const h=400;ctx.strokeStyle='#2a3550';ctx.lineWidth=2;ctx.strokeRect(20,20,w-40,h-40);const rooms=[{x:30,y:30,w:w*.45,h:h*.55,l:'DATA HALL',s:'18x DDC Cabinets',c:'#76b900'},{x:30,y:30+h*.55+10,w:w*.22,h:h*.3,l:'ELEC ROOM 01',s:'UPS, PDU, CRAC',c:'#f59e0b'},{x:30+w*.22+10,y:30+h*.55+10,w:w*.22,h:h*.3,l:'ELEC ROOM 02',s:'Switchgear, ATS',c:'#f59e0b'},{x:30+w*.45+10,y:30,w:w*.22,h:h*.35,l:'CHILLERS',s:'3x 145T',c:'#00b4d8'},{x:30+w*.45+10,y:30+h*.35+10,w:w*.22,h:h*.2,l:'NOC',s:'Operations',c:'#8b5cf6'},{x:30+w*.45+10,y:30+h*.55+20,w:w*.22,h:h*.15,l:'STAGING',s:'Equipment',c:'#94a3b8'},{x:30+w*.67+20,y:30,w:w*.25,h:h*.25,l:'MMR & CARRIERS',s:'Meet-Me Room',c:'#06b6d4'},{x:30+w*.67+20,y:30+h*.25+10,w:w*.25,h:h*.2,l:'BATTERY ROOM',s:'Li-ion Banks',c:'#ef4444'},{x:30+w*.67+20,y:30+h*.45+20,w:w*.12,h:h*.15,l:'INLET',s:'Lock',c:'#94a3b8'},{x:30+w*.79+30,y:30+h*.45+20,w:w*.12,h:h*.15,l:'WC',s:'',c:'#64748b'},{x:30+w*.67+20,y:30+h*.65+10,w:w*.25,h:h*.2,l:'RECEPTION',s:'Main Entrance',c:'#94a3b8'}];rooms.forEach(r=>{ctx.fillStyle=r.c+'15';ctx.strokeStyle=r.c+'60';ctx.lineWidth=1.5;ctx.beginPath();ctx.roundRect(r.x,r.y,r.w,r.h,4);ctx.fill();ctx.stroke();ctx.fillStyle=r.c;ctx.font='bold 11px Segoe UI';ctx.textAlign='center';ctx.fillText(r.l,r.x+r.w/2,r.y+r.h/2-4);if(r.s){ctx.fillStyle='#94a3b8';ctx.font='10px Segoe UI';ctx.fillText(r.s,r.x+r.w/2,r.y+r.h/2+10)}});const dh=rooms[0],rW=8,rH=16,rG=4,sX=dh.x+20,sY=dh.y+40;for(let i=0;i<9;i++){ctx.fillStyle='#76b900';ctx.fillRect(sX+i*(rW+rG),sY,rW,rH);ctx.fillRect(sX+i*(rW+rG),sY+rH+20,rW,rH)}ctx.fillStyle='#94a3b8';ctx.font='9px Segoe UI';ctx.textAlign='left';ctx.fillText('Row A',sX+9*(rW+rG)+4,sY+12);ctx.fillText('Row B',sX+9*(rW+rG)+4,sY+rH+32)}
+
+// ENERGY MONTHLY BARS
+function drawEnergyMonthly(){const s=setupCanvas('energyMonthlyChart',300);if(!s)return;const{ctx,w,h}=s;const ms=['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];const v=[2.23,2.09,2.07,2.08,2.10,1.86,1.83,1.78,1.89,1.85,1.98,1.90];const avg=1.87,pL=50,pR=20,pT=20,pB=50,cW=w-pL-pR,cH=h-pT-pB,minY=1.5,maxY=2.4,rY=maxY-minY,bW=cW/12*.65;for(let val=1.5;val<=2.4;val+=.15){const y=pT+cH-((val-minY)/rY)*cH;ctx.strokeStyle='#2a3550';ctx.lineWidth=1;ctx.beginPath();ctx.moveTo(pL,y);ctx.lineTo(w-pR,y);ctx.stroke();ctx.fillStyle='#94a3b8';ctx.font='10px Segoe UI';ctx.textAlign='right';ctx.fillText('$'+val.toFixed(2),pL-6,y+4)}const aY=pT+cH-((avg-minY)/rY)*cH;ctx.strokeStyle='#ef4444';ctx.lineWidth=2;ctx.setLineDash([6,4]);ctx.beginPath();ctx.moveTo(pL,aY);ctx.lineTo(w-pR,aY);ctx.stroke();ctx.setLineDash([]);ctx.fillStyle='#ef4444';ctx.font='bold 11px Segoe UI';ctx.textAlign='left';ctx.fillText('Avg $1.87',w-pR-60,aY-6);ms.forEach((m,i)=>{const x=pL+(cW/12)*i+(cW/12-bW)/2,bH2=((v[i]-minY)/rY)*cH,y=pT+cH-bH2;ctx.fillStyle=v[i]>avg?'#f59e0b':'#76b900';rRect(ctx,x,y,bW,bH2,3);ctx.fillStyle='#e2e8f0';ctx.font='bold 10px Segoe UI';ctx.textAlign='center';ctx.fillText('$'+v[i].toFixed(2),x+bW/2,y-6);ctx.fillStyle='#94a3b8';ctx.font='11px Segoe UI';ctx.fillText(m,x+bW/2,h-14)})}
+
+// TARIFF DONUT
+function drawTariffDonut(){drawDonut('tariffDonutChart',[{l:'Capacity Charge',v:.61},{l:'Energy (CAP)',v:.54},{l:'Regulated & MEM',v:.51},{l:'Congestion',v:.16},{l:'CELs',v:.05}],['#f59e0b','#76b900','#00b4d8','#ef4444','#8b5cf6'],'$1.87/kWh',300)}
+
+// ENERGY STACKED
+function drawEnergyStacked(){const s=setupCanvas('energyStackedChart',300);if(!s)return;const{ctx,w,h}=s;const ms=['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];const cap=[.66,.73,.66,.66,.63,.64,.62,.61,.63,.61,.63,.61],en=[.76,.61,.66,.53,.55,.50,.52,.49,.50,.52,.60,.55],con=[.21,.15,.15,.30,.33,.13,.10,.09,.17,.13,.16,.15],reg=[.54,.54,.54,.54,.54,.54,.54,.54,.54,.54,.54,.54],cel=[.06,.06,.06,.05,.05,.05,.05,.05,.05,.05,.05,.05];const pL=50,pR=20,pT=20,pB=60,cW=w-pL-pR,cH=h-pT-pB,maxY=2.5,bW=cW/12*.7;const colors=['#f59e0b','#76b900','#ef4444','#00b4d8','#8b5cf6'],labels=['Capacity','Energy','Congestion','Regulated','CELs'];for(let v=0;v<=2.5;v+=.5){const y=pT+cH-(v/maxY)*cH;ctx.strokeStyle='#2a3550';ctx.lineWidth=1;ctx.beginPath();ctx.moveTo(pL,y);ctx.lineTo(w-pR,y);ctx.stroke();ctx.fillStyle='#94a3b8';ctx.font='10px Segoe UI';ctx.textAlign='right';ctx.fillText('$'+v.toFixed(1),pL-6,y+4)}ms.forEach((m,i)=>{const x=pL+(cW/12)*i+(cW/12-bW)/2;const segs=[cap[i],en[i],con[i],reg[i],cel[i]];let cum=0;segs.forEach((s,si)=>{const sH=(s/maxY)*cH,y=pT+cH-cum-sH;ctx.fillStyle=colors[si];ctx.fillRect(x,y,bW,sH);cum+=sH});ctx.fillStyle='#94a3b8';ctx.font='10px Segoe UI';ctx.textAlign='center';ctx.fillText(m,x+bW/2,h-24)});let lx=pL;labels.forEach((l,i)=>{ctx.fillStyle=colors[i];ctx.fillRect(lx,h-14,10,10);ctx.fillStyle='#94a3b8';ctx.font='10px Segoe UI';ctx.textAlign='left';ctx.fillText(l,lx+14,h-5);lx+=ctx.measureText(l).width+25})}
+
+// ENERGY USD COMPARISON
+function drawEnergyUsd(){const s=setupCanvas('energyUsdChart',250);if(!s)return;const{ctx,w,h}=s;const ms=['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];const ibd=[.1297,.1215,.1203,.1209,.1221,.1081,.1064,.1035,.1099,.1076,.1151,.1105];const blq=[.1285,.1331,.1256,.1320,.1326,.1192,.1180,.1163,.1203,.1180,.1198,.1203];const pL=55,pR=20,pT=20,pB=50,cW=w-pL-pR,cH=h-pT-pB,minY=.09,maxY=.14,rY=maxY-minY;for(let v=.09;v<=.14;v+=.01){const y=pT+cH-((v-minY)/rY)*cH;ctx.strokeStyle='#1a2235';ctx.lineWidth=1;ctx.beginPath();ctx.moveTo(pL,y);ctx.lineTo(w-pR,y);ctx.stroke();ctx.fillStyle='#64748b';ctx.font='10px Segoe UI';ctx.textAlign='right';ctx.fillText('$'+v.toFixed(3),pL-6,y+4)}function drawLine(data,color,dash){ctx.strokeStyle=color;ctx.lineWidth=3;if(dash)ctx.setLineDash([6,4]);ctx.beginPath();data.forEach((v,i)=>{const x=pL+(cW/11)*i,y=pT+cH-((v-minY)/rY)*cH;i===0?ctx.moveTo(x,y):ctx.lineTo(x,y)});ctx.stroke();ctx.setLineDash([]);data.forEach((v,i)=>{const x=pL+(cW/11)*i,y=pT+cH-((v-minY)/rY)*cH;ctx.fillStyle=color;ctx.beginPath();ctx.arc(x,y,4,0,Math.PI*2);ctx.fill()})}drawLine(ibd,'#76b900',false);drawLine(blq,'#f59e0b',true);ms.forEach((m,i)=>{ctx.fillStyle='#94a3b8';ctx.font='10px Segoe UI';ctx.textAlign='center';ctx.fillText(m,pL+(cW/11)*i,h-14)});ctx.fillStyle='#76b900';ctx.fillRect(pL+10,8,20,3);ctx.fillStyle='#94a3b8';ctx.font='11px Segoe UI';ctx.textAlign='left';ctx.fillText('Pass-Through IBD (avg $0.109)',pL+35,13);ctx.strokeStyle='#f59e0b';ctx.lineWidth=2;ctx.setLineDash([6,4]);ctx.beginPath();ctx.moveTo(pL+240,10);ctx.lineTo(pL+260,10);ctx.stroke();ctx.setLineDash([]);ctx.fillStyle='#94a3b8';ctx.fillText('Bloque IBD (avg $0.119)',pL+265,13)}
+
+// ENERGY SAVINGS
+function drawEnergySavings(){const s=setupCanvas('energySavingsChart',250);if(!s)return;const{ctx,w,h}=s;const sc=[{l:'CFE Basic (est.)',r:2.80,c:'#ef4444'},{l:'Bloque IBD',r:2.04,c:'#f59e0b'},{l:'Pass-Through IBD',r:1.87,c:'#76b900'}];const annKwh=10512000,pL=140,pR=20,pT=30,pB=30,cW=w-pL-pR,maxC=sc[0].r*annKwh,bH=50,gap=20;sc.forEach((s,i)=>{const y=pT+i*(bH+gap),annC=s.r*annKwh,bw=(annC/maxC)*cW;ctx.fillStyle='#94a3b8';ctx.font='12px Segoe UI';ctx.textAlign='right';ctx.fillText(s.l,pL-10,y+bH*.6);ctx.fillStyle=s.c;rRect(ctx,pL,y,bw,bH,5);ctx.fillStyle='#e2e8f0';ctx.font='bold 12px Segoe UI';ctx.textAlign='center';ctx.fillText('$'+(annC/1e6).toFixed(1)+'M MXN/yr',pL+bw/2,y+bH*.6);ctx.fillStyle='#94a3b8';ctx.font='10px Segoe UI';ctx.textAlign='left';ctx.fillText('$'+s.r.toFixed(2)+'/kWh',pL+bw+8,y+bH*.6)});const savings=(sc[0].r-sc[2].r)*annKwh;ctx.fillStyle='#22c55e';ctx.font='bold 13px Segoe UI';ctx.textAlign='left';ctx.fillText('Savings vs CFE: $'+(savings/1e6).toFixed(1)+'M MXN/yr ($'+(savings/17.2/1e6).toFixed(2)+'M USD)',pL,h-10)}
+
+// OPEX PIE
+function drawOpexPie(){drawDonut('opexPieChart',[{l:'Energy',v:1246772},{l:'Telecom',v:456963},{l:'O&M Infra',v:316744},{l:'Personnel',v:286047},{l:'Insurance',v:244186},{l:'OEM Support',v:101163},{l:'NOC',v:48837},{l:'FSCA',v:46744},{l:'Brokkr Platform',v:27907}],['#f59e0b','#00b4d8','#76b900','#8b5cf6','#ef4444','#22c55e','#06b6d4','#94a3b8','#64748b'],'$2.7M/yr',320)}
+
+// CAPEX WATERFALL
+function drawCapexWaterfall(){const s=setupCanvas('capexWaterfallChart',300);if(!s)return;const{ctx,w,h}=s;const items=[{l:'GPUs',v:39000000,c:'#76b900'},{l:'Aux CAPEX',v:4120000,c:'#f59e0b'},{l:'Construct.',v:1586700,c:'#00b4d8'},{l:'BCYSA Feas.',v:250000,c:'#8b5cf6'},{l:'BCYSA OE',v:237868,c:'#06b6d4'},{l:'CFE',v:248020,c:'#22c55e'},{l:'Commissn.',v:150000,c:'#64748b'},{l:'Engineerg.',v:90000,c:'#e879f9'},{l:'Permits',v:10000,c:'#94a3b8'},{l:'Conting.',v:468481,c:'#ef4444'}];const total=items.reduce((a,b)=>a+b.v,0);const pL=16,pR=16,pT=30,pB=60,cW=w-pL-pR,cH=h-pT-pB;const n=items.length+1,bW=Math.min(50,cW/n*.7);for(let i=0;i<=4;i++){const y=pT+(cH/4)*i,val=total*1.05-(total*1.05/4)*i;ctx.strokeStyle='#1a2235';ctx.lineWidth=1;ctx.beginPath();ctx.moveTo(pL,y);ctx.lineTo(w-pR,y);ctx.stroke();ctx.fillStyle='#64748b';ctx.font='9px Segoe UI';ctx.textAlign='right';ctx.fillText('$'+(val/1e6).toFixed(0)+'M',pL+42,y-3)}let cum=0;items.forEach((item,i)=>{const x=pL+50+(cW-50)/n*i+((cW-50)/n-bW)/2;const bH2=(item.v/(total*1.05))*cH;const prevH=(cum/(total*1.05))*cH;cum+=item.v;const y=pT+cH-prevH-bH2;ctx.fillStyle=item.c;rRect(ctx,x,y,bW,bH2,3);ctx.fillStyle='#e2e8f0';ctx.font='bold 9px Segoe UI';ctx.textAlign='center';ctx.fillText('$'+(item.v/1e6).toFixed(1)+'M',x+bW/2,y-5);ctx.save();ctx.translate(x+bW/2,h-pB+8);ctx.rotate(-.5);ctx.fillStyle='#94a3b8';ctx.font='9px Segoe UI';ctx.textAlign='right';ctx.fillText(item.l,0,0);ctx.restore()});const tx=pL+50+(cW-50)/n*items.length+((cW-50)/n-bW)/2;const tH=(cum/(total*1.05))*cH;const tY=pT+cH-tH;ctx.fillStyle='#e2e8f0';rRect(ctx,tx,tY,bW,tH,3);ctx.fillStyle='#e2e8f0';ctx.font='bold 10px Segoe UI';ctx.textAlign='center';ctx.fillText('$'+(cum/1e6).toFixed(1)+'M',tx+bW/2,tY-5);ctx.save();ctx.translate(tx+bW/2,h-pB+8);ctx.rotate(-.5);ctx.fillStyle='#e2e8f0';ctx.font='bold 9px Segoe UI';ctx.textAlign='right';ctx.fillText('TOTAL',0,0);ctx.restore()}
+
+// CAPEX DONUT
+function drawCapexDonut(){drawDonut('capexDonutChart',[{l:'GPUs (B300 HPC)',v:39000000},{l:'Auxiliary CAPEX',v:4120000},{l:'Construction',v:1586700},{l:'Contingency (7%)',v:468481},{l:'CFE Commitments',v:248020},{l:'BCYSA Feasibility',v:250000},{l:'BCYSA Owner\'s Eng.',v:237868},{l:'Commissioning',v:150000},{l:'Engineering',v:90000},{l:'Permits',v:10000}],['#76b900','#f59e0b','#00b4d8','#ef4444','#22c55e','#8b5cf6','#06b6d4','#64748b','#e879f9','#94a3b8'],'$46.2M',320)}
+
+// EPC BREAKDOWN
+function drawEpcBreakdown(){drawHBars('epcBreakdownChart',[{l:'LV Electrical Works',v:929373,c:'#f59e0b'},{l:'Mechanical Works',v:815367,c:'#00b4d8'},{l:'Civil Ground Floor',v:415874,c:'#76b900'},{l:'Chiller Structure',v:393745,c:'#06b6d4'},{l:'Demolitions',v:187647,c:'#ef4444'},{l:'Civil Basement',v:165287,c:'#8b5cf6'},{l:'Detail Engineering',v:155874,c:'#22c55e'},{l:'Sound Insulation',v:128957,c:'#64748b'},{l:'Commissioning',v:105684,c:'#94a3b8'},{l:'MV Electrical',v:95874,c:'#f59e0b'},{l:'Test Equipment',v:25000,c:'#94a3b8'}],340,{lW:150})}
+
+// CRITICAL EQUIPMENT
+function drawCritEquip(){drawHBars('critEquipChart',[{l:'Chillers (2x 340T)',v:1179316,c:'#00b4d8'},{l:'UPS (2x 1000kVA)',v:1130494,c:'#76b900'},{l:'Generators (2x)',v:831748,c:'#ef4444'},{l:'LV Switchgear+ATS',v:333327,c:'#f59e0b'},{l:'MV Transformer',v:196874,c:'#f59e0b'},{l:'CRAH (7x 3T)',v:146013,c:'#06b6d4'},{l:'Minor Equipment',v:85987,c:'#94a3b8'},{l:'MV Driescher',v:55698,c:'#64748b'}],260,{lW:160})}
+
+// SPECIAL SYSTEMS
+function drawSpecialSys(){drawHBars('specialSysChart',[{l:'Fire Suppression (Novec)',v:235874,c:'#ef4444'},{l:'VESDA Detection',v:230254,c:'#f59e0b'},{l:'Infra Monitoring (BMS)',v:185874,c:'#76b900'},{l:'Flood Suppression',v:142407,c:'#00b4d8'},{l:'CCTV',v:65254,c:'#8b5cf6'},{l:'Access Control',v:52359,c:'#06b6d4'},{l:'Telecom MMR',v:45254,c:'#64748b'}],230,{lW:170,rP:100})}
+
+// OEM COST COMPARISON CHART
+function drawDellCost(){const s=setupCanvas('dellCostChart',240);if(!s)return;const{ctx,w,h}=s;const quotes=[{l:'Dell PSP MC',pre:34230887,tax:5476942,c:'#76b900',unit:475429},{l:'Dell NBD',pre:33780167,tax:5404827,c:'#22c55e',unit:469169},{l:'Supermicro',pre:37846701,tax:0,c:'#00b4d8',unit:525649},{l:'Lenovo',pre:0,tax:0,c:'#f59e0b',unit:0}];const maxV=Math.max(...quotes.map(q=>q.pre+q.tax));const pL=120,pR=160,pT=15,bH=34,gap=14;quotes.forEach((q,i)=>{const y=pT+i*(bH+gap);ctx.fillStyle='#94a3b8';ctx.font='12px Segoe UI';ctx.textAlign='right';ctx.fillText(q.l,pL-10,y+bH*.6);if(q.pre===0){ctx.fillStyle='#64748b';ctx.font='italic 11px Segoe UI';ctx.textAlign='left';ctx.fillText('Price pending (config only)',pL+8,y+bH*.6);ctx.strokeStyle='#2a3550';ctx.setLineDash([4,4]);ctx.strokeRect(pL,y,w-pL-pR,bH);ctx.setLineDash([]);return}const total=q.pre+q.tax,bw=(q.pre/maxV)*(w-pL-pR),tw=(q.tax/maxV)*(w-pL-pR);ctx.fillStyle=q.c;rRect(ctx,pL,y,bw,bH,4);if(tw>2){ctx.fillStyle=q.c+'80';ctx.fillRect(pL+bw,y,tw,bH)}ctx.fillStyle='#e2e8f0';ctx.font='bold 11px Segoe UI';ctx.textAlign='left';const lbl='$'+(total/1e6).toFixed(1)+'M'+(q.tax>0?' (incl IVA)':' (ex-tax, US)');ctx.fillText(lbl,pL+bw+tw+8,y+bH*.6);ctx.fillStyle='#fff';ctx.font='10px Segoe UI';ctx.textAlign='center';if(bw>100)ctx.fillText('$'+q.unit.toLocaleString()+'/node',pL+bw/2,y+bH*.6)});ctx.fillStyle='#94a3b8';ctx.font='bold 11px Segoe UI';ctx.textAlign='center';ctx.fillText('Pre-tax comparison: Dell $34.2M vs Supermicro $37.8M (+$3.6M, includes BF3 DPUs)',w/2,h-8)}
+
+// ENERGY OPEX BAR
+function drawEnergyOpex(){const s=setupCanvas('energyOpexChart',200);if(!s)return;const{ctx,w,h}=s;const items=[{l:'IT Load (1 MW)',v:1489200,c:'#f59e0b'},{l:'Cooling (PUE 1.2)',v:297840,c:'#ef4444'}];const total=items.reduce((a,b)=>a+b.v,0);const maxV=items[0].v;const pL=130,pR=120,pT=20,bH=40,gap=20;items.forEach((item,i)=>{const y=pT+i*(bH+gap),bw=Math.max(2,(item.v/maxV)*(w-pL-pR));ctx.fillStyle='#94a3b8';ctx.font='12px Segoe UI';ctx.textAlign='right';ctx.fillText(item.l,pL-10,y+bH*.6);ctx.fillStyle=item.c;rRect(ctx,pL,y,bw,bH,5);ctx.fillStyle='#e2e8f0';ctx.font='bold 11px Segoe UI';ctx.textAlign='left';const pct=Math.round(item.v/total*100);ctx.fillText('$'+(item.v/1e6).toFixed(1)+'M/mo ('+pct+'%)',pL+bw+8,y+bH*.6)});ctx.fillStyle='#94a3b8';ctx.font='bold 12px Segoe UI';ctx.textAlign='center';ctx.fillText('Total: $'+(total/1e6).toFixed(1)+'M MXN/mo | $'+(total*12/1e6).toFixed(1)+'M MXN/yr | $'+(total*12/17.2/1e6).toFixed(1)+'M USD/yr',w/2,h-8)}
+
+// NETWORK OPEX BAR
+function drawNetOpexBar(canvasId){const s=setupCanvas(canvasId,200);if(!s)return;const{ctx,w,h}=s;const items=[{l:'100Gb Transit',v:560000,c:'#00b4d8'},{l:'/25 Subnet',v:55200,c:'#8b5cf6'},{l:'1Gb Mgmt',v:39780,c:'#76b900'}];const total=items.reduce((a,b)=>a+b.v,0);const maxV=items[0].v;const pL=110,pR=100,pT=15,bH=36,gap=16;items.forEach((item,i)=>{const y=pT+i*(bH+gap),bw=Math.max(2,(item.v/maxV)*(w-pL-pR));ctx.fillStyle='#94a3b8';ctx.font='12px Segoe UI';ctx.textAlign='right';ctx.fillText(item.l,pL-10,y+bH*.6);ctx.fillStyle=item.c;rRect(ctx,pL,y,bw,bH,5);ctx.fillStyle='#e2e8f0';ctx.font='bold 11px Segoe UI';ctx.textAlign='left';const pct=Math.round(item.v/total*100);ctx.fillText('$'+Math.round(item.v/1e3)+'K/mo ('+pct+'%)',pL+bw+8,y+bH*.6)});ctx.fillStyle='#94a3b8';ctx.font='bold 12px Segoe UI';ctx.textAlign='center';ctx.fillText('Total: $'+Math.round(total/1e3)+'K MXN/mo | $'+(total*12/1e6).toFixed(1)+'M MXN/yr',w/2,h-8)}
+function drawNetOpex(){drawNetOpexBar('netOpexChart')}
+function drawNetOpex2(){drawNetOpexBar('netOpexChart2')}
+
+// OPEX TREEMAP
+function drawOpexTreemap(){const s=setupCanvas('opexTreemapChart',320);if(!s)return;const{ctx,w,h}=s;const items=[{l:'Energy',v:21444480,c:'#f59e0b'},{l:'Telecom',v:7859760,c:'#00b4d8'},{l:'O&M Infra',v:5448000,c:'#76b900'},{l:'Personnel',v:4920000,c:'#8b5cf6'},{l:'Insurance',v:4200000,c:'#ef4444'},{l:'OEM Support',v:1740000,c:'#22c55e'},{l:'NOC',v:840000,c:'#06b6d4'},{l:'FSCA',v:804000,c:'#94a3b8'},{l:'Brokkr',v:480000,c:'#64748b'}];const total=items.reduce((a,b)=>a+b.v,0);const pad=4,tW=w-pad*2,tH=h-pad*2-20;function layoutRow(its,x,y,rw,rh){const rowTotal=its.reduce((a,b)=>a+b.v,0);let cx=x;its.forEach(it=>{const frac=it.v/rowTotal;let bw,bh;if(rw>=rh){bw=rw*frac;bh=rh}else{bw=rw;bh=rh*frac}ctx.fillStyle=it.c+'cc';ctx.beginPath();ctx.roundRect(cx,y,bw-2,bh-2,4);ctx.fill();ctx.strokeStyle=it.c;ctx.lineWidth=1;ctx.stroke();ctx.fillStyle='#fff';ctx.font='bold 12px Segoe UI';ctx.textAlign='center';const lbl=it.l;const val='$'+(it.v/1e6).toFixed(1)+'M';if(bw>60&&bh>40){ctx.fillText(lbl,cx+bw/2-1,y+bh/2-4);ctx.font='10px Segoe UI';ctx.fillStyle='#e2e8f0';ctx.fillText(val,cx+bw/2-1,y+bh/2+12);ctx.font='9px Segoe UI';ctx.fillText(Math.round(it.v/total*100)+'%',cx+bw/2-1,y+bh/2+24)}else if(bw>40&&bh>25){ctx.font='10px Segoe UI';ctx.fillText(lbl,cx+bw/2-1,y+bh/2+4)}if(rw>=rh)cx+=bw;else y+=bh})}const r1=items.slice(0,2),r2=items.slice(2,5),r3=items.slice(5);const r1H=tH*.45,r2H=tH*.32,r3H=tH*.23;layoutRow(r1,pad,pad,tW,r1H);layoutRow(r2,pad,pad+r1H,tW,r2H);layoutRow(r3,pad,pad+r1H+r2H,tW,r3H);ctx.fillStyle='#94a3b8';ctx.font='bold 11px Segoe UI';ctx.textAlign='center';ctx.fillText('Total Annual OPEX: $'+(total/1e6).toFixed(1)+'M MXN ($'+(total/17.2/1e6).toFixed(1)+'M USD)',w/2,h-4)}
+
+const sectionCharts={overview:[],power:[drawPowerFlow,drawPowerBudget,drawEnergyMonthly,drawTariffDonut,drawEnergyStacked,drawEnergyUsd,drawEnergySavings],cooling:[],racks:[],network:[drawNetOpex2],facility:[],timeline:[drawGantt],financial:[],capex:[drawCapexWaterfall,drawCapexDonut],opex:[drawOpexPie,drawOpexTreemap,drawEnergyOpex,drawNetOpex],oem:[drawDellCost],twin:[]};
+
+// INIT - draw charts for the currently active section
+function drawActiveSection(){const active=document.querySelector('.nav-btn.active');if(!active)return;const sec=active.dataset.section;const fns=sectionCharts[sec];if(fns)fns.forEach(f=>f());}
+window.addEventListener('load',drawActiveSection);
+window.addEventListener('resize',()=>{drawActiveSection();});
+</script>
+</body>
+</html>

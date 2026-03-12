@@ -978,13 +978,93 @@
 
 <!-- DIGITAL TWIN -->
 <div class="section" id="sec-twin">
-  <div class="section-title">NVIDIA Digital Twin Readiness</div>
-  <div class="kpi-row"><div class="kpi-card"><div class="kpi-label">Data Completeness</div><div class="kpi-value kpi-yellow">72%</div><div class="kpi-sub">Of required parameters</div></div><div class="kpi-card"><div class="kpi-label">Documents Processed</div><div class="kpi-value kpi-green">16</div><div class="kpi-sub">PDF sources analyzed</div></div><div class="kpi-card"><div class="kpi-label">3D Model</div><div class="kpi-value kpi-red">0%</div><div class="kpi-sub">Awaiting CAD / renders</div></div><div class="kpi-card"><div class="kpi-label">API Access</div><div class="kpi-value kpi-red">Pending</div><div class="kpi-sub">NVIDIA Omniverse</div></div></div>
-  <div class="grid-2">
-    <div class="panel"><div class="panel-title"><span class="dot dot-green"></span> Data Available (Ready)</div><ul class="checklist"><li><span class="check-icon check-done">&#10003;</span> IT Load profile (1 MW, 18 cabs, 72 nodes)</li><li><span class="check-icon check-done">&#10003;</span> GPU specifications (B300 HGX, 8 GPU/node)</li><li><span class="check-icon check-done">&#10003;</span> Cabinet specs (DDC S-Series v4)</li><li><span class="check-icon check-done">&#10003;</span> Power architecture (utility, xfmr, gen, UPS)</li><li><span class="check-icon check-done">&#10003;</span> Cooling system (3x 145T chillers)</li><li><span class="check-icon check-done">&#10003;</span> Network topology (IB + Ethernet + Edge)</li><li><span class="check-icon check-done">&#10003;</span> Room-by-room layout (GF + Basement)</li><li><span class="check-icon check-done">&#10003;</span> Climate &amp; environmental data</li><li><span class="check-icon check-done">&#10003;</span> Construction timeline (24 weeks)</li><li><span class="check-icon check-done">&#10003;</span> Financial model (CAPEX, OPEX, S&amp;U)</li></ul></div>
-    <div class="panel"><div class="panel-title"><span class="dot dot-red"></span> Data Needed (Pending)</div><ul class="checklist"><li><span class="check-icon check-missing">!</span> 3D CAD files / site renders (OpenUSD)</li><li><span class="check-icon check-missing">!</span> NVIDIA Omniverse API access</li><li><span class="check-icon check-pending">~</span> Single-line electrical diagram (detailed)</li><li><span class="check-icon check-pending">~</span> BMS/DCIM protocol specs</li><li><span class="check-icon check-pending">~</span> Sensor placement map</li><li><span class="check-icon check-pending">~</span> Piping &amp; instrumentation diagram</li><li><span class="check-icon check-pending">~</span> Fire suppression details</li><li><span class="check-icon check-missing">!</span> As-built dimensions</li><li><span class="check-icon check-pending">~</span> DCIM software selection</li></ul></div>
+  <div class="section-title">Digital Twin — Live Facility Simulation</div>
+  <div style="display:flex;align-items:center;gap:12px;margin-bottom:16px">
+    <span class="tag tag-green" style="font-size:12px;padding:4px 12px;animation:pulse 2s infinite">SIMULATION ACTIVE</span>
+    <span style="font-size:12px;color:var(--text2)">Simulated BMS/DCIM telemetry — FDO Fermaca Digital Origins, CDMX</span>
+    <span id="dtClock" style="margin-left:auto;font-family:monospace;font-size:13px;color:var(--accent)"></span>
   </div>
-  <div class="panel mb-24" style="margin-top:20px"><div class="panel-title"><span class="dot dot-blue"></span> NVIDIA Digital Twin Pipeline</div><div style="display:flex;gap:12px;flex-wrap:wrap;justify-content:center;padding:16px"><div style="background:rgba(118,185,0,.1);border:2px solid var(--accent);border-radius:10px;padding:16px;text-align:center;flex:1;min-width:150px"><div style="font-size:24px;margin-bottom:4px">1</div><div style="font-weight:600;font-size:13px">BUILD</div><div style="font-size:11px;color:var(--text2);margin-top:4px">Create OpenUSD 3D model<br/>Import CAD/renders</div><div style="margin-top:8px"><span class="tag tag-yellow">In Progress</span></div></div><div style="color:var(--text2);display:flex;align-items:center;font-size:24px">&#8594;</div><div style="background:rgba(0,180,216,.1);border:2px solid var(--border);border-radius:10px;padding:16px;text-align:center;flex:1;min-width:150px"><div style="font-size:24px;margin-bottom:4px">2</div><div style="font-weight:600;font-size:13px">TEST</div><div style="font-size:11px;color:var(--text2);margin-top:4px">Validate thermal/power<br/>Run simulations</div><div style="margin-top:8px"><span class="tag tag-blue">Pending</span></div></div><div style="color:var(--text2);display:flex;align-items:center;font-size:24px">&#8594;</div><div style="background:rgba(239,68,68,.1);border:2px solid var(--border);border-radius:10px;padding:16px;text-align:center;flex:1;min-width:150px"><div style="font-size:24px;margin-bottom:4px">3</div><div style="font-weight:600;font-size:13px">SIMULATE</div><div style="font-size:11px;color:var(--text2);margin-top:4px">Live monitoring<br/>Predictive analytics</div><div style="margin-top:8px"><span class="tag tag-red">Future</span></div></div></div></div>
+  <style>
+    @keyframes pulse{0%,100%{opacity:1}50%{opacity:.5}}
+    @keyframes flow{0%{stroke-dashoffset:0}100%{stroke-dashoffset:-20}}
+    .dt-kpi{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:10px;margin-bottom:16px}
+    .dt-kpi-card{background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:10px 14px;position:relative;overflow:hidden}
+    .dt-kpi-card::after{content:'';position:absolute;bottom:0;left:0;height:3px;border-radius:0 0 8px 8px}
+    .dt-kpi-card .dk-label{font-size:10px;color:var(--text2);text-transform:uppercase;letter-spacing:.5px}
+    .dt-kpi-card .dk-value{font-size:22px;font-weight:700;margin-top:2px}
+    .dt-kpi-card .dk-sub{font-size:10px;color:var(--text2);margin-top:1px}
+    .dt-kpi-card .dk-spark{position:absolute;right:8px;top:50%;transform:translateY(-50%);opacity:.3}
+    .dt-alert{display:flex;align-items:center;gap:8px;padding:8px 14px;border-radius:6px;font-size:12px;margin-bottom:4px}
+    .dt-alert-ok{background:rgba(34,197,94,.08);color:var(--success);border:1px solid rgba(34,197,94,.2)}
+    .dt-alert-warn{background:rgba(245,158,11,.08);color:var(--warn);border:1px solid rgba(245,158,11,.2)}
+    .dt-alert-crit{background:rgba(239,68,68,.08);color:var(--danger);border:1px solid rgba(239,68,68,.2);animation:pulse 1.5s infinite}
+    #dt3dCanvas{background:#080c14;border-radius:8px;cursor:grab;display:block;width:100%}
+    .dt-overlay{position:absolute;padding:6px 10px;background:rgba(10,14,23,.9);border:1px solid var(--border);border-radius:6px;font-size:11px;pointer-events:none;z-index:5}
+  </style>
+
+  <!-- LIVE KPIs -->
+  <div class="dt-kpi">
+    <div class="dt-kpi-card" style="border-left:3px solid var(--accent)"><div class="dk-label">Total IT Load</div><div class="dk-value kpi-green" id="dkLoad">987 kW</div><div class="dk-sub">of 1,000 kW capacity</div></div>
+    <div class="dt-kpi-card" style="border-left:3px solid var(--accent2)"><div class="dk-label">PUE (Real-time)</div><div class="dk-value kpi-blue" id="dkPue">1.18</div><div class="dk-sub">Target: 1.20</div></div>
+    <div class="dt-kpi-card" style="border-left:3px solid var(--warn)"><div class="dk-label">Cooling Load</div><div class="dk-value kpi-yellow" id="dkCool">348 TR</div><div class="dk-sub">of 435 TR (3x145T N+1)</div></div>
+    <div class="dt-kpi-card" style="border-left:3px solid #8b5cf6"><div class="dk-label">Inlet Temp (Avg)</div><div class="dk-value" style="color:#8b5cf6" id="dkTemp">19.2 C</div><div class="dk-sub">ASHRAE A1: 18-27 C</div></div>
+    <div class="dt-kpi-card" style="border-left:3px solid var(--success)"><div class="dk-label">GPU Utilization</div><div class="dk-value kpi-green" id="dkGpu">91%</div><div class="dk-sub">576 NVIDIA B300 active</div></div>
+    <div class="dt-kpi-card" style="border-left:3px solid var(--accent2)"><div class="dk-label">Network I/O</div><div class="dk-value kpi-blue" id="dkNet">286 Gbps</div><div class="dk-sub">IB NDR 400G fabric</div></div>
+    <div class="dt-kpi-card" style="border-left:3px solid var(--warn)"><div class="dk-label">UPS Battery</div><div class="dk-value kpi-yellow" id="dkUps">98%</div><div class="dk-sub">2x 1000kW Li-ion</div></div>
+    <div class="dt-kpi-card" style="border-left:3px solid var(--success)"><div class="dk-label">Uptime</div><div class="dk-value kpi-green" id="dkUptime">99.97%</div><div class="dk-sub">Last 30 days</div></div>
+  </div>
+
+  <!-- 3D ISOMETRIC VIEW + SIDEBAR -->
+  <div style="display:grid;grid-template-columns:1fr 340px;gap:16px;margin-bottom:16px">
+    <div class="panel" style="padding:12px;position:relative">
+      <div class="panel-title"><span class="dot dot-green" style="animation:pulse 2s infinite"></span> 3D Facility — Isometric View (Live)</div>
+      <canvas id="dt3dCanvas" height="520"></canvas>
+      <div style="position:absolute;bottom:20px;left:20px;display:flex;gap:8px;flex-wrap:wrap">
+        <span class="tag" style="background:rgba(118,185,0,.25);color:#76b900;font-size:10px">Normal</span>
+        <span class="tag" style="background:rgba(245,158,11,.25);color:#f59e0b;font-size:10px">Warm</span>
+        <span class="tag" style="background:rgba(239,68,68,.25);color:#ef4444;font-size:10px">Hot</span>
+        <span class="tag" style="background:rgba(0,180,216,.25);color:#00b4d8;font-size:10px">Chilled Water</span>
+        <span class="tag" style="background:rgba(139,92,246,.25);color:#8b5cf6;font-size:10px">Power Bus</span>
+      </div>
+    </div>
+    <div style="display:flex;flex-direction:column;gap:12px">
+      <!-- THERMAL HEATMAP -->
+      <div class="panel" style="padding:12px;flex:1">
+        <div class="panel-title"><span class="dot dot-red"></span> Thermal Map — Cabinet Inlet Temps</div>
+        <canvas id="dtHeatmap" height="180"></canvas>
+      </div>
+      <!-- POWER FLOW SANKEY -->
+      <div class="panel" style="padding:12px;flex:1">
+        <div class="panel-title"><span class="dot" style="background:#8b5cf6"></span> Power Distribution (Real-time)</div>
+        <canvas id="dtPowerFlow" height="180"></canvas>
+      </div>
+      <!-- ALERT FEED -->
+      <div class="panel" style="padding:12px;flex:0 0 auto;max-height:200px;overflow-y:auto">
+        <div class="panel-title"><span class="dot dot-yellow"></span> Alert Feed</div>
+        <div id="dtAlerts"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- CHARTS ROW -->
+  <div class="grid-2">
+    <div class="panel" style="padding:12px">
+      <div class="panel-title"><span class="dot dot-blue"></span> Chilled Water Loop — Flow &amp; Temps</div>
+      <canvas id="dtCoolingChart" height="200"></canvas>
+    </div>
+    <div class="panel" style="padding:12px">
+      <div class="panel-title"><span class="dot dot-green"></span> GPU Cluster Load — 60s Rolling Window</div>
+      <canvas id="dtGpuChart" height="200"></canvas>
+    </div>
+  </div>
+
+  <!-- READINESS + PIPELINE -->
+  <div style="margin-top:16px" class="grid-2">
+    <div class="panel"><div class="panel-title"><span class="dot dot-green"></span> Data Available (Ready for Omniverse)</div><ul class="checklist"><li><span class="check-icon check-done">&#10003;</span> IT Load profile (1 MW, 18 cabs, 72 nodes)</li><li><span class="check-icon check-done">&#10003;</span> GPU specifications (B300 HGX, 8 GPU/node)</li><li><span class="check-icon check-done">&#10003;</span> Cabinet specs (DDC S-Series v4 NEMA 3R)</li><li><span class="check-icon check-done">&#10003;</span> Power architecture (CFE 23kV, xfmr, gen, UPS)</li><li><span class="check-icon check-done">&#10003;</span> Cooling system (3x 145T chillers, N+1)</li><li><span class="check-icon check-done">&#10003;</span> Network topology (IB NDR + Ethernet + Edge)</li><li><span class="check-icon check-done">&#10003;</span> Room-by-room layout (GF + Basement)</li><li><span class="check-icon check-done">&#10003;</span> Environmental data (2,395m elev, Zone D seismic)</li><li><span class="check-icon check-done">&#10003;</span> Financial model (CAPEX, OPEX, S&amp;U)</li></ul></div>
+    <div class="panel"><div class="panel-title"><span class="dot dot-blue"></span> NVIDIA Digital Twin Pipeline</div><div style="display:flex;gap:12px;flex-wrap:wrap;justify-content:center;padding:16px"><div style="background:rgba(118,185,0,.1);border:2px solid var(--accent);border-radius:10px;padding:16px;text-align:center;flex:1;min-width:130px"><div style="font-size:24px;margin-bottom:4px">1</div><div style="font-weight:600;font-size:13px">BUILD</div><div style="font-size:11px;color:var(--text2);margin-top:4px">Create OpenUSD model<br/>Import CAD/renders</div><div style="margin-top:8px"><span class="tag tag-yellow">In Progress</span></div></div><div style="color:var(--text2);display:flex;align-items:center;font-size:24px">&#8594;</div><div style="background:rgba(0,180,216,.1);border:2px solid var(--accent2);border-radius:10px;padding:16px;text-align:center;flex:1;min-width:130px"><div style="font-size:24px;margin-bottom:4px">2</div><div style="font-weight:600;font-size:13px">SIMULATE</div><div style="font-size:11px;color:var(--text2);margin-top:4px">Thermal + Power<br/>CFD validation</div><div style="margin-top:8px"><span class="tag tag-green">This Demo</span></div></div><div style="color:var(--text2);display:flex;align-items:center;font-size:24px">&#8594;</div><div style="background:rgba(139,92,246,.1);border:2px solid var(--border);border-radius:10px;padding:16px;text-align:center;flex:1;min-width:130px"><div style="font-size:24px;margin-bottom:4px">3</div><div style="font-weight:600;font-size:13px">OPERATE</div><div style="font-size:11px;color:var(--text2);margin-top:4px">Live BMS/DCIM<br/>Predictive analytics</div><div style="margin-top:8px"><span class="tag tag-blue">Post-COD</span></div></div></div>
+    <div style="margin-top:8px;padding:10px;background:rgba(118,185,0,.06);border-radius:6px;font-size:11px;color:var(--text2);line-height:1.6"><span style="color:var(--accent);font-weight:700">What you're seeing:</span> This simulation generates realistic BMS/DCIM telemetry based on FDO's actual specifications — 18 DDC cabinets, 576 B300 GPUs, chilled water cooling at 14C, CFE 23kV feed through 1.5 MVA transformer, and 2x 1000kW UPS. In the full NVIDIA Omniverse digital twin, this data will drive a photorealistic 3D model with real-time physics, CFD thermal simulation, and predictive failure analytics.</div>
+    </div>
+  </div>
 </div>
 
 </div>
@@ -1005,7 +1085,7 @@ function rRect(ctx,x,y,w,h,r){ctx.beginPath();ctx.roundRect(x,y,w,h,r);ctx.fill(
 function setupCanvas(id,logicalH){const cv=document.getElementById(id);if(!cv)return null;const dpr=window.devicePixelRatio||1;const w=cv.parentElement.clientWidth-40;cv.style.width=w+'px';cv.style.height=logicalH+'px';cv.width=w*dpr;cv.height=logicalH*dpr;const ctx=cv.getContext('2d');ctx.scale(dpr,dpr);return{cv,ctx,w,h:logicalH};}
 
 // NAV
-document.querySelectorAll('.nav-btn').forEach(btn=>{btn.addEventListener('click',()=>{document.querySelectorAll('.nav-btn').forEach(b=>b.classList.remove('active'));document.querySelectorAll('.section').forEach(s=>s.classList.remove('active'));btn.classList.add('active');document.getElementById('sec-'+btn.dataset.section).classList.add('active');const sec=btn.dataset.section;const fns=sectionCharts[sec];if(fns)setTimeout(()=>fns.forEach(f=>f()),50);})});
+document.querySelectorAll('.nav-btn').forEach(btn=>{btn.addEventListener('click',()=>{dtStopSim();document.querySelectorAll('.nav-btn').forEach(b=>b.classList.remove('active'));document.querySelectorAll('.section').forEach(s=>s.classList.remove('active'));btn.classList.add('active');document.getElementById('sec-'+btn.dataset.section).classList.add('active');const sec=btn.dataset.section;const fns=sectionCharts[sec];if(fns)setTimeout(()=>fns.forEach(f=>f()),50);})});
 
 // RACKS
 (function(){
@@ -1080,7 +1160,408 @@ function drawNetOpex2(){drawNetOpexBar('netOpexChart2')}
 // OPEX TREEMAP
 function drawOpexTreemap(){const s=setupCanvas('opexTreemapChart',320);if(!s)return;const{ctx,w,h}=s;const items=[{l:'Energy',v:21444480,c:'#f59e0b'},{l:'Telecom',v:7859760,c:'#00b4d8'},{l:'O&M Infra',v:5448000,c:'#76b900'},{l:'Personnel',v:4920000,c:'#8b5cf6'},{l:'Insurance',v:4200000,c:'#ef4444'},{l:'OEM Support',v:1740000,c:'#22c55e'},{l:'NOC',v:840000,c:'#06b6d4'},{l:'FSCA',v:804000,c:'#94a3b8'},{l:'Brokkr',v:480000,c:'#64748b'}];const total=items.reduce((a,b)=>a+b.v,0);const pad=4,tW=w-pad*2,tH=h-pad*2-20;function layoutRow(its,x,y,rw,rh){const rowTotal=its.reduce((a,b)=>a+b.v,0);let cx=x;its.forEach(it=>{const frac=it.v/rowTotal;let bw,bh;if(rw>=rh){bw=rw*frac;bh=rh}else{bw=rw;bh=rh*frac}ctx.fillStyle=it.c+'cc';ctx.beginPath();ctx.roundRect(cx,y,bw-2,bh-2,4);ctx.fill();ctx.strokeStyle=it.c;ctx.lineWidth=1;ctx.stroke();ctx.fillStyle='#fff';ctx.font='bold 12px Segoe UI';ctx.textAlign='center';const lbl=it.l;const val='$'+(it.v/1e6).toFixed(1)+'M';if(bw>60&&bh>40){ctx.fillText(lbl,cx+bw/2-1,y+bh/2-4);ctx.font='10px Segoe UI';ctx.fillStyle='#e2e8f0';ctx.fillText(val,cx+bw/2-1,y+bh/2+12);ctx.font='9px Segoe UI';ctx.fillText(Math.round(it.v/total*100)+'%',cx+bw/2-1,y+bh/2+24)}else if(bw>40&&bh>25){ctx.font='10px Segoe UI';ctx.fillText(lbl,cx+bw/2-1,y+bh/2+4)}if(rw>=rh)cx+=bw;else y+=bh})}const r1=items.slice(0,2),r2=items.slice(2,5),r3=items.slice(5);const r1H=tH*.45,r2H=tH*.32,r3H=tH*.23;layoutRow(r1,pad,pad,tW,r1H);layoutRow(r2,pad,pad+r1H,tW,r2H);layoutRow(r3,pad,pad+r1H+r2H,tW,r3H);ctx.fillStyle='#94a3b8';ctx.font='bold 11px Segoe UI';ctx.textAlign='center';ctx.fillText('Total Annual OPEX: $'+(total/1e6).toFixed(1)+'M MXN ($'+(total/17.2/1e6).toFixed(1)+'M USD)',w/2,h-4)}
 
-const sectionCharts={overview:[],power:[drawPowerFlow,drawPowerBudget,drawEnergyMonthly,drawTariffDonut,drawEnergyStacked,drawEnergyUsd,drawEnergySavings],cooling:[],racks:[],network:[drawNetOpex2],facility:[],timeline:[drawGantt],financial:[],capex:[drawCapexWaterfall,drawCapexDonut],opex:[drawOpexPie,drawOpexTreemap,drawEnergyOpex,drawNetOpex],oem:[drawDellCost],twin:[]};
+// ===== DIGITAL TWIN SIMULATION =====
+const DT={running:false,tick:0,cabinets:[],gpuHistory:[],coolHistory:[],alerts:[]};
+function dtInit(){
+  DT.cabinets=[];
+  for(let i=0;i<18;i++){
+    DT.cabinets.push({id:'CAB-'+String(i+1).padStart(2,'0'),nodes:4,gpus:32,
+      load:52+Math.random()*8,temp:18+Math.random()*3,exitTemp:32+Math.random()*4,
+      flow:34+Math.random()*5,util:85+Math.random()*12,
+      waterIn:14+Math.random()*.5,waterOut:22+Math.random()*2});
+  }
+  DT.gpuHistory=[];DT.coolHistory=[];
+  DT.alerts=[
+    {t:Date.now()-120000,type:'ok',msg:'All chillers operating normally — 348 TR / 435 TR capacity'},
+    {t:Date.now()-90000,type:'ok',msg:'UPS A & B online — Battery 98% SOC, 9.8 min runtime'},
+    {t:Date.now()-60000,type:'warn',msg:'CAB-07 inlet temp 22.1C — above baseline (monitor)'},
+    {t:Date.now()-30000,type:'ok',msg:'CFE utility feed stable — 23kV, PF 0.98, THD < 3%'},
+    {t:Date.now()-10000,type:'ok',msg:'Iberdrola MEM billing: $1.86 MXN/kWh current rate'}
+  ];
+}
+function dtUpdate(){
+  DT.tick++;
+  const t=DT.tick*.05;
+  DT.cabinets.forEach((c,i)=>{
+    c.load=52+Math.sin(t+i*.7)*4+Math.random()*2;
+    c.util=85+Math.sin(t+i*.5)*8+Math.random()*3;
+    c.temp=18+Math.sin(t*.3+i*.4)*1.5+Math.random()*.5+(i===6?.8:0);
+    c.exitTemp=c.temp+14+Math.random()*2;
+    c.flow=34+Math.sin(t*.2+i)*2+Math.random();
+    c.waterIn=14+Math.sin(t*.1)*.3;
+    c.waterOut=c.waterIn+8+Math.random();
+  });
+  const totalLoad=DT.cabinets.reduce((a,c)=>a+c.load,0);
+  const avgTemp=DT.cabinets.reduce((a,c)=>a+c.temp,0)/18;
+  const avgUtil=DT.cabinets.reduce((a,c)=>a+c.util,0)/18;
+  const coolTR=totalLoad*3412/12000*.2+totalLoad*.33;
+  DT.gpuHistory.push({t:DT.tick,load:totalLoad,util:avgUtil});
+  DT.coolHistory.push({t:DT.tick,tr:coolTR,temp:avgTemp});
+  if(DT.gpuHistory.length>60)DT.gpuHistory.shift();
+  if(DT.coolHistory.length>60)DT.coolHistory.shift();
+  // update KPIs
+  const el=id=>document.getElementById(id);
+  if(el('dkLoad'))el('dkLoad').textContent=Math.round(totalLoad)+' kW';
+  if(el('dkPue'))el('dkPue').textContent=(1.15+Math.sin(t*.2)*.04).toFixed(2);
+  if(el('dkCool'))el('dkCool').textContent=Math.round(coolTR)+' TR';
+  if(el('dkTemp'))el('dkTemp').textContent=avgTemp.toFixed(1)+' C';
+  if(el('dkGpu'))el('dkGpu').textContent=Math.round(avgUtil)+'%';
+  if(el('dkNet'))el('dkNet').textContent=Math.round(240+Math.sin(t*.3)*50)+' Gbps';
+  if(el('dkUps'))el('dkUps').textContent=Math.round(97+Math.sin(t*.1)*1.5)+'%';
+  if(el('dtClock')){const d=new Date();el('dtClock').textContent=d.toLocaleTimeString()+' | Tick #'+DT.tick;}
+  // random alert
+  if(DT.tick%80===0){
+    const msgs=[
+      {type:'ok',msg:'Chiller #'+(1+Math.floor(Math.random()*3))+' COP: '+(5.2+Math.random()*.5).toFixed(1)+' — nominal'},
+      {type:'ok',msg:'GPU cluster checkpoint — '+Math.round(avgUtil)+'% avg utilization, 0 errors'},
+      {type:'warn',msg:'CAB-'+String(1+Math.floor(Math.random()*18)).padStart(2,'0')+' delta-T '+(15+Math.random()*3).toFixed(1)+'C — within tolerance'},
+      {type:'ok',msg:'Network fabric health: 0 CRC errors, '+Math.round(240+Math.random()*60)+' Gbps aggregate'},
+      {type:'ok',msg:'Fire suppression: Novec 1230 — all zones armed, pressure nominal'},
+      {type:'warn',msg:'Ambient humidity '+Math.round(45+Math.random()*15)+'% RH — monitoring'},
+      {type:'ok',msg:'Generator #'+(1+Math.floor(Math.random()*3))+' weekly test PASSED — 600kW prime ready'},
+    ];
+    DT.alerts.push({t:Date.now(),...msgs[Math.floor(Math.random()*msgs.length)]});
+    if(DT.alerts.length>12)DT.alerts.shift();
+  }
+}
+function dtDrawAlerts(){
+  const el=document.getElementById('dtAlerts');if(!el)return;
+  el.innerHTML=DT.alerts.slice().reverse().map(a=>{
+    const cls=a.type==='ok'?'dt-alert-ok':a.type==='warn'?'dt-alert-warn':'dt-alert-crit';
+    const icon=a.type==='ok'?'&#10003;':a.type==='warn'?'&#9888;':'&#10007;';
+    const ago=Math.round((Date.now()-a.t)/1000);
+    const ts=ago<60?ago+'s ago':Math.round(ago/60)+'m ago';
+    return '<div class="dt-alert '+cls+'"><span>'+icon+'</span><span style="flex:1">'+a.msg+'</span><span style="opacity:.5;font-size:10px">'+ts+'</span></div>';
+  }).join('');
+}
+
+// ISOMETRIC 3D FACILITY
+function dtDraw3D(){
+  const cv=document.getElementById('dt3dCanvas');if(!cv)return;
+  const dpr=window.devicePixelRatio||1;
+  const w=cv.parentElement.clientWidth-24;const h=520;
+  cv.style.width=w+'px';cv.style.height=h+'px';cv.width=w*dpr;cv.height=h*dpr;
+  const ctx=cv.getContext('2d');ctx.scale(dpr,dpr);
+  ctx.clearRect(0,0,w,h);
+  const cx=w/2,cy=160;
+  // iso helpers
+  function iso(x,y,z){return{x:cx+(x-y)*.866*1.1,y:cy+(x+y)*.5*.9-z*.9};}
+  function face(pts,fill,stroke){ctx.beginPath();ctx.moveTo(pts[0].x,pts[0].y);for(let i=1;i<pts.length;i++)ctx.lineTo(pts[i].x,pts[i].y);ctx.closePath();ctx.fillStyle=fill;ctx.fill();if(stroke){ctx.strokeStyle=stroke;ctx.lineWidth=1;ctx.stroke();}}
+  function isoBox(x,y,z,bw,bd,bh,top,right,left,stroke){
+    const p={ftl:iso(x,y,z+bh),ftr:iso(x+bw,y,z+bh),fbr:iso(x+bw,y,z),fbl:iso(x,y,z),btl:iso(x,y+bd,z+bh),btr:iso(x+bw,y+bd,z+bh),bbr:iso(x+bw,y+bd,z),bbl:iso(x,y+bd,z)};
+    face([p.fbl,p.bbl,p.bbr,p.fbr],left||'#1a2235',stroke);
+    face([p.fbr,p.bbr,p.btr,p.ftr],right||'#111827',stroke);
+    face([p.ftl,p.ftr,p.btr,p.btl],top||'#2a3550',stroke);
+    return p;
+  }
+  const t=DT.tick*.03;
+  // FLOOR
+  face([iso(-160,-40,0),iso(160,-40,0),iso(160,200,0),iso(-160,200,0)],'#0d1320','#1a2235');
+  // grid lines
+  ctx.strokeStyle='#1a223580';ctx.lineWidth=.5;
+  for(let i=-160;i<=160;i+=20){const a=iso(i,-40,0),b=iso(i,200,0);ctx.beginPath();ctx.moveTo(a.x,a.y);ctx.lineTo(b.x,b.y);ctx.stroke();}
+  for(let j=-40;j<=200;j+=20){const a=iso(-160,j,0),b=iso(160,j,0);ctx.beginPath();ctx.moveTo(a.x,a.y);ctx.lineTo(b.x,b.y);ctx.stroke();}
+  // CHILLER YARD (back left)
+  for(let c=0;c<3;c++){
+    const cx2=-140+c*35,cy2=-30;
+    const clr=c<2?'#00b4d8':'#00b4d880';
+    isoBox(cx2,cy2,0,28,20,25,'#0d4f6680','#0a3d5180',clr,'#00b4d8');
+    // fan animation
+    const fc=iso(cx2+14,cy2+10,26);
+    ctx.beginPath();ctx.arc(fc.x,fc.y,8,0,Math.PI*2);ctx.fillStyle='#0d4f66';ctx.fill();
+    ctx.strokeStyle='#00b4d8';ctx.lineWidth=1.5;
+    for(let b=0;b<3;b++){const a2=t*3+b*2.094+c;ctx.beginPath();ctx.moveTo(fc.x,fc.y);ctx.lineTo(fc.x+Math.cos(a2)*7,fc.y+Math.sin(a2)*7);ctx.stroke();}
+    ctx.fillStyle='#94a3b8';ctx.font='8px Segoe UI';ctx.textAlign='center';
+    ctx.fillText(c<2?'Chiller '+(c+1):'Chiller 3 (N+1)',fc.x,fc.y+18);
+  }
+  // chilled water pipes
+  ctx.strokeStyle='#00b4d8';ctx.lineWidth=2;ctx.setLineDash([4,4]);
+  ctx.lineDashOffset=-DT.tick*2;
+  const pipeStart=iso(-50,-10,3),pipeEnd=iso(-50,180,3);
+  ctx.beginPath();ctx.moveTo(pipeStart.x,pipeStart.y);ctx.lineTo(pipeEnd.x,pipeEnd.y);ctx.stroke();
+  ctx.strokeStyle='#ef4444';
+  ctx.lineDashOffset=-DT.tick*2+10;
+  const rpStart=iso(-40,-10,3),rpEnd=iso(-40,180,3);
+  ctx.beginPath();ctx.moveTo(rpStart.x,rpStart.y);ctx.lineTo(rpEnd.x,rpEnd.y);ctx.stroke();
+  ctx.setLineDash([]);
+  // GENERATOR YARD (back right)
+  for(let g=0;g<3;g++){
+    const gx=60+g*35,gy=-30;
+    isoBox(gx,gy,0,30,14,16,'#3a2a10','#2d2008','#4a3515','#f59e0b80');
+    ctx.fillStyle='#94a3b8';ctx.font='8px Segoe UI';ctx.textAlign='center';
+    const gl=iso(gx+15,gy+7,17);
+    ctx.fillText('Gen '+(g+1)+' 600kW',gl.x,gl.y);
+  }
+  // TRANSFORMER (mid right)
+  isoBox(120,30,0,25,18,22,'#3d1a4d','#2d1040','#4d2060','#8b5cf680');
+  const tl=iso(132,39,23);ctx.fillStyle='#c084fc';ctx.font='bold 8px Segoe UI';ctx.textAlign='center';ctx.fillText('1.5 MVA',tl.x,tl.y);ctx.fillStyle='#94a3b8';ctx.font='7px Segoe UI';ctx.fillText('23kV > 480V',tl.x,tl.y+10);
+  // power bus from transformer
+  ctx.strokeStyle='#8b5cf6';ctx.lineWidth=2;ctx.setLineDash([6,3]);ctx.lineDashOffset=-DT.tick*1.5;
+  const pb1=iso(120,40,12),pb2=iso(-30,40,12);
+  ctx.beginPath();ctx.moveTo(pb1.x,pb1.y);ctx.lineTo(pb2.x,pb2.y);ctx.stroke();ctx.setLineDash([]);
+  // UPS (mid left)
+  for(let u=0;u<2;u++){
+    const ux=-140+u*28,uy=30;
+    isoBox(ux,uy,0,24,16,20,'#1a3a1a','#143014','#1e4a1e','#76b90080');
+    const ul=iso(ux+12,uy+8,21);ctx.fillStyle='#76b900';ctx.font='bold 8px Segoe UI';ctx.textAlign='center';ctx.fillText('UPS '+(u+1),ul.x,ul.y);ctx.fillStyle='#94a3b8';ctx.font='7px Segoe UI';ctx.fillText('1000kW',ul.x,ul.y+10);
+  }
+  // CABINET ROWS (main hall)
+  const rowAy=70,rowBy=140;
+  for(let i=0;i<9;i++){
+    const cab=DT.cabinets[i];
+    const rx=-120+i*30,ry=rowAy;
+    // color by temp
+    const tNorm=(cab.temp-16)/8;
+    const r2=Math.round(30+tNorm*180),g2=Math.round(180-tNorm*140),b2=Math.round(30);
+    const topC='rgb('+r2+','+g2+','+b2+')';
+    const rightC='rgb('+Math.round(r2*.7)+','+Math.round(g2*.7)+','+Math.round(b2*.7)+')';
+    const leftC='rgb('+Math.round(r2*.5)+','+Math.round(g2*.5)+','+Math.round(b2*.5)+')';
+    isoBox(rx,ry,0,22,14,35,topC,rightC,leftC,'#2a355080');
+    // LED indicator
+    const ledP=iso(rx+11,ry,36);
+    ctx.beginPath();ctx.arc(ledP.x,ledP.y,2.5,0,Math.PI*2);
+    ctx.fillStyle=cab.util>95?'#ef4444':cab.util>80?'#76b900':'#f59e0b';ctx.fill();
+    // label
+    ctx.fillStyle='#e2e8f0';ctx.font='bold 7px Segoe UI';ctx.textAlign='center';
+    ctx.fillText(cab.id.replace('CAB-','C'),ledP.x,ledP.y-6);
+    // load bar on front face
+    const barBase=iso(rx+2,ry,1),barTop=iso(rx+2,ry,1+cab.load/55*32);
+    ctx.strokeStyle=topC;ctx.lineWidth=3;ctx.globalAlpha=.6;
+    ctx.beginPath();ctx.moveTo(barBase.x,barBase.y);ctx.lineTo(barTop.x,barTop.y);ctx.stroke();
+    ctx.globalAlpha=1;
+  }
+  // Row B
+  for(let i=0;i<9;i++){
+    const cab=DT.cabinets[i+9];
+    const rx=-120+i*30,ry=rowBy;
+    const tNorm=(cab.temp-16)/8;
+    const r2=Math.round(30+tNorm*180),g2=Math.round(180-tNorm*140),b2=Math.round(30);
+    const topC='rgb('+r2+','+g2+','+b2+')';
+    const rightC='rgb('+Math.round(r2*.7)+','+Math.round(g2*.7)+','+Math.round(b2*.7)+')';
+    const leftC='rgb('+Math.round(r2*.5)+','+Math.round(g2*.5)+','+Math.round(b2*.5)+')';
+    isoBox(rx,ry,0,22,14,35,topC,rightC,leftC,'#2a355080');
+    const ledP=iso(rx+11,ry,36);
+    ctx.beginPath();ctx.arc(ledP.x,ledP.y,2.5,0,Math.PI*2);
+    ctx.fillStyle=cab.util>95?'#ef4444':cab.util>80?'#76b900':'#f59e0b';ctx.fill();
+    ctx.fillStyle='#e2e8f0';ctx.font='bold 7px Segoe UI';ctx.textAlign='center';
+    ctx.fillText(cab.id.replace('CAB-','C'),ledP.x,ledP.y-6);
+    const barBase=iso(rx+2,ry,1),barTop=iso(rx+2,ry,1+cab.load/55*32);
+    ctx.strokeStyle=topC;ctx.lineWidth=3;ctx.globalAlpha=.6;
+    ctx.beginPath();ctx.moveTo(barBase.x,barBase.y);ctx.lineTo(barTop.x,barTop.y);ctx.stroke();
+    ctx.globalAlpha=1;
+  }
+  // HOT AISLE label between rows
+  const ha=iso(-20,rowAy+28,38);
+  ctx.fillStyle='#ef444480';ctx.font='bold 10px Segoe UI';ctx.textAlign='center';ctx.fillText('HOT AISLE',ha.x,ha.y);
+  // cold aisle labels
+  const ca1=iso(-20,rowAy-10,38);ctx.fillStyle='#00b4d880';ctx.font='bold 9px Segoe UI';ctx.fillText('COLD AISLE',ca1.x,ca1.y);
+  const ca2=iso(-20,rowBy+20,38);ctx.fillText('COLD AISLE',ca2.x,ca2.y);
+  // ROW LABELS
+  ctx.fillStyle='#e2e8f0';ctx.font='bold 10px Segoe UI';
+  const ra=iso(-140,rowAy+7,18);ctx.fillText('Row A',ra.x-15,ra.y);
+  const rb=iso(-140,rowBy+7,18);ctx.fillText('Row B',rb.x-15,rb.y);
+  // airflow particles
+  ctx.globalAlpha=.4;
+  for(let p=0;p<30;p++){
+    const px=-120+Math.random()*270;
+    const py=rowAy+14+((DT.tick*2+p*37)%50);
+    const pz=5+Math.random()*25;
+    const pp=iso(px,py,pz);
+    ctx.fillStyle=py<rowAy+35?'#00b4d8':'#ef4444';
+    ctx.beginPath();ctx.arc(pp.x,pp.y,1.5,0,Math.PI*2);ctx.fill();
+  }
+  ctx.globalAlpha=1;
+  // LABELS
+  ctx.fillStyle='#76b900';ctx.font='bold 12px Segoe UI';ctx.textAlign='left';
+  ctx.fillText('FDO Fermaca Digital Origins',12,20);
+  ctx.fillStyle='#94a3b8';ctx.font='11px Segoe UI';
+  ctx.fillText('1 MW | 18 DDC Cabinets | 576 NVIDIA B300 GPUs',12,36);
+  const totalLoad=DT.cabinets.reduce((a,c)=>a+c.load,0);
+  ctx.fillStyle='#e2e8f0';ctx.font='bold 11px Segoe UI';ctx.textAlign='right';
+  ctx.fillText('IT Load: '+Math.round(totalLoad)+' kW / 1,000 kW',w-12,20);
+  ctx.fillStyle=totalLoad>950?'#ef4444':'#76b900';ctx.font='11px Segoe UI';
+  ctx.fillText('Status: '+(totalLoad>950?'HIGH LOAD':'NOMINAL'),w-12,36);
+}
+
+// THERMAL HEATMAP
+function dtDrawHeatmap(){
+  const cv=document.getElementById('dtHeatmap');if(!cv)return;
+  const dpr=window.devicePixelRatio||1;
+  const w=cv.parentElement.clientWidth-24;const h=180;
+  cv.style.width=w+'px';cv.style.height=h+'px';cv.width=w*dpr;cv.height=h*dpr;
+  const ctx=cv.getContext('2d');ctx.scale(dpr,dpr);ctx.clearRect(0,0,w,h);
+  const cellW=(w-50)/9,cellH=50,padT=20,padL=40;
+  ['Row A','Row B'].forEach((label,row)=>{
+    ctx.fillStyle='#94a3b8';ctx.font='10px Segoe UI';ctx.textAlign='right';
+    ctx.fillText(label,padL-6,padT+row*(cellH+12)+cellH/2+3);
+    for(let i=0;i<9;i++){
+      const cab=DT.cabinets[row*9+i];
+      const x=padL+i*cellW,y=padT+row*(cellH+12);
+      const tNorm=Math.max(0,Math.min(1,(cab.temp-16)/8));
+      const r=Math.round(40+tNorm*200),g=Math.round(200-tNorm*160),b=Math.round(40-tNorm*20);
+      ctx.fillStyle='rgb('+r+','+g+','+b+')';
+      ctx.beginPath();ctx.roundRect(x+1,y,cellW-2,cellH,4);ctx.fill();
+      ctx.fillStyle='#fff';ctx.font='bold 11px Segoe UI';ctx.textAlign='center';
+      ctx.fillText(cab.temp.toFixed(1)+'C',x+cellW/2,y+cellH/2-4);
+      ctx.font='8px Segoe UI';ctx.fillStyle='#e2e8f0';
+      ctx.fillText(cab.id.replace('CAB-','C')+' | '+Math.round(cab.load)+'kW',x+cellW/2,y+cellH/2+10);
+    }
+  });
+  // scale
+  const scY=padT+2*(cellH+12)+8;
+  const grad=ctx.createLinearGradient(padL,0,w-10,0);
+  grad.addColorStop(0,'rgb(40,200,40)');grad.addColorStop(.5,'rgb(200,160,20)');grad.addColorStop(1,'rgb(240,40,20)');
+  ctx.fillStyle=grad;ctx.fillRect(padL,scY,w-padL-10,8);
+  ctx.fillStyle='#94a3b8';ctx.font='9px Segoe UI';ctx.textAlign='left';ctx.fillText('16C',padL,scY+18);
+  ctx.textAlign='center';ctx.fillText('20C',(w+padL)/2,scY+18);
+  ctx.textAlign='right';ctx.fillText('24C',w-10,scY+18);
+}
+
+// POWER DISTRIBUTION
+function dtDrawPower(){
+  const cv=document.getElementById('dtPowerFlow');if(!cv)return;
+  const dpr=window.devicePixelRatio||1;
+  const w=cv.parentElement.clientWidth-24;const h=180;
+  cv.style.width=w+'px';cv.style.height=h+'px';cv.width=w*dpr;cv.height=h*dpr;
+  const ctx=cv.getContext('2d');ctx.scale(dpr,dpr);ctx.clearRect(0,0,w,h);
+  const totalLoad=DT.cabinets.reduce((a,c)=>a+c.load,0);
+  const facilityLoad=totalLoad*1.18;
+  const nodes=[
+    {x:20,y:45,w:65,h:30,label:'CFE 23kV',sub:Math.round(facilityLoad)+' kW',c:'#f59e0b'},
+    {x:110,y:45,w:65,h:30,label:'1.5 MVA',sub:'Transformer',c:'#8b5cf6'},
+    {x:200,y:20,w:55,h:26,label:'UPS A',sub:'1000 kW',c:'#76b900'},
+    {x:200,y:68,w:55,h:26,label:'UPS B',sub:'1000 kW',c:'#76b900'},
+    {x:280,y:45,w:70,h:30,label:'Switchgear',sub:'480V',c:'#00b4d8'},
+    {x:w-90,y:10,w:80,h:26,label:'Row A (9 cab)',sub:Math.round(totalLoad/2)+' kW',c:'#76b900'},
+    {x:w-90,y:45,w:80,h:26,label:'Row B (9 cab)',sub:Math.round(totalLoad/2)+' kW',c:'#76b900'},
+    {x:w-90,y:80,w:80,h:26,label:'Cooling',sub:Math.round(facilityLoad-totalLoad)+' kW',c:'#00b4d8'},
+  ];
+  // draw connections
+  ctx.strokeStyle='#8b5cf680';ctx.lineWidth=2;ctx.setLineDash([4,4]);ctx.lineDashOffset=-DT.tick*2;
+  function conn(a,b){ctx.beginPath();ctx.moveTo(a.x+a.w,a.y+a.h/2);ctx.lineTo(b.x,b.y+b.h/2);ctx.stroke();}
+  conn(nodes[0],nodes[1]);conn(nodes[1],nodes[2]);conn(nodes[1],nodes[3]);
+  conn(nodes[2],nodes[4]);conn(nodes[3],nodes[4]);
+  conn(nodes[4],nodes[5]);conn(nodes[4],nodes[6]);conn(nodes[4],nodes[7]);
+  ctx.setLineDash([]);
+  // draw nodes
+  nodes.forEach(n=>{
+    ctx.fillStyle=n.c+'30';ctx.strokeStyle=n.c;ctx.lineWidth=1.5;
+    ctx.beginPath();ctx.roundRect(n.x,n.y,n.w,n.h,5);ctx.fill();ctx.stroke();
+    ctx.fillStyle='#e2e8f0';ctx.font='bold 9px Segoe UI';ctx.textAlign='center';
+    ctx.fillText(n.label,n.x+n.w/2,n.y+n.h/2-3);
+    ctx.fillStyle='#94a3b8';ctx.font='8px Segoe UI';
+    ctx.fillText(n.sub,n.x+n.w/2,n.y+n.h/2+9);
+  });
+  // gen status (standby)
+  ctx.fillStyle='#f59e0b20';ctx.strokeStyle='#f59e0b60';ctx.lineWidth=1;
+  ctx.beginPath();ctx.roundRect(110,110,65,28,5);ctx.fill();ctx.stroke();
+  ctx.fillStyle='#f59e0b';ctx.font='bold 9px Segoe UI';ctx.textAlign='center';
+  ctx.fillText('3x Gen 600kW',142,124);
+  ctx.fillStyle='#94a3b8';ctx.font='8px Segoe UI';ctx.fillText('STANDBY',142,135);
+  // dashed to ATS
+  ctx.strokeStyle='#f59e0b40';ctx.setLineDash([3,5]);
+  ctx.beginPath();ctx.moveTo(175,120);ctx.lineTo(200,60);ctx.stroke();ctx.setLineDash([]);
+  // totals
+  ctx.fillStyle='#e2e8f0';ctx.font='bold 10px Segoe UI';ctx.textAlign='left';
+  ctx.fillText('Total: '+Math.round(facilityLoad)+' kW (PUE '+(facilityLoad/totalLoad).toFixed(2)+')',20,h-8);
+}
+
+// COOLING CHART
+function dtDrawCooling(){
+  const cv=document.getElementById('dtCoolingChart');if(!cv)return;
+  const s=setupCanvas('dtCoolingChart',200);if(!s)return;
+  const{ctx,w,h}=s;
+  const data=DT.coolHistory;if(data.length<2)return;
+  const pL=50,pR=20,pT=20,pB=30,cW=w-pL-pR,cH=h-pT-pB;
+  // bg
+  ctx.fillStyle='#0d1320';ctx.fillRect(pL,pT,cW,cH);
+  // grid
+  ctx.strokeStyle='#1a2235';ctx.lineWidth=1;
+  for(let i=0;i<=4;i++){const y=pT+cH/4*i;ctx.beginPath();ctx.moveTo(pL,y);ctx.lineTo(pL+cW,y);ctx.stroke();}
+  // TR line
+  const maxTR=450,minTR=200;
+  ctx.beginPath();ctx.strokeStyle='#00b4d8';ctx.lineWidth=2;
+  data.forEach((d,i)=>{const x=pL+i/(data.length-1)*cW;const y=pT+cH-(d.tr-minTR)/(maxTR-minTR)*cH;i===0?ctx.moveTo(x,y):ctx.lineTo(x,y);});
+  ctx.stroke();
+  // Temp line
+  ctx.beginPath();ctx.strokeStyle='#ef4444';ctx.lineWidth=2;
+  data.forEach((d,i)=>{const x=pL+i/(data.length-1)*cW;const y=pT+cH-(d.temp-14)/12*cH;i===0?ctx.moveTo(x,y):ctx.lineTo(x,y);});
+  ctx.stroke();
+  // chiller capacity line
+  ctx.strokeStyle='#f59e0b40';ctx.lineWidth=1;ctx.setLineDash([4,4]);
+  const capY=pT+cH-(435-minTR)/(maxTR-minTR)*cH;
+  ctx.beginPath();ctx.moveTo(pL,capY);ctx.lineTo(pL+cW,capY);ctx.stroke();ctx.setLineDash([]);
+  ctx.fillStyle='#f59e0b';ctx.font='9px Segoe UI';ctx.textAlign='left';ctx.fillText('N+1 Capacity: 435 TR',pL+4,capY-4);
+  // axis labels
+  ctx.fillStyle='#94a3b8';ctx.font='9px Segoe UI';ctx.textAlign='right';
+  ctx.fillText(maxTR+' TR',pL-4,pT+8);ctx.fillText(minTR+' TR',pL-4,pT+cH);
+  ctx.textAlign='center';ctx.fillText('60s',pL,h-8);ctx.fillText('Now',pL+cW,h-8);
+  // legend
+  ctx.fillStyle='#00b4d8';ctx.fillRect(pL+cW-180,pT+8,10,3);ctx.fillStyle='#e2e8f0';ctx.font='9px Segoe UI';ctx.textAlign='left';ctx.fillText('Cooling Load (TR)',pL+cW-165,pT+13);
+  ctx.fillStyle='#ef4444';ctx.fillRect(pL+cW-180,pT+22,10,3);ctx.fillStyle='#e2e8f0';ctx.fillText('Avg Inlet Temp (C)',pL+cW-165,pT+27);
+}
+
+// GPU CLUSTER CHART
+function dtDrawGpu(){
+  const cv=document.getElementById('dtGpuChart');if(!cv)return;
+  const s=setupCanvas('dtGpuChart',200);if(!s)return;
+  const{ctx,w,h}=s;
+  const data=DT.gpuHistory;if(data.length<2)return;
+  const pL=50,pR=20,pT=20,pB=30,cW=w-pL-pR,cH=h-pT-pB;
+  ctx.fillStyle='#0d1320';ctx.fillRect(pL,pT,cW,cH);
+  ctx.strokeStyle='#1a2235';ctx.lineWidth=1;
+  for(let i=0;i<=4;i++){const y=pT+cH/4*i;ctx.beginPath();ctx.moveTo(pL,y);ctx.lineTo(pL+cW,y);ctx.stroke();}
+  // Load area
+  ctx.beginPath();
+  data.forEach((d,i)=>{const x=pL+i/(data.length-1)*cW;const y=pT+cH-(d.load-800)/300*cH;i===0?ctx.moveTo(x,y):ctx.lineTo(x,y);});
+  ctx.strokeStyle='#76b900';ctx.lineWidth=2;ctx.stroke();
+  // fill
+  const lastX=pL+(data.length-1)/(data.length-1)*cW;
+  ctx.lineTo(lastX,pT+cH);ctx.lineTo(pL,pT+cH);ctx.closePath();
+  ctx.fillStyle='#76b90015';ctx.fill();
+  // utilization line
+  ctx.beginPath();ctx.strokeStyle='#f59e0b';ctx.lineWidth=1.5;
+  data.forEach((d,i)=>{const x=pL+i/(data.length-1)*cW;const y=pT+cH-d.util/100*cH;i===0?ctx.moveTo(x,y):ctx.lineTo(x,y);});
+  ctx.stroke();
+  // 1MW capacity line
+  ctx.strokeStyle='#ef444440';ctx.lineWidth=1;ctx.setLineDash([4,4]);
+  const mwY=pT+cH-(1000-800)/300*cH;
+  ctx.beginPath();ctx.moveTo(pL,mwY);ctx.lineTo(pL+cW,mwY);ctx.stroke();ctx.setLineDash([]);
+  ctx.fillStyle='#ef4444';ctx.font='9px Segoe UI';ctx.textAlign='left';ctx.fillText('1 MW Capacity',pL+4,mwY-4);
+  // axis
+  ctx.fillStyle='#94a3b8';ctx.font='9px Segoe UI';ctx.textAlign='right';
+  ctx.fillText('1100 kW',pL-4,pT+8);ctx.fillText('800 kW',pL-4,pT+cH);
+  ctx.textAlign='center';ctx.fillText('60s',pL,h-8);ctx.fillText('Now',pL+cW,h-8);
+  // legend
+  ctx.fillStyle='#76b900';ctx.fillRect(pL+cW-180,pT+8,10,3);ctx.fillStyle='#e2e8f0';ctx.font='9px Segoe UI';ctx.textAlign='left';ctx.fillText('IT Load (kW)',pL+cW-165,pT+13);
+  ctx.fillStyle='#f59e0b';ctx.fillRect(pL+cW-180,pT+22,10,3);ctx.fillStyle='#e2e8f0';ctx.fillText('GPU Utilization (%)',pL+cW-165,pT+27);
+  // current values
+  const last=data[data.length-1];
+  ctx.fillStyle='#e2e8f0';ctx.font='bold 11px Segoe UI';ctx.textAlign='right';
+  ctx.fillText(Math.round(last.load)+' kW | '+Math.round(last.util)+'% util | 576 GPUs active',pL+cW,h-8);
+}
+
+let dtAnimId=null;
+function dtStartSim(){
+  if(DT.running)return;
+  DT.running=true;
+  dtInit();
+  function loop(){
+    if(!DT.running)return;
+    dtUpdate();
+    dtDraw3D();
+    dtDrawHeatmap();
+    dtDrawPower();
+    dtDrawCooling();
+    dtDrawGpu();
+    dtDrawAlerts();
+    dtAnimId=requestAnimationFrame(loop);
+  }
+  loop();
+}
+function dtStopSim(){DT.running=false;if(dtAnimId)cancelAnimationFrame(dtAnimId);dtAnimId=null;}
+
+const sectionCharts={overview:[],power:[drawPowerFlow,drawPowerBudget,drawEnergyMonthly,drawTariffDonut,drawEnergyStacked,drawEnergyUsd,drawEnergySavings],cooling:[],racks:[],network:[drawNetOpex2],facility:[],timeline:[drawGantt],financial:[],capex:[drawCapexWaterfall,drawCapexDonut],opex:[drawOpexPie,drawOpexTreemap,drawEnergyOpex,drawNetOpex],oem:[drawDellCost],twin:[dtStartSim]};
 
 // INIT - draw charts for the currently active section
 function drawActiveSection(){const active=document.querySelector('.nav-btn.active');if(!active)return;const sec=active.dataset.section;const fns=sectionCharts[sec];if(fns)fns.forEach(f=>f());}

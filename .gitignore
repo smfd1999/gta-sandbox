@@ -10,5 +10,6 @@ Desktop.ini
 .vscode/
 .idea/
 
-# Claude Code
-.claude/
+# Claude Code — ignore everything except skills (shared via git)
+.claude/*
+!.claude/skills/

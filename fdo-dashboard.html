@@ -6,19 +6,19 @@
 <title>FDO - Fermaca Digital Origins Dashboard</title>
 <style>
   *{margin:0;padding:0;box-sizing:border-box}
-  :root{--bg:#0a0e17;--surface:#111827;--surface2:#1a2235;--border:#2a3550;--accent:#76b900;--accent2:#00b4d8;--warn:#f59e0b;--danger:#ef4444;--text:#e2e8f0;--text2:#94a3b8;--success:#22c55e}
+  :root{--bg:#0a0e17;--surface:#111827;--surface2:#1a2235;--border:#2a3550;--accent:#00889A;--accent2:#FCA311;--warn:#f59e0b;--danger:#ef4444;--text:#e2e8f0;--text2:#94a3b8;--success:#22c55e}
   body{font-family:'Segoe UI',system-ui,sans-serif;background:var(--bg);color:var(--text);overflow-x:hidden}
   .header{background:linear-gradient(135deg,#111827,#1a2235);border-bottom:1px solid var(--border);padding:16px 32px;display:flex;align-items:center;justify-content:space-between}
   .header-left{display:flex;align-items:center;gap:16px}
   .logo{width:40px;height:40px;background:var(--accent);border-radius:8px;display:flex;align-items:center;justify-content:center;font-weight:900;font-size:18px;color:#000}
   .header h1{font-size:20px;font-weight:600} .header h1 span{color:var(--accent)}
   .header-right{display:flex;gap:12px;align-items:center}
-  .status-badge{padding:4px 12px;border-radius:20px;font-size:12px;font-weight:600;background:rgba(118,185,0,.15);color:var(--accent);border:1px solid rgba(118,185,0,.3)}
+  .status-badge{padding:4px 12px;border-radius:20px;font-size:12px;font-weight:600;background:rgba(0,136,154,.15);color:var(--accent);border:1px solid rgba(0,136,154,.3)}
   .status-date{color:var(--text2);font-size:13px}
   .nav{display:flex;gap:4px;padding:8px 32px;background:var(--surface);border-bottom:1px solid var(--border);overflow-x:auto}
   .nav-btn{padding:8px 16px;border:none;background:transparent;color:var(--text2);cursor:pointer;border-radius:6px;font-size:13px;font-weight:500;white-space:nowrap;transition:all .2s}
   .nav-btn:hover{background:var(--surface2);color:var(--text)}
-  .nav-btn.active{background:rgba(118,185,0,.15);color:var(--accent)}
+  .nav-btn.active{background:rgba(0,136,154,.15);color:var(--accent)}
   .main{padding:24px 32px;max-width:1600px;margin:0 auto}
   .section{display:none}.section.active{display:block}
   .kpi-row{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:16px;margin-bottom:24px}
@@ -37,10 +37,10 @@
   .data-table td{padding:8px 12px;border-bottom:1px solid rgba(42,53,80,.5)}
   .data-table tr:last-child td{border-bottom:none}
   .tag{display:inline-block;padding:2px 8px;border-radius:4px;font-size:11px;font-weight:600}
-  .tag-green{background:rgba(34,197,94,.15);color:var(--success)}.tag-yellow{background:rgba(245,158,11,.15);color:var(--warn)}.tag-blue{background:rgba(0,180,216,.15);color:var(--accent2)}.tag-red{background:rgba(239,68,68,.15);color:var(--danger)}
+  .tag-green{background:rgba(34,197,94,.15);color:var(--success)}.tag-yellow{background:rgba(245,158,11,.15);color:var(--warn)}.tag-blue{background:rgba(252,163,17,.15);color:var(--accent2)}.tag-red{background:rgba(239,68,68,.15);color:var(--danger)}
   .rack-grid{display:grid;grid-template-columns:repeat(9,1fr);gap:8px;padding:16px;background:#0d1320;border-radius:8px}
   .rack{background:var(--surface2);border:2px solid var(--border);border-radius:6px;padding:8px;text-align:center;cursor:pointer;transition:all .2s;min-height:100px;display:flex;flex-direction:column;justify-content:space-between}
-  .rack:hover{border-color:var(--accent);transform:translateY(-2px);box-shadow:0 4px 12px rgba(118,185,0,.2)}
+  .rack:hover{border-color:var(--accent);transform:translateY(-2px);box-shadow:0 4px 12px rgba(0,136,154,.2)}
   .rack-id{font-size:10px;color:var(--text2);font-weight:600}.rack-icon{font-size:24px;margin:4px 0}.rack-load{font-size:11px;font-weight:700;color:var(--accent)}.rack-type{font-size:9px;color:var(--text2)}.rack-temp{font-size:10px;color:var(--accent2)}
   .row-label{grid-column:1/-1;text-align:center;font-size:11px;color:var(--text2);padding:4px;text-transform:uppercase;letter-spacing:1px}
   .timeline-bar{display:flex;align-items:center;margin-bottom:6px;font-size:12px}
@@ -172,8 +172,8 @@
     <div class="panel">
       <div class="panel-title"><span class="dot dot-red"></span> Why This Project Matters</div>
       <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;padding:10px">
-        <div style="background:rgba(118,185,0,.08);border:1px solid rgba(118,185,0,.3);border-radius:8px;padding:14px;text-align:center"><div style="font-size:12px;font-weight:700;color:var(--accent)">First of its Kind</div><div style="font-size:10px;color:var(--text2);margin-top:4px">First AI Factory in Mexico &amp; LATAM</div></div>
-        <div style="background:rgba(0,180,216,.08);border:1px solid rgba(0,180,216,.3);border-radius:8px;padding:14px;text-align:center"><div style="font-size:12px;font-weight:700;color:var(--accent2)">Innovation Hub</div><div style="font-size:10px;color:var(--text2);margin-top:4px">Startups, universities, enterprises &amp; govt.</div></div>
+        <div style="background:rgba(0,136,154,.08);border:1px solid rgba(0,136,154,.3);border-radius:8px;padding:14px;text-align:center"><div style="font-size:12px;font-weight:700;color:var(--accent)">First of its Kind</div><div style="font-size:10px;color:var(--text2);margin-top:4px">First AI Factory in Mexico &amp; LATAM</div></div>
+        <div style="background:rgba(252,163,17,.08);border:1px solid rgba(252,163,17,.3);border-radius:8px;padding:14px;text-align:center"><div style="font-size:12px;font-weight:700;color:var(--accent2)">Innovation Hub</div><div style="font-size:10px;color:var(--text2);margin-top:4px">Startups, universities, enterprises &amp; govt.</div></div>
         <div style="background:rgba(245,158,11,.08);border:1px solid rgba(245,158,11,.3);border-radius:8px;padding:14px;text-align:center"><div style="font-size:12px;font-weight:700;color:var(--warn)">Plan M&eacute;xico</div><div style="font-size:10px;color:var(--text2);margin-top:4px">Core component of national AI strategy</div></div>
         <div style="background:rgba(139,92,246,.08);border:1px solid rgba(139,92,246,.3);border-radius:8px;padding:14px;text-align:center"><div style="font-size:12px;font-weight:700;color:#8b5cf6">Digital City Foundation</div><div style="font-size:10px;color:var(--text2);margin-top:4px">Blueprint for multi-MW expansion</div></div>
       </div>
@@ -194,8 +194,8 @@
   <div class="panel mb-24" style="margin-top:16px">
     <div class="panel-title"><span class="dot dot-blue"></span> Fermaca Dreams Group — Track Record</div>
     <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:10px;padding:10px">
-      <div style="background:rgba(118,185,0,.08);border-radius:8px;padding:14px;text-align:center"><div style="font-size:20px;font-weight:700;color:var(--accent)">60+</div><div style="font-size:10px;color:var(--text2)">Years of Operations</div></div>
-      <div style="background:rgba(0,180,216,.08);border-radius:8px;padding:14px;text-align:center"><div style="font-size:20px;font-weight:700;color:var(--accent2)">$1B+</div><div style="font-size:10px;color:var(--text2)">Equity Capital Raised</div></div>
+      <div style="background:rgba(0,136,154,.08);border-radius:8px;padding:14px;text-align:center"><div style="font-size:20px;font-weight:700;color:var(--accent)">60+</div><div style="font-size:10px;color:var(--text2)">Years of Operations</div></div>
+      <div style="background:rgba(252,163,17,.08);border-radius:8px;padding:14px;text-align:center"><div style="font-size:20px;font-weight:700;color:var(--accent2)">$1B+</div><div style="font-size:10px;color:var(--text2)">Equity Capital Raised</div></div>
       <div style="background:rgba(245,158,11,.08);border-radius:8px;padding:14px;text-align:center"><div style="font-size:20px;font-weight:700;color:var(--warn)">$2B+</div><div style="font-size:10px;color:var(--text2)">Debt Capital Secured</div></div>
       <div style="background:rgba(139,92,246,.08);border-radius:8px;padding:14px;text-align:center"><div style="font-size:20px;font-weight:700;color:#8b5cf6">$4B</div><div style="font-size:10px;color:var(--text2)">Commercial Value</div></div>
       <div style="background:rgba(239,68,68,.08);border-radius:8px;padding:14px;text-align:center"><div style="font-size:20px;font-weight:700;color:var(--danger)">3,000+</div><div style="font-size:10px;color:var(--text2)">KM Contracted ROW</div></div>
@@ -442,7 +442,7 @@
         <thead><tr><th>Model</th><th>IT Load Range</th><th>Cooling Capacity</th><th>Max Flow</th></tr></thead>
         <tbody>
           <tr><td>S4-Base</td><td>15 - 50 kW</td><td>52 kW</td><td>36 GPM</td></tr>
-          <tr style="background:rgba(0,180,216,.06);font-weight:600"><td>S4-GPU <span style="color:var(--accent2)">&#9664; FDO</span></td><td>50 - 85 kW</td><td>80-85 kW</td><td>36 GPM</td></tr>
+          <tr style="background:rgba(252,163,17,.06);font-weight:600"><td>S4-GPU <span style="color:var(--accent2)">&#9664; FDO</span></td><td>50 - 85 kW</td><td>80-85 kW</td><td>36 GPM</td></tr>
           <tr><td>S4-MAX</td><td>85 - 100 kW</td><td>100 kW</td><td>50 GPM</td></tr>
           <tr><td colspan="4" style="font-size:11px;color:var(--text2);padding-top:8px">All models support field-upgradeable heat exchangers for larger sizes. Scalable to 1MW+ with liquid-to-chip integration.</td></tr>
         </tbody>
@@ -556,7 +556,7 @@
           <tr><td colspan="2">DDC Cooling Margin</td><td></td><td>10.8 kW</td></tr>
         </tbody>
       </table>
-      <div style="margin-top:16px;padding:12px;background:rgba(118,185,0,.06);border-radius:6px;font-size:12px;color:var(--text2)">
+      <div style="margin-top:16px;padding:12px;background:rgba(0,136,154,.06);border-radius:6px;font-size:12px;color:var(--text2)">
         <span style="color:var(--accent);font-weight:700">GPU Summary:</span> 72 servers across 15 racks (14x5 + 1x2) = 576 NVIDIA B300 GPUs. Total GPU IT load: <b>995.8 kW</b>. Each XE9780 chassis is 10 RU with max calculated power of 11,580 W.
       </div>
     </div>
@@ -644,7 +644,7 @@
         <tr><td>Annual Maintenance (17 cabs)</td><td>00000118</td><td style="text-align:right">$42,500</td></tr>
         <tr><td>Spares Kit (Rosenberg)</td><td></td><td style="text-align:right">$4,500</td></tr>
         <tr style="font-weight:700;border-top:2px solid var(--border)"><td>Subtotal — Optional / Annual</td><td>00000118</td><td style="text-align:right">$47,000</td></tr>
-        <tr style="font-weight:700;border-top:2px solid var(--accent);background:rgba(118,185,0,.05)"><td style="color:var(--accent)">Grand Total (DDC)</td><td></td><td style="text-align:right;color:var(--accent);font-size:15px">$953,460</td></tr>
+        <tr style="font-weight:700;border-top:2px solid var(--accent);background:rgba(0,136,154,.05)"><td style="color:var(--accent)">Grand Total (DDC)</td><td></td><td style="text-align:right;color:var(--accent);font-size:15px">$953,460</td></tr>
         <tr><td colspan="2" style="font-size:11px;color:var(--text2)">Recurring annual: $65,450/yr (Maintenance $42,500 + DCIM $22,950)</td><td></td></tr>
       </tbody>
     </table>
@@ -655,7 +655,7 @@
 <div class="section" id="sec-network">
   <div class="section-title">Network Topology</div>
   <div class="kpi-row"><div class="kpi-card"><div class="kpi-label">InfiniBand Switches</div><div class="kpi-value kpi-green">12</div><div class="kpi-sub">NVIDIA Q3400-X800</div></div><div class="kpi-card"><div class="kpi-label">Ethernet Switches</div><div class="kpi-value kpi-blue">8</div><div class="kpi-sub">NVIDIA SN5610 (Spectrum-4)</div></div><div class="kpi-card"><div class="kpi-label">Storage Switches</div><div class="kpi-value kpi-yellow">2</div><div class="kpi-sub">NVIDIA SN4700 (Spectrum-3)</div></div><div class="kpi-card"><div class="kpi-label">Mgmt Switches</div><div class="kpi-value">8</div><div class="kpi-sub">NVIDIA SN2201 (OOB)</div></div><div class="kpi-card"><div class="kpi-label">Uplinks</div><div class="kpi-value">4x100G</div><div class="kpi-sub">QSFP28 to upstream</div></div></div>
-  <div class="panel mb-24"><div class="panel-title"><span class="dot dot-green"></span> Network Architecture</div><div class="net-layer" style="border-color:rgba(245,158,11,.3)"><div class="net-layer-title" style="color:var(--warn)">North/South (External) - BGP Peering</div><div class="net-devices"><div class="net-device"><div class="nd-name">Upstream ISP</div><div class="nd-spec">2x 100Gb QSFP28</div></div></div><div class="net-connector">|</div><div class="net-devices"><div class="net-device"><div class="nd-name">Hydra Router 1</div><div class="nd-spec">Edge</div></div><div class="net-device"><div class="nd-name">Hydra Router 2</div><div class="nd-spec">Edge</div></div><div class="net-device"><div class="nd-name">Hydra Router 3</div><div class="nd-spec">Edge</div></div><div class="net-device"><div class="nd-name">Hydra Router 4</div><div class="nd-spec">Edge</div></div></div><div class="net-connector">|</div><div class="net-devices"><div class="net-device"><div class="nd-name">SN5610 x8</div><div class="nd-spec">Ethernet (Spectrum-4)</div></div><div class="net-device"><div class="nd-name">SN4700 x2</div><div class="nd-spec">Storage (Spectrum-3)</div></div><div class="net-device"><div class="nd-name">SN2201 x8</div><div class="nd-spec">OOB Mgmt</div></div></div></div><div class="net-connector" style="font-size:24px">&#8595;</div><div class="net-layer" style="border-color:rgba(118,185,0,.3)"><div class="net-layer-title" style="color:var(--accent)">East/West (GPU Fabric) - InfiniBand NDR</div><div class="net-devices"><div class="net-device" style="border-color:rgba(118,185,0,.4)"><div class="nd-name">Q3400-X800 #1</div><div class="nd-spec">IB NDR</div></div><div class="net-device" style="border-color:rgba(118,185,0,.4)"><div class="nd-name">Q3400-X800 #2</div><div class="nd-spec">IB NDR</div></div><div class="net-device" style="border-color:rgba(118,185,0,.4)"><div class="nd-name">Q3400-X800 #3</div><div class="nd-spec">IB NDR</div></div><div class="net-device" style="border-color:rgba(118,185,0,.4)"><div class="nd-name">...</div><div class="nd-spec">x12 total</div></div></div><div class="net-connector">|</div><div class="net-devices"><div class="net-device" style="border-color:rgba(118,185,0,.4)"><div class="nd-name">B300 HGX Nodes</div><div class="nd-spec">72 nodes x 8 GPU</div></div></div></div></div>
+  <div class="panel mb-24"><div class="panel-title"><span class="dot dot-green"></span> Network Architecture</div><div class="net-layer" style="border-color:rgba(245,158,11,.3)"><div class="net-layer-title" style="color:var(--warn)">North/South (External) - BGP Peering</div><div class="net-devices"><div class="net-device"><div class="nd-name">Upstream ISP</div><div class="nd-spec">2x 100Gb QSFP28</div></div></div><div class="net-connector">|</div><div class="net-devices"><div class="net-device"><div class="nd-name">Hydra Router 1</div><div class="nd-spec">Edge</div></div><div class="net-device"><div class="nd-name">Hydra Router 2</div><div class="nd-spec">Edge</div></div><div class="net-device"><div class="nd-name">Hydra Router 3</div><div class="nd-spec">Edge</div></div><div class="net-device"><div class="nd-name">Hydra Router 4</div><div class="nd-spec">Edge</div></div></div><div class="net-connector">|</div><div class="net-devices"><div class="net-device"><div class="nd-name">SN5610 x8</div><div class="nd-spec">Ethernet (Spectrum-4)</div></div><div class="net-device"><div class="nd-name">SN4700 x2</div><div class="nd-spec">Storage (Spectrum-3)</div></div><div class="net-device"><div class="nd-name">SN2201 x8</div><div class="nd-spec">OOB Mgmt</div></div></div></div><div class="net-connector" style="font-size:24px">&#8595;</div><div class="net-layer" style="border-color:rgba(0,136,154,.3)"><div class="net-layer-title" style="color:var(--accent)">East/West (GPU Fabric) - InfiniBand NDR</div><div class="net-devices"><div class="net-device" style="border-color:rgba(0,136,154,.4)"><div class="nd-name">Q3400-X800 #1</div><div class="nd-spec">IB NDR</div></div><div class="net-device" style="border-color:rgba(0,136,154,.4)"><div class="nd-name">Q3400-X800 #2</div><div class="nd-spec">IB NDR</div></div><div class="net-device" style="border-color:rgba(0,136,154,.4)"><div class="nd-name">Q3400-X800 #3</div><div class="nd-spec">IB NDR</div></div><div class="net-device" style="border-color:rgba(0,136,154,.4)"><div class="nd-name">...</div><div class="nd-spec">x12 total</div></div></div><div class="net-connector">|</div><div class="net-devices"><div class="net-device" style="border-color:rgba(0,136,154,.4)"><div class="nd-name">B300 HGX Nodes</div><div class="nd-spec">72 nodes x 8 GPU</div></div></div></div></div>
   <div class="grid-2"><div class="panel"><div class="panel-title"><span class="dot dot-yellow"></span> Upstream Handoff Requirements</div><ul class="info-list"><li><span class="il-label">Uplink Ports</span><span class="il-value">2x 100Gb QSFP28</span></li><li><span class="il-label">Protocol</span><span class="il-value">BGP (eBGP peering)</span></li><li><span class="il-label">IPv4 Subnet</span><span class="il-value">/25</span></li><li><span class="il-label">NAT</span><span class="il-value">DNAT</span></li><li><span class="il-label">MMR Location</span><span class="il-value">Ground Floor</span></li></ul></div><div class="panel"><div class="panel-title"><span class="dot dot-green"></span> GPU Fabric Details</div><ul class="info-list"><li><span class="il-label">IB Switches</span><span class="il-value">12x Q3400-X800</span></li><li><span class="il-label">IB Generation</span><span class="il-value">NDR (Next Data Rate)</span></li><li><span class="il-label">Fabric Type</span><span class="il-value">Full fat-tree</span></li><li><span class="il-label">GPU-to-GPU BW</span><span class="il-value">400 Gbps per port</span></li><li><span class="il-label">Total GPU Endpoints</span><span class="il-value">576 GPUs</span></li></ul></div></div>
   <div class="section-title" style="margin-top:24px">Network &amp; Connectivity OPEX</div>
   <div class="kpi-row">
@@ -844,10 +844,10 @@
         <tr><td>Q4 2026</td><td>$4.45</td><td style="text-align:right">$4.98M</td><td style="text-align:right">$0.68M</td><td style="text-align:right">$3.25M</td><td style="text-align:right;color:var(--accent)">$1.06M</td><td style="text-align:right">$2.18M</td><td style="text-align:right;color:var(--accent)">1.33x</td></tr>
         <tr><td>Q1 2027</td><td>$4.40</td><td style="text-align:right">$4.93M</td><td style="text-align:right">$0.68M</td><td style="text-align:right">$3.25M</td><td style="text-align:right;color:var(--accent)">$1.00M</td><td style="text-align:right">$3.18M</td><td style="text-align:right;color:var(--accent)">1.31x</td></tr>
         <tr><td>Q2 2027</td><td>$4.35</td><td style="text-align:right">$4.87M</td><td style="text-align:right">$0.68M</td><td style="text-align:right">$3.25M</td><td style="text-align:right;color:var(--accent)">$0.95M</td><td style="text-align:right">$4.12M</td><td style="text-align:right;color:var(--accent)">1.29x</td></tr>
-        <tr style="background:rgba(118,185,0,.04)"><td>Q3 2027</td><td>$4.25</td><td style="text-align:right">$4.76M</td><td style="text-align:right">$0.68M</td><td style="text-align:right">$3.25M</td><td style="text-align:right;color:var(--accent)">$0.84M</td><td style="text-align:right">$4.96M</td><td style="text-align:right;color:var(--accent2)">1.26x</td></tr>
-        <tr style="background:rgba(118,185,0,.04)"><td>Q4 2027</td><td>$4.15</td><td style="text-align:right">$4.65M</td><td style="text-align:right">$0.68M</td><td style="text-align:right">$3.25M</td><td style="text-align:right;color:var(--accent)">$0.73M</td><td style="text-align:right">$5.69M</td><td style="text-align:right;color:var(--accent2)">1.22x</td></tr>
-        <tr style="background:rgba(118,185,0,.04)"><td>Q1 2028</td><td>$4.05</td><td style="text-align:right">$4.54M</td><td style="text-align:right">$0.68M</td><td style="text-align:right">$3.25M</td><td style="text-align:right;color:var(--accent)">$0.61M</td><td style="text-align:right">$6.30M</td><td style="text-align:right;color:var(--accent2)">1.19x</td></tr>
-        <tr style="background:rgba(118,185,0,.04)"><td>Q2 2028</td><td>$3.95</td><td style="text-align:right">$4.42M</td><td style="text-align:right">$0.68M</td><td style="text-align:right">$3.25M</td><td style="text-align:right;color:var(--accent)">$0.50M</td><td style="text-align:right">$6.80M</td><td style="text-align:right;color:var(--warn)">1.15x</td></tr>
+        <tr style="background:rgba(0,136,154,.04)"><td>Q3 2027</td><td>$4.25</td><td style="text-align:right">$4.76M</td><td style="text-align:right">$0.68M</td><td style="text-align:right">$3.25M</td><td style="text-align:right;color:var(--accent)">$0.84M</td><td style="text-align:right">$4.96M</td><td style="text-align:right;color:var(--accent2)">1.26x</td></tr>
+        <tr style="background:rgba(0,136,154,.04)"><td>Q4 2027</td><td>$4.15</td><td style="text-align:right">$4.65M</td><td style="text-align:right">$0.68M</td><td style="text-align:right">$3.25M</td><td style="text-align:right;color:var(--accent)">$0.73M</td><td style="text-align:right">$5.69M</td><td style="text-align:right;color:var(--accent2)">1.22x</td></tr>
+        <tr style="background:rgba(0,136,154,.04)"><td>Q1 2028</td><td>$4.05</td><td style="text-align:right">$4.54M</td><td style="text-align:right">$0.68M</td><td style="text-align:right">$3.25M</td><td style="text-align:right;color:var(--accent)">$0.61M</td><td style="text-align:right">$6.30M</td><td style="text-align:right;color:var(--accent2)">1.19x</td></tr>
+        <tr style="background:rgba(0,136,154,.04)"><td>Q2 2028</td><td>$3.95</td><td style="text-align:right">$4.42M</td><td style="text-align:right">$0.68M</td><td style="text-align:right">$3.25M</td><td style="text-align:right;color:var(--accent)">$0.50M</td><td style="text-align:right">$6.80M</td><td style="text-align:right;color:var(--warn)">1.15x</td></tr>
         <tr style="background:rgba(245,158,11,.04)"><td>Q3 2028</td><td>$3.85</td><td style="text-align:right">$4.31M</td><td style="text-align:right">$0.68M</td><td style="text-align:right">$3.25M</td><td style="text-align:right;color:var(--accent)">$0.39M</td><td style="text-align:right">$7.19M</td><td style="text-align:right;color:var(--warn)">1.12x</td></tr>
         <tr style="background:rgba(245,158,11,.04)"><td>Q4 2028</td><td>$3.75</td><td style="text-align:right">$4.20M</td><td style="text-align:right">$0.68M</td><td style="text-align:right">$3.25M</td><td style="text-align:right;color:var(--accent2)">$0.28M</td><td style="text-align:right">$7.46M</td><td style="text-align:right;color:var(--warn)">1.08x</td></tr>
         <tr style="background:rgba(245,158,11,.04)"><td>Q1 2029</td><td>$3.65</td><td style="text-align:right">$4.09M</td><td style="text-align:right">$0.68M</td><td style="text-align:right">$3.25M</td><td style="text-align:right;color:var(--accent2)">$0.17M</td><td style="text-align:right">$7.63M</td><td style="text-align:right;color:var(--warn)">1.05x</td></tr>
@@ -975,7 +975,7 @@
 
   <div class="panel mb-24" style="margin-top:20px">
     <div class="panel-title"><span class="dot dot-blue"></span> OPEX Line Items</div>
-    <div style="max-height:600px;overflow-y:auto"><table class="data-table" style="font-size:12px"><thead><tr><th>Category</th><th>Item</th><th>MXN/mo</th><th>MXN/yr</th></tr></thead><tbody><tr style="background:rgba(245,158,11,.05)"><td colspan="2" style="font-weight:700;color:var(--warn)">ENERGY</td><td style="text-align:right;font-weight:700">1,734,918</td><td style="text-align:right;font-weight:700">20,819,016</td></tr><tr><td></td><td>Electricity (IT 1MW, PUE 1.33)</td><td style="text-align:right">1,734,918</td><td style="text-align:right">20,819,016</td></tr><tr style="background:rgba(0,180,216,.05)"><td colspan="2" style="font-weight:700;color:var(--accent2)">TELECOM</td><td style="text-align:right;font-weight:700">654,980</td><td style="text-align:right;font-weight:700">7,859,760</td></tr><tr><td></td><td>Internet/Transit 1 Gb</td><td style="text-align:right">39,780</td><td style="text-align:right">477,360</td></tr><tr><td></td><td>Internet/Transit 100 Gb</td><td style="text-align:right">560,000</td><td style="text-align:right">6,720,000</td></tr><tr><td></td><td>/25 Subnet</td><td style="text-align:right">55,200</td><td style="text-align:right">662,400</td></tr><tr style="background:rgba(118,185,0,.05)"><td colspan="2" style="font-weight:700;color:var(--accent)">O&amp;M INFRA</td><td style="text-align:right;font-weight:700">454,000</td><td style="text-align:right;font-weight:700">5,448,000</td></tr><tr><td></td><td>Chillers/CDU/CRAH (PM+chemicals)</td><td style="text-align:right">140,000</td><td style="text-align:right">1,680,000</td></tr><tr><td></td><td>UPS (PM+spares)</td><td style="text-align:right">90,000</td><td style="text-align:right">1,080,000</td></tr><tr><td></td><td>Generators (PM)</td><td style="text-align:right">60,000</td><td style="text-align:right">720,000</td></tr><tr><td></td><td>BMS/EPMS</td><td style="text-align:right">40,000</td><td style="text-align:right">480,000</td></tr><tr><td></td><td>Other O&amp;M items</td><td style="text-align:right">124,000</td><td style="text-align:right">1,488,000</td></tr><tr style="background:rgba(139,92,246,.05)"><td colspan="2" style="font-weight:700;color:#8b5cf6">PERSONNEL (6 FTE)</td><td style="text-align:right;font-weight:700">410,000</td><td style="text-align:right;font-weight:700">4,920,000</td></tr><tr style="background:rgba(239,68,68,.05)"><td colspan="2" style="font-weight:700;color:var(--danger)">INSURANCE</td><td style="text-align:right;font-weight:700">350,000</td><td style="text-align:right;font-weight:700">4,200,000</td></tr><tr style="background:rgba(34,197,94,.05)"><td colspan="2" style="font-weight:700;color:var(--success)">OEM SUPPORT</td><td style="text-align:right;font-weight:700">145,000</td><td style="text-align:right;font-weight:700">1,740,000</td></tr><tr style="background:rgba(100,116,139,.05)"><td colspan="2" style="font-weight:700">OTHER (NOC,FSCA,Brokkr,etc)</td><td style="text-align:right;font-weight:700">187,000</td><td style="text-align:right;font-weight:700">2,244,000</td></tr></tbody></table></div>
+    <div style="max-height:600px;overflow-y:auto"><table class="data-table" style="font-size:12px"><thead><tr><th>Category</th><th>Item</th><th>MXN/mo</th><th>MXN/yr</th></tr></thead><tbody><tr style="background:rgba(245,158,11,.05)"><td colspan="2" style="font-weight:700;color:var(--warn)">ENERGY</td><td style="text-align:right;font-weight:700">1,734,918</td><td style="text-align:right;font-weight:700">20,819,016</td></tr><tr><td></td><td>Electricity (IT 1MW, PUE 1.33)</td><td style="text-align:right">1,734,918</td><td style="text-align:right">20,819,016</td></tr><tr style="background:rgba(252,163,17,.05)"><td colspan="2" style="font-weight:700;color:var(--accent2)">TELECOM</td><td style="text-align:right;font-weight:700">654,980</td><td style="text-align:right;font-weight:700">7,859,760</td></tr><tr><td></td><td>Internet/Transit 1 Gb</td><td style="text-align:right">39,780</td><td style="text-align:right">477,360</td></tr><tr><td></td><td>Internet/Transit 100 Gb</td><td style="text-align:right">560,000</td><td style="text-align:right">6,720,000</td></tr><tr><td></td><td>/25 Subnet</td><td style="text-align:right">55,200</td><td style="text-align:right">662,400</td></tr><tr style="background:rgba(0,136,154,.05)"><td colspan="2" style="font-weight:700;color:var(--accent)">O&amp;M INFRA</td><td style="text-align:right;font-weight:700">454,000</td><td style="text-align:right;font-weight:700">5,448,000</td></tr><tr><td></td><td>Chillers/CDU/CRAH (PM+chemicals)</td><td style="text-align:right">140,000</td><td style="text-align:right">1,680,000</td></tr><tr><td></td><td>UPS (PM+spares)</td><td style="text-align:right">90,000</td><td style="text-align:right">1,080,000</td></tr><tr><td></td><td>Generators (PM)</td><td style="text-align:right">60,000</td><td style="text-align:right">720,000</td></tr><tr><td></td><td>BMS/EPMS</td><td style="text-align:right">40,000</td><td style="text-align:right">480,000</td></tr><tr><td></td><td>Other O&amp;M items</td><td style="text-align:right">124,000</td><td style="text-align:right">1,488,000</td></tr><tr style="background:rgba(139,92,246,.05)"><td colspan="2" style="font-weight:700;color:#8b5cf6">PERSONNEL (6 FTE)</td><td style="text-align:right;font-weight:700">410,000</td><td style="text-align:right;font-weight:700">4,920,000</td></tr><tr style="background:rgba(239,68,68,.05)"><td colspan="2" style="font-weight:700;color:var(--danger)">INSURANCE</td><td style="text-align:right;font-weight:700">350,000</td><td style="text-align:right;font-weight:700">4,200,000</td></tr><tr style="background:rgba(34,197,94,.05)"><td colspan="2" style="font-weight:700;color:var(--success)">OEM SUPPORT</td><td style="text-align:right;font-weight:700">145,000</td><td style="text-align:right;font-weight:700">1,740,000</td></tr><tr style="background:rgba(100,116,139,.05)"><td colspan="2" style="font-weight:700">OTHER (NOC,FSCA,Brokkr,etc)</td><td style="text-align:right;font-weight:700">187,000</td><td style="text-align:right;font-weight:700">2,244,000</td></tr></tbody></table></div>
   </div>
 </div>
 
@@ -1013,7 +1013,7 @@
         <li><span class="il-label">Approach</span><span class="il-value">Partner model (not vendor-client)</span></li>
         <li><span class="il-label">Post-COD</span><span class="il-value">Operations &amp; maintenance continuity</span></li>
       </ul>
-      <div style="margin-top:12px;padding:10px;background:rgba(118,185,0,.06);border-radius:6px;font-size:12px;color:var(--text2);line-height:1.6">
+      <div style="margin-top:12px;padding:10px;background:rgba(0,136,154,.06);border-radius:6px;font-size:12px;color:var(--text2);line-height:1.6">
         <span style="color:var(--accent);font-weight:700">ATN Value Proposition:</span> Fixed scope, fixed price, controlled delivery date, single responsible party. Minimizes risk of cost overruns and rework post-commissioning. ATN assumes full responsibility for final performance — not just equipment supply.
       </div>
     </div>
@@ -1047,8 +1047,8 @@
   <div class="panel mb-24">
     <div class="panel-title"><span class="dot dot-red"></span> ATN Competitive Differentiators</div>
     <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:10px;padding:10px">
-      <div style="background:rgba(118,185,0,.08);border:1px solid rgba(118,185,0,.3);border-radius:8px;padding:14px;text-align:center"><div style="font-size:20px;margin-bottom:4px">&#9989;</div><div style="font-size:12px;font-weight:700;color:var(--accent)">Fully Defined Scope</div><div style="font-size:10px;color:var(--text2);margin-top:4px">Complete scope eliminates ambiguity</div></div>
-      <div style="background:rgba(0,180,216,.08);border:1px solid rgba(0,180,216,.3);border-radius:8px;padding:14px;text-align:center"><div style="font-size:20px;margin-bottom:4px">&#128176;</div><div style="font-size:12px;font-weight:700;color:var(--accent2)">Fixed Price</div><div style="font-size:10px;color:var(--text2);margin-top:4px">Minimizes cost deviation risk</div></div>
+      <div style="background:rgba(0,136,154,.08);border:1px solid rgba(0,136,154,.3);border-radius:8px;padding:14px;text-align:center"><div style="font-size:20px;margin-bottom:4px">&#9989;</div><div style="font-size:12px;font-weight:700;color:var(--accent)">Fully Defined Scope</div><div style="font-size:10px;color:var(--text2);margin-top:4px">Complete scope eliminates ambiguity</div></div>
+      <div style="background:rgba(252,163,17,.08);border:1px solid rgba(252,163,17,.3);border-radius:8px;padding:14px;text-align:center"><div style="font-size:20px;margin-bottom:4px">&#128176;</div><div style="font-size:12px;font-weight:700;color:var(--accent2)">Fixed Price</div><div style="font-size:10px;color:var(--text2);margin-top:4px">Minimizes cost deviation risk</div></div>
       <div style="background:rgba(245,158,11,.08);border:1px solid rgba(245,158,11,.3);border-radius:8px;padding:14px;text-align:center"><div style="font-size:20px;margin-bottom:4px">&#128197;</div><div style="font-size:12px;font-weight:700;color:var(--warn)">Controlled Delivery</div><div style="font-size:10px;color:var(--text2);margin-top:4px">24-week schedule with milestones</div></div>
       <div style="background:rgba(139,92,246,.08);border:1px solid rgba(139,92,246,.3);border-radius:8px;padding:14px;text-align:center"><div style="font-size:20px;margin-bottom:4px">&#128737;</div><div style="font-size:12px;font-weight:700;color:#8b5cf6">Single Responsible Party</div><div style="font-size:10px;color:var(--text2);margin-top:4px">Performance accountability, not just supply</div></div>
     </div>
@@ -1221,7 +1221,7 @@
         <tr><td>Unit Price (pre-tax)</td><td style="font-weight:700">$475,429</td><td style="font-weight:700">$469,169</td><td style="font-weight:700">$525,649</td><td style="color:var(--text2)">TBD</td></tr>
         <tr><td>Subtotal (72 nodes)</td><td>$34,230,887</td><td>$33,780,167</td><td>$37,846,701</td><td style="color:var(--text2)">TBD</td></tr>
         <tr><td>Tax</td><td>$5,476,942 (IVA 16%)</td><td>$5,404,827 (IVA 16%)</td><td>$0 (ships to US)</td><td style="color:var(--text2)">TBD</td></tr>
-        <tr style="font-weight:700;background:rgba(118,185,0,.05)"><td>Total</td><td style="color:var(--warn)">$39,707,828</td><td style="color:var(--warn)">$39,184,993</td><td style="color:var(--accent2)">$37,846,701*</td><td style="color:var(--text2)">TBD</td></tr>
+        <tr style="font-weight:700;background:rgba(0,136,154,.05)"><td>Total</td><td style="color:var(--warn)">$39,707,828</td><td style="color:var(--warn)">$39,184,993</td><td style="color:var(--accent2)">$37,846,701*</td><td style="color:var(--text2)">TBD</td></tr>
         <tr><td>Ship To</td><td>Mexico (CDMX)</td><td>Mexico (CDMX)</td><td>Dallas, TX (USA)</td><td style="color:var(--text2)">TBD</td></tr>
         <tr><td>Support Level</td><td style="color:var(--accent)">ProSupport Plus MC 7x24 4hr</td><td>ProSupport NBD</td><td>3yr Onsite NBD</td><td>Premier 24x7 4hr</td></tr>
         <tr><td>Deployment</td><td>ProDeploy Plus</td><td>—</td><td>Assembly fee included</td><td>—</td></tr>
@@ -1589,10 +1589,10 @@
       <div class="panel-title"><span class="dot dot-green" style="animation:pulse 2s infinite"></span> 3D Facility — Isometric View (Live)</div>
       <canvas id="dt3dCanvas" height="600"></canvas>
       <div style="position:absolute;bottom:20px;left:20px;display:flex;gap:8px;flex-wrap:wrap">
-        <span class="tag" style="background:rgba(118,185,0,.25);color:#76b900;font-size:10px">Normal</span>
+        <span class="tag" style="background:rgba(0,136,154,.25);color:#00889A;font-size:10px">Normal</span>
         <span class="tag" style="background:rgba(245,158,11,.25);color:#f59e0b;font-size:10px">Warm</span>
         <span class="tag" style="background:rgba(239,68,68,.25);color:#ef4444;font-size:10px">Hot</span>
-        <span class="tag" style="background:rgba(0,180,216,.25);color:#00b4d8;font-size:10px">Chilled Water</span>
+        <span class="tag" style="background:rgba(252,163,17,.25);color:#FCA311;font-size:10px">Chilled Water</span>
         <span class="tag" style="background:rgba(139,92,246,.25);color:#8b5cf6;font-size:10px">Power Bus</span>
       </div>
     </div>
@@ -1630,8 +1630,8 @@
   <!-- READINESS + PIPELINE -->
   <div style="margin-top:16px" class="grid-2">
     <div class="panel"><div class="panel-title"><span class="dot dot-green"></span> Data Available (Ready for Omniverse)</div><ul class="checklist"><li><span class="check-icon check-done">&#10003;</span> IT Load profile (1 MW, 17 cabs, 72 nodes)</li><li><span class="check-icon check-done">&#10003;</span> GPU specifications (B300 HGX, 8 GPU/node)</li><li><span class="check-icon check-done">&#10003;</span> Cabinet specs (DDC S-Series v4 NEMA 3R)</li><li><span class="check-icon check-done">&#10003;</span> Power architecture (CFE 23kV, xfmr, gen, UPS)</li><li><span class="check-icon check-done">&#10003;</span> Cooling system (3x 145T chillers, N+1)</li><li><span class="check-icon check-done">&#10003;</span> Network topology (IB NDR + Ethernet + Edge)</li><li><span class="check-icon check-done">&#10003;</span> Room-by-room layout (GF + Basement)</li><li><span class="check-icon check-done">&#10003;</span> Environmental data (2,395m elev, Zone D seismic)</li><li><span class="check-icon check-done">&#10003;</span> Financial model (CAPEX, OPEX, S&amp;U)</li></ul></div>
-    <div class="panel"><div class="panel-title"><span class="dot dot-blue"></span> NVIDIA Digital Twin Pipeline</div><div style="display:flex;gap:12px;flex-wrap:wrap;justify-content:center;padding:16px"><div style="background:rgba(118,185,0,.1);border:2px solid var(--accent);border-radius:10px;padding:16px;text-align:center;flex:1;min-width:130px"><div style="font-size:24px;margin-bottom:4px">1</div><div style="font-weight:600;font-size:13px">BUILD</div><div style="font-size:11px;color:var(--text2);margin-top:4px">Create OpenUSD model<br/>Import CAD/renders</div><div style="margin-top:8px"><span class="tag tag-yellow">In Progress</span></div></div><div style="color:var(--text2);display:flex;align-items:center;font-size:24px">&#8594;</div><div style="background:rgba(0,180,216,.1);border:2px solid var(--accent2);border-radius:10px;padding:16px;text-align:center;flex:1;min-width:130px"><div style="font-size:24px;margin-bottom:4px">2</div><div style="font-weight:600;font-size:13px">SIMULATE</div><div style="font-size:11px;color:var(--text2);margin-top:4px">Thermal + Power<br/>CFD validation</div><div style="margin-top:8px"><span class="tag tag-green">This Demo</span></div></div><div style="color:var(--text2);display:flex;align-items:center;font-size:24px">&#8594;</div><div style="background:rgba(139,92,246,.1);border:2px solid var(--border);border-radius:10px;padding:16px;text-align:center;flex:1;min-width:130px"><div style="font-size:24px;margin-bottom:4px">3</div><div style="font-weight:600;font-size:13px">OPERATE</div><div style="font-size:11px;color:var(--text2);margin-top:4px">Live BMS/DCIM<br/>Predictive analytics</div><div style="margin-top:8px"><span class="tag tag-blue">Post-COD</span></div></div></div>
-    <div style="margin-top:8px;padding:10px;background:rgba(118,185,0,.06);border-radius:6px;font-size:11px;color:var(--text2);line-height:1.6"><span style="color:var(--accent);font-weight:700">What you're seeing:</span> This simulation generates realistic BMS/DCIM telemetry based on FDO's actual specifications — 17 DDC cabinets, 576 B300 GPUs, chilled water cooling at 14C, CFE 23kV feed through 2 MVA transformer, and 2x 1,250 kVA UPS. In the full NVIDIA Omniverse digital twin, this data will drive a photorealistic 3D model with real-time physics, CFD thermal simulation, and predictive failure analytics.</div>
+    <div class="panel"><div class="panel-title"><span class="dot dot-blue"></span> NVIDIA Digital Twin Pipeline</div><div style="display:flex;gap:12px;flex-wrap:wrap;justify-content:center;padding:16px"><div style="background:rgba(0,136,154,.1);border:2px solid var(--accent);border-radius:10px;padding:16px;text-align:center;flex:1;min-width:130px"><div style="font-size:24px;margin-bottom:4px">1</div><div style="font-weight:600;font-size:13px">BUILD</div><div style="font-size:11px;color:var(--text2);margin-top:4px">Create OpenUSD model<br/>Import CAD/renders</div><div style="margin-top:8px"><span class="tag tag-yellow">In Progress</span></div></div><div style="color:var(--text2);display:flex;align-items:center;font-size:24px">&#8594;</div><div style="background:rgba(252,163,17,.1);border:2px solid var(--accent2);border-radius:10px;padding:16px;text-align:center;flex:1;min-width:130px"><div style="font-size:24px;margin-bottom:4px">2</div><div style="font-weight:600;font-size:13px">SIMULATE</div><div style="font-size:11px;color:var(--text2);margin-top:4px">Thermal + Power<br/>CFD validation</div><div style="margin-top:8px"><span class="tag tag-green">This Demo</span></div></div><div style="color:var(--text2);display:flex;align-items:center;font-size:24px">&#8594;</div><div style="background:rgba(139,92,246,.1);border:2px solid var(--border);border-radius:10px;padding:16px;text-align:center;flex:1;min-width:130px"><div style="font-size:24px;margin-bottom:4px">3</div><div style="font-weight:600;font-size:13px">OPERATE</div><div style="font-size:11px;color:var(--text2);margin-top:4px">Live BMS/DCIM<br/>Predictive analytics</div><div style="margin-top:8px"><span class="tag tag-blue">Post-COD</span></div></div></div>
+    <div style="margin-top:8px;padding:10px;background:rgba(0,136,154,.06);border-radius:6px;font-size:11px;color:var(--text2);line-height:1.6"><span style="color:var(--accent);font-weight:700">What you're seeing:</span> This simulation generates realistic BMS/DCIM telemetry based on FDO's actual specifications — 17 DDC cabinets, 576 B300 GPUs, chilled water cooling at 14C, CFE 23kV feed through 2 MVA transformer, and 2x 1,250 kVA UPS. In the full NVIDIA Omniverse digital twin, this data will drive a photorealistic 3D model with real-time physics, CFD thermal simulation, and predictive failure analytics.</div>
     </div>
   </div>
 </div>
@@ -1669,69 +1669,69 @@ addRow('Row A (Front)',0,9);addRow('Row B (Rear)',9,17);
 })();
 
 // GANTT
-function drawGantt(){const c=document.getElementById('ganttChart'),w=document.getElementById('ganttWeeks');if(!c)return;const ms=[{l:'Admin/Docs',s:1,e:24,c:'#94a3b8'},{l:'FEED Engineering',s:2,e:6,c:'#8b5cf6'},{l:'Civil Works',s:6,e:24,c:'#f59e0b'},{l:'Chiller System',s:1,e:24,c:'#00b4d8'},{l:'Generators',s:6,e:19,c:'#ef4444'},{l:'ATS',s:6,e:19,c:'#ef4444'},{l:'Transformer',s:6,e:15,c:'#f59e0b'},{l:'UPS & Batteries',s:6,e:19,c:'#76b900'},{l:'Battery Bank',s:4,e:15,c:'#76b900'},{l:'MV Switchgear',s:8,e:19,c:'#f59e0b'},{l:'Electromechanical',s:3,e:20,c:'#8b5cf6'},{l:'Telecom',s:8,e:22,c:'#06b6d4'},{l:'Security',s:8,e:19,c:'#64748b'},{l:'Commissioning',s:22,e:23,c:'#22c55e'}];c.innerHTML='';ms.forEach(m=>{const left=((m.s-1)/24*100).toFixed(1),width=((m.e-m.s+1)/24*100).toFixed(1);const d=document.createElement('div');d.className='timeline-bar';d.innerHTML='<div class="timeline-label">'+m.l+'</div><div class="timeline-track"><div class="timeline-fill" style="left:'+left+'%;width:'+width+'%;background:'+m.c+'">Wk '+m.s+'-'+m.e+'</div></div>';c.appendChild(d)});w.innerHTML='';for(let i=1;i<=24;i+=2){const s=document.createElement('span');s.textContent='W'+i;w.appendChild(s)}}
+function drawGantt(){const c=document.getElementById('ganttChart'),w=document.getElementById('ganttWeeks');if(!c)return;const ms=[{l:'Admin/Docs',s:1,e:24,c:'#94a3b8'},{l:'FEED Engineering',s:2,e:6,c:'#8b5cf6'},{l:'Civil Works',s:6,e:24,c:'#f59e0b'},{l:'Chiller System',s:1,e:24,c:'#FCA311'},{l:'Generators',s:6,e:19,c:'#ef4444'},{l:'ATS',s:6,e:19,c:'#ef4444'},{l:'Transformer',s:6,e:15,c:'#f59e0b'},{l:'UPS & Batteries',s:6,e:19,c:'#00889A'},{l:'Battery Bank',s:4,e:15,c:'#00889A'},{l:'MV Switchgear',s:8,e:19,c:'#f59e0b'},{l:'Electromechanical',s:3,e:20,c:'#8b5cf6'},{l:'Telecom',s:8,e:22,c:'#06b6d4'},{l:'Security',s:8,e:19,c:'#64748b'},{l:'Commissioning',s:22,e:23,c:'#22c55e'}];c.innerHTML='';ms.forEach(m=>{const left=((m.s-1)/24*100).toFixed(1),width=((m.e-m.s+1)/24*100).toFixed(1);const d=document.createElement('div');d.className='timeline-bar';d.innerHTML='<div class="timeline-label">'+m.l+'</div><div class="timeline-track"><div class="timeline-fill" style="left:'+left+'%;width:'+width+'%;background:'+m.c+'">Wk '+m.s+'-'+m.e+'</div></div>';c.appendChild(d)});w.innerHTML='';for(let i=1;i<=24;i+=2){const s=document.createElement('span');s.textContent='W'+i;w.appendChild(s)}}
 
 // HELPER: Donut
 function drawDonut(id,data,colors,center,lh){const s=setupCanvas(id,lh||280);if(!s)return;const{ctx,w,h}=s;const cx=w*.32,cy=h*.5,r=Math.min(w*.28,h*.42);const total=data.reduce((a,b)=>a+b.v,0);let angle=-Math.PI/2;data.forEach((item,i)=>{const sa=(item.v/total)*Math.PI*2;ctx.beginPath();ctx.moveTo(cx,cy);ctx.arc(cx,cy,r,angle,angle+sa);ctx.closePath();ctx.fillStyle=colors[i%colors.length];ctx.fill();ctx.strokeStyle='#0a0e17';ctx.lineWidth=2;ctx.stroke();angle+=sa});ctx.beginPath();ctx.arc(cx,cy,r*.55,0,Math.PI*2);ctx.fillStyle='#111827';ctx.fill();if(center){ctx.fillStyle='#e2e8f0';ctx.font='bold 14px Segoe UI';ctx.textAlign='center';ctx.fillText(center,cx,cy+5)}const lx=w*.66;let ly=Math.max(16,h*.5-data.length*11);data.forEach((item,i)=>{const y=ly+i*22;ctx.fillStyle=colors[i%colors.length];ctx.fillRect(lx,y,12,12);ctx.fillStyle='#e2e8f0';ctx.font='11px Segoe UI';ctx.textAlign='left';ctx.fillText(item.l+' ('+Math.round(item.v/total*100)+'%)',lx+18,y+10)})}
 
 // HELPER: Horizontal bars
-function drawHBars(id,items,lh,opts){const s=setupCanvas(id,lh);if(!s)return;const{ctx,w,h}=s;const maxV=Math.max(...items.map(x=>x.v));const bH=opts?.bH||24,gap=opts?.gap||8,sY=opts?.sY||10,lW=opts?.lW||160,rP=opts?.rP||130;items.forEach((item,i)=>{const y=sY+i*(bH+gap),bw=Math.max(2,(item.v/maxV)*(w-lW-rP));ctx.fillStyle='#94a3b8';ctx.font='11px Segoe UI';ctx.textAlign='right';ctx.fillText(item.l,lW-8,y+bH*.65);ctx.fillStyle=item.c||'#76b900';rRect(ctx,lW,y,bw,bH,4);ctx.fillStyle='#e2e8f0';ctx.font='bold 11px Segoe UI';ctx.textAlign='left';ctx.fillText('$'+(item.v>=1e6?(item.v/1e6).toFixed(1)+'M':Math.round(item.v/1e3)+'K'),lW+bw+8,y+bH*.65)})}
+function drawHBars(id,items,lh,opts){const s=setupCanvas(id,lh);if(!s)return;const{ctx,w,h}=s;const maxV=Math.max(...items.map(x=>x.v));const bH=opts?.bH||24,gap=opts?.gap||8,sY=opts?.sY||10,lW=opts?.lW||160,rP=opts?.rP||130;items.forEach((item,i)=>{const y=sY+i*(bH+gap),bw=Math.max(2,(item.v/maxV)*(w-lW-rP));ctx.fillStyle='#94a3b8';ctx.font='11px Segoe UI';ctx.textAlign='right';ctx.fillText(item.l,lW-8,y+bH*.65);ctx.fillStyle=item.c||'#00889A';rRect(ctx,lW,y,bw,bH,4);ctx.fillStyle='#e2e8f0';ctx.font='bold 11px Segoe UI';ctx.textAlign='left';ctx.fillText('$'+(item.v>=1e6?(item.v/1e6).toFixed(1)+'M':Math.round(item.v/1e3)+'K'),lW+bw+8,y+bH*.65)})}
 
 // POWER FLOW
-function drawPowerFlow(){const s=setupCanvas('powerCanvas',380);if(!s)return;const{ctx,w,h}=s;const nW=Math.min(140,w*.2),nH=42,cx=w/2;const gap=(h-25-5*nH)/5;const ry=i=>12+i*(nH+gap);const sp=Math.min(50,w*.08);const nodes=[{x:cx-nW-sp,y:ry(0),w:nW,h:nH,l:'CFE Utility',s:'23 kV Medium Voltage',c:'#f59e0b'},{x:cx+sp,y:ry(0),w:nW,h:nH,l:'Generators (3x)',s:'800 kW Diesel (N+1)',c:'#ef4444'},{x:cx-nW/2,y:ry(1),w:nW,h:nH,l:'MV Switchgear',s:'Driescher + ATS',c:'#f59e0b'},{x:cx-nW/2,y:ry(2),w:nW,h:nH,l:'Transformer',s:'2 MVA 23kV→480V',c:'#f59e0b'},{x:cx-nW-sp/2,y:ry(3),w:nW,h:nH,l:'UPS 1',s:'1,250 kVA Li-ion',c:'#76b900'},{x:cx+sp/2,y:ry(3),w:nW,h:nH,l:'UPS 2',s:'1,250 kVA Li-ion',c:'#76b900'},{x:cx-nW/2,y:ry(4),w:nW,h:nH,l:'PDUs (4x)',s:'Power Distribution',c:'#76b900'}];function ln(a,b){ctx.beginPath();ctx.moveTo(a.x+a.w/2,a.y+a.h);ctx.lineTo(b.x+b.w/2,b.y);ctx.stroke()}ctx.strokeStyle='rgba(118,185,0,.45)';ctx.lineWidth=2;ctx.setLineDash([6,4]);ln(nodes[0],nodes[2]);ln(nodes[1],nodes[2]);ln(nodes[2],nodes[3]);ln(nodes[3],nodes[4]);ln(nodes[3],nodes[5]);ln(nodes[4],nodes[6]);ln(nodes[5],nodes[6]);ctx.setLineDash([]);nodes.forEach(n=>{ctx.fillStyle='#1a2235';ctx.strokeStyle=n.c;ctx.lineWidth=2;ctx.beginPath();ctx.roundRect(n.x,n.y,n.w,n.h,6);ctx.fill();ctx.stroke();ctx.fillStyle='#e2e8f0';ctx.font='bold 11px Segoe UI';ctx.textAlign='center';ctx.fillText(n.l,n.x+n.w/2,n.y+17);ctx.fillStyle='#94a3b8';ctx.font='10px Segoe UI';ctx.fillText(n.s,n.x+n.w/2,n.y+32)});const p=nodes[6];ctx.fillStyle='#76b900';ctx.font='bold 11px Segoe UI';ctx.textAlign='right';ctx.fillText('17x DDC',p.x-12,p.y+nH/2+2);ctx.fillText('Cabinets',p.x-12,p.y+nH/2+14);ctx.textAlign='left';ctx.fillText('1,524 kW',p.x+p.w+12,p.y+nH/2+2);ctx.fillText('Total Load',p.x+p.w+12,p.y+nH/2+14);ctx.fillStyle='#64748b';ctx.font='10px Segoe UI';ctx.textAlign='center';ctx.fillText('PUE 1.33 — Gen max 1,600 kW — CFE H-M3 1,300 kW',cx,h-4)}
+function drawPowerFlow(){const s=setupCanvas('powerCanvas',380);if(!s)return;const{ctx,w,h}=s;const nW=Math.min(140,w*.2),nH=42,cx=w/2;const gap=(h-25-5*nH)/5;const ry=i=>12+i*(nH+gap);const sp=Math.min(50,w*.08);const nodes=[{x:cx-nW-sp,y:ry(0),w:nW,h:nH,l:'CFE Utility',s:'23 kV Medium Voltage',c:'#f59e0b'},{x:cx+sp,y:ry(0),w:nW,h:nH,l:'Generators (3x)',s:'800 kW Diesel (N+1)',c:'#ef4444'},{x:cx-nW/2,y:ry(1),w:nW,h:nH,l:'MV Switchgear',s:'Driescher + ATS',c:'#f59e0b'},{x:cx-nW/2,y:ry(2),w:nW,h:nH,l:'Transformer',s:'2 MVA 23kV→480V',c:'#f59e0b'},{x:cx-nW-sp/2,y:ry(3),w:nW,h:nH,l:'UPS 1',s:'1,250 kVA Li-ion',c:'#00889A'},{x:cx+sp/2,y:ry(3),w:nW,h:nH,l:'UPS 2',s:'1,250 kVA Li-ion',c:'#00889A'},{x:cx-nW/2,y:ry(4),w:nW,h:nH,l:'PDUs (4x)',s:'Power Distribution',c:'#00889A'}];function ln(a,b){ctx.beginPath();ctx.moveTo(a.x+a.w/2,a.y+a.h);ctx.lineTo(b.x+b.w/2,b.y);ctx.stroke()}ctx.strokeStyle='rgba(0,136,154,.45)';ctx.lineWidth=2;ctx.setLineDash([6,4]);ln(nodes[0],nodes[2]);ln(nodes[1],nodes[2]);ln(nodes[2],nodes[3]);ln(nodes[3],nodes[4]);ln(nodes[3],nodes[5]);ln(nodes[4],nodes[6]);ln(nodes[5],nodes[6]);ctx.setLineDash([]);nodes.forEach(n=>{ctx.fillStyle='#1a2235';ctx.strokeStyle=n.c;ctx.lineWidth=2;ctx.beginPath();ctx.roundRect(n.x,n.y,n.w,n.h,6);ctx.fill();ctx.stroke();ctx.fillStyle='#e2e8f0';ctx.font='bold 11px Segoe UI';ctx.textAlign='center';ctx.fillText(n.l,n.x+n.w/2,n.y+17);ctx.fillStyle='#94a3b8';ctx.font='10px Segoe UI';ctx.fillText(n.s,n.x+n.w/2,n.y+32)});const p=nodes[6];ctx.fillStyle='#00889A';ctx.font='bold 11px Segoe UI';ctx.textAlign='right';ctx.fillText('17x DDC',p.x-12,p.y+nH/2+2);ctx.fillText('Cabinets',p.x-12,p.y+nH/2+14);ctx.textAlign='left';ctx.fillText('1,524 kW',p.x+p.w+12,p.y+nH/2+2);ctx.fillText('Total Load',p.x+p.w+12,p.y+nH/2+14);ctx.fillStyle='#64748b';ctx.font='10px Segoe UI';ctx.textAlign='center';ctx.fillText('PUE 1.33 — Gen max 1,600 kW — CFE H-M3 1,300 kW',cx,h-4)}
 
 // POWER BUDGET
-function drawPowerBudget(){const s=setupCanvas('powerBudgetCanvas',220);if(!s)return;const{ctx,w,h}=s;const items=[{l:'GPU Compute (72 nodes)',v:750,c:'#76b900'},{l:'Cabinet Cooling (fans, coils)',v:72,c:'#06b6d4'},{l:'Networking (IB + Ethernet)',v:60,c:'#00b4d8'},{l:'Storage / Management',v:30,c:'#8b5cf6'},{l:'DDC Controllers',v:8,c:'#f59e0b'},{l:'Lighting / Misc',v:10,c:'#94a3b8'},{l:'Cooling Overhead (PUE 1.33)',v:315,c:'#ef4444'},{l:'UPS / Distribution Losses',v:70,c:'#64748b'}];const total=items.reduce((a,b)=>a+b.v,0);const lW=200,rP=120,bH=22,gap=6,sY=10;items.forEach((item,i)=>{const y=sY+i*(bH+gap),bw=Math.max(2,(item.v/total)*(w-lW-rP));ctx.fillStyle='#94a3b8';ctx.font='12px Segoe UI';ctx.textAlign='right';ctx.fillText(item.l,lW-12,y+15);ctx.fillStyle=item.c;rRect(ctx,lW,y,bw,bH,4);ctx.fillStyle='#e2e8f0';ctx.font='bold 11px Segoe UI';ctx.textAlign='left';ctx.fillText(item.v+' kW ('+Math.round(item.v/total*100)+'%)',lW+bw+8,y+15)});ctx.fillStyle='#e2e8f0';ctx.font='bold 13px Segoe UI';ctx.textAlign='right';ctx.fillText('Total: '+total+' kW (1.0 MW IT + 315 kW overhead @ PUE 1.33)',w-20,sY+items.length*(bH+gap)+16)}
+function drawPowerBudget(){const s=setupCanvas('powerBudgetCanvas',220);if(!s)return;const{ctx,w,h}=s;const items=[{l:'GPU Compute (72 nodes)',v:750,c:'#00889A'},{l:'Cabinet Cooling (fans, coils)',v:72,c:'#06b6d4'},{l:'Networking (IB + Ethernet)',v:60,c:'#FCA311'},{l:'Storage / Management',v:30,c:'#8b5cf6'},{l:'DDC Controllers',v:8,c:'#f59e0b'},{l:'Lighting / Misc',v:10,c:'#94a3b8'},{l:'Cooling Overhead (PUE 1.33)',v:315,c:'#ef4444'},{l:'UPS / Distribution Losses',v:70,c:'#64748b'}];const total=items.reduce((a,b)=>a+b.v,0);const lW=200,rP=120,bH=22,gap=6,sY=10;items.forEach((item,i)=>{const y=sY+i*(bH+gap),bw=Math.max(2,(item.v/total)*(w-lW-rP));ctx.fillStyle='#94a3b8';ctx.font='12px Segoe UI';ctx.textAlign='right';ctx.fillText(item.l,lW-12,y+15);ctx.fillStyle=item.c;rRect(ctx,lW,y,bw,bH,4);ctx.fillStyle='#e2e8f0';ctx.font='bold 11px Segoe UI';ctx.textAlign='left';ctx.fillText(item.v+' kW ('+Math.round(item.v/total*100)+'%)',lW+bw+8,y+15)});ctx.fillStyle='#e2e8f0';ctx.font='bold 13px Segoe UI';ctx.textAlign='right';ctx.fillText('Total: '+total+' kW (1.0 MW IT + 315 kW overhead @ PUE 1.33)',w-20,sY+items.length*(bH+gap)+16)}
 
 // FLOOR PLAN
-function drawFloorPlan(){const s=setupCanvas('floorCanvas',400);if(!s)return;const{ctx,w}=s;const h=400;ctx.strokeStyle='#2a3550';ctx.lineWidth=2;ctx.strokeRect(20,20,w-40,h-40);const rooms=[{x:30,y:30,w:w*.45,h:h*.55,l:'DATA HALL',s:'17x DDC Cabinets',c:'#76b900'},{x:30,y:30+h*.55+10,w:w*.22,h:h*.3,l:'ELEC ROOM 01',s:'UPS, PDU, CRAC',c:'#f59e0b'},{x:30+w*.22+10,y:30+h*.55+10,w:w*.22,h:h*.3,l:'ELEC ROOM 02',s:'Switchgear, ATS',c:'#f59e0b'},{x:30+w*.45+10,y:30,w:w*.22,h:h*.35,l:'CHILLERS',s:'3x 145T',c:'#00b4d8'},{x:30+w*.45+10,y:30+h*.35+10,w:w*.22,h:h*.2,l:'NOC',s:'Operations',c:'#8b5cf6'},{x:30+w*.45+10,y:30+h*.55+20,w:w*.22,h:h*.15,l:'STAGING',s:'Equipment',c:'#94a3b8'},{x:30+w*.67+20,y:30,w:w*.25,h:h*.25,l:'MMR & CARRIERS',s:'Meet-Me Room',c:'#06b6d4'},{x:30+w*.67+20,y:30+h*.25+10,w:w*.25,h:h*.2,l:'BATTERY ROOM',s:'Li-ion Banks',c:'#ef4444'},{x:30+w*.67+20,y:30+h*.45+20,w:w*.12,h:h*.15,l:'INLET',s:'Lock',c:'#94a3b8'},{x:30+w*.79+30,y:30+h*.45+20,w:w*.12,h:h*.15,l:'WC',s:'',c:'#64748b'},{x:30+w*.67+20,y:30+h*.65+10,w:w*.25,h:h*.2,l:'RECEPTION',s:'Main Entrance',c:'#94a3b8'}];rooms.forEach(r=>{ctx.fillStyle=r.c+'15';ctx.strokeStyle=r.c+'60';ctx.lineWidth=1.5;ctx.beginPath();ctx.roundRect(r.x,r.y,r.w,r.h,4);ctx.fill();ctx.stroke();ctx.fillStyle=r.c;ctx.font='bold 11px Segoe UI';ctx.textAlign='center';ctx.fillText(r.l,r.x+r.w/2,r.y+r.h/2-4);if(r.s){ctx.fillStyle='#94a3b8';ctx.font='10px Segoe UI';ctx.fillText(r.s,r.x+r.w/2,r.y+r.h/2+10)}});const dh=rooms[0],rW=8,rH=16,rG=4,sX=dh.x+20,sY=dh.y+40;for(let i=0;i<9;i++){ctx.fillStyle='#76b900';ctx.fillRect(sX+i*(rW+rG),sY,rW,rH);ctx.fillRect(sX+i*(rW+rG),sY+rH+20,rW,rH)}ctx.fillStyle='#94a3b8';ctx.font='9px Segoe UI';ctx.textAlign='left';ctx.fillText('Row A',sX+9*(rW+rG)+4,sY+12);ctx.fillText('Row B',sX+9*(rW+rG)+4,sY+rH+32)}
+function drawFloorPlan(){const s=setupCanvas('floorCanvas',400);if(!s)return;const{ctx,w}=s;const h=400;ctx.strokeStyle='#2a3550';ctx.lineWidth=2;ctx.strokeRect(20,20,w-40,h-40);const rooms=[{x:30,y:30,w:w*.45,h:h*.55,l:'DATA HALL',s:'17x DDC Cabinets',c:'#00889A'},{x:30,y:30+h*.55+10,w:w*.22,h:h*.3,l:'ELEC ROOM 01',s:'UPS, PDU, CRAC',c:'#f59e0b'},{x:30+w*.22+10,y:30+h*.55+10,w:w*.22,h:h*.3,l:'ELEC ROOM 02',s:'Switchgear, ATS',c:'#f59e0b'},{x:30+w*.45+10,y:30,w:w*.22,h:h*.35,l:'CHILLERS',s:'3x 145T',c:'#FCA311'},{x:30+w*.45+10,y:30+h*.35+10,w:w*.22,h:h*.2,l:'NOC',s:'Operations',c:'#8b5cf6'},{x:30+w*.45+10,y:30+h*.55+20,w:w*.22,h:h*.15,l:'STAGING',s:'Equipment',c:'#94a3b8'},{x:30+w*.67+20,y:30,w:w*.25,h:h*.25,l:'MMR & CARRIERS',s:'Meet-Me Room',c:'#06b6d4'},{x:30+w*.67+20,y:30+h*.25+10,w:w*.25,h:h*.2,l:'BATTERY ROOM',s:'Li-ion Banks',c:'#ef4444'},{x:30+w*.67+20,y:30+h*.45+20,w:w*.12,h:h*.15,l:'INLET',s:'Lock',c:'#94a3b8'},{x:30+w*.79+30,y:30+h*.45+20,w:w*.12,h:h*.15,l:'WC',s:'',c:'#64748b'},{x:30+w*.67+20,y:30+h*.65+10,w:w*.25,h:h*.2,l:'RECEPTION',s:'Main Entrance',c:'#94a3b8'}];rooms.forEach(r=>{ctx.fillStyle=r.c+'15';ctx.strokeStyle=r.c+'60';ctx.lineWidth=1.5;ctx.beginPath();ctx.roundRect(r.x,r.y,r.w,r.h,4);ctx.fill();ctx.stroke();ctx.fillStyle=r.c;ctx.font='bold 11px Segoe UI';ctx.textAlign='center';ctx.fillText(r.l,r.x+r.w/2,r.y+r.h/2-4);if(r.s){ctx.fillStyle='#94a3b8';ctx.font='10px Segoe UI';ctx.fillText(r.s,r.x+r.w/2,r.y+r.h/2+10)}});const dh=rooms[0],rW=8,rH=16,rG=4,sX=dh.x+20,sY=dh.y+40;for(let i=0;i<9;i++){ctx.fillStyle='#00889A';ctx.fillRect(sX+i*(rW+rG),sY,rW,rH);ctx.fillRect(sX+i*(rW+rG),sY+rH+20,rW,rH)}ctx.fillStyle='#94a3b8';ctx.font='9px Segoe UI';ctx.textAlign='left';ctx.fillText('Row A',sX+9*(rW+rG)+4,sY+12);ctx.fillText('Row B',sX+9*(rW+rG)+4,sY+rH+32)}
 
 // ENERGY MONTHLY BARS
-function drawEnergyMonthly(){const s=setupCanvas('energyMonthlyChart',300);if(!s)return;const{ctx,w,h}=s;const ms=['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];const v=[2.23,2.09,2.07,2.08,2.10,1.86,1.83,1.78,1.89,1.85,1.98,1.90];const avg=1.87,pL=50,pR=20,pT=20,pB=50,cW=w-pL-pR,cH=h-pT-pB,minY=1.5,maxY=2.4,rY=maxY-minY,bW=cW/12*.65;for(let val=1.5;val<=2.4;val+=.15){const y=pT+cH-((val-minY)/rY)*cH;ctx.strokeStyle='#2a3550';ctx.lineWidth=1;ctx.beginPath();ctx.moveTo(pL,y);ctx.lineTo(w-pR,y);ctx.stroke();ctx.fillStyle='#94a3b8';ctx.font='10px Segoe UI';ctx.textAlign='right';ctx.fillText('$'+val.toFixed(2),pL-6,y+4)}const aY=pT+cH-((avg-minY)/rY)*cH;ctx.strokeStyle='#ef4444';ctx.lineWidth=2;ctx.setLineDash([6,4]);ctx.beginPath();ctx.moveTo(pL,aY);ctx.lineTo(w-pR,aY);ctx.stroke();ctx.setLineDash([]);ctx.fillStyle='#ef4444';ctx.font='bold 11px Segoe UI';ctx.textAlign='left';ctx.fillText('Avg $1.87',w-pR-60,aY-6);ms.forEach((m,i)=>{const x=pL+(cW/12)*i+(cW/12-bW)/2,bH2=((v[i]-minY)/rY)*cH,y=pT+cH-bH2;ctx.fillStyle=v[i]>avg?'#f59e0b':'#76b900';rRect(ctx,x,y,bW,bH2,3);ctx.fillStyle='#e2e8f0';ctx.font='bold 10px Segoe UI';ctx.textAlign='center';ctx.fillText('$'+v[i].toFixed(2),x+bW/2,y-6);ctx.fillStyle='#94a3b8';ctx.font='11px Segoe UI';ctx.fillText(m,x+bW/2,h-14)})}
+function drawEnergyMonthly(){const s=setupCanvas('energyMonthlyChart',300);if(!s)return;const{ctx,w,h}=s;const ms=['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];const v=[2.23,2.09,2.07,2.08,2.10,1.86,1.83,1.78,1.89,1.85,1.98,1.90];const avg=1.87,pL=50,pR=20,pT=20,pB=50,cW=w-pL-pR,cH=h-pT-pB,minY=1.5,maxY=2.4,rY=maxY-minY,bW=cW/12*.65;for(let val=1.5;val<=2.4;val+=.15){const y=pT+cH-((val-minY)/rY)*cH;ctx.strokeStyle='#2a3550';ctx.lineWidth=1;ctx.beginPath();ctx.moveTo(pL,y);ctx.lineTo(w-pR,y);ctx.stroke();ctx.fillStyle='#94a3b8';ctx.font='10px Segoe UI';ctx.textAlign='right';ctx.fillText('$'+val.toFixed(2),pL-6,y+4)}const aY=pT+cH-((avg-minY)/rY)*cH;ctx.strokeStyle='#ef4444';ctx.lineWidth=2;ctx.setLineDash([6,4]);ctx.beginPath();ctx.moveTo(pL,aY);ctx.lineTo(w-pR,aY);ctx.stroke();ctx.setLineDash([]);ctx.fillStyle='#ef4444';ctx.font='bold 11px Segoe UI';ctx.textAlign='left';ctx.fillText('Avg $1.87',w-pR-60,aY-6);ms.forEach((m,i)=>{const x=pL+(cW/12)*i+(cW/12-bW)/2,bH2=((v[i]-minY)/rY)*cH,y=pT+cH-bH2;ctx.fillStyle=v[i]>avg?'#f59e0b':'#00889A';rRect(ctx,x,y,bW,bH2,3);ctx.fillStyle='#e2e8f0';ctx.font='bold 10px Segoe UI';ctx.textAlign='center';ctx.fillText('$'+v[i].toFixed(2),x+bW/2,y-6);ctx.fillStyle='#94a3b8';ctx.font='11px Segoe UI';ctx.fillText(m,x+bW/2,h-14)})}
 
 // TARIFF DONUT
-function drawTariffDonut(){drawDonut('tariffDonutChart',[{l:'Capacity Charge',v:.61},{l:'Energy (CAP)',v:.54},{l:'Regulated & MEM',v:.51},{l:'Congestion',v:.16},{l:'CELs',v:.05}],['#f59e0b','#76b900','#00b4d8','#ef4444','#8b5cf6'],'$1.87/kWh',300)}
+function drawTariffDonut(){drawDonut('tariffDonutChart',[{l:'Capacity Charge',v:.61},{l:'Energy (CAP)',v:.54},{l:'Regulated & MEM',v:.51},{l:'Congestion',v:.16},{l:'CELs',v:.05}],['#f59e0b','#00889A','#FCA311','#ef4444','#8b5cf6'],'$1.87/kWh',300)}
 
 // ENERGY STACKED
-function drawEnergyStacked(){const s=setupCanvas('energyStackedChart',300);if(!s)return;const{ctx,w,h}=s;const ms=['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];const cap=[.66,.73,.66,.66,.63,.64,.62,.61,.63,.61,.63,.61],en=[.76,.61,.66,.53,.55,.50,.52,.49,.50,.52,.60,.55],con=[.21,.15,.15,.30,.33,.13,.10,.09,.17,.13,.16,.15],reg=[.54,.54,.54,.54,.54,.54,.54,.54,.54,.54,.54,.54],cel=[.06,.06,.06,.05,.05,.05,.05,.05,.05,.05,.05,.05];const pL=50,pR=20,pT=20,pB=60,cW=w-pL-pR,cH=h-pT-pB,maxY=2.5,bW=cW/12*.7;const colors=['#f59e0b','#76b900','#ef4444','#00b4d8','#8b5cf6'],labels=['Capacity','Energy','Congestion','Regulated','CELs'];for(let v=0;v<=2.5;v+=.5){const y=pT+cH-(v/maxY)*cH;ctx.strokeStyle='#2a3550';ctx.lineWidth=1;ctx.beginPath();ctx.moveTo(pL,y);ctx.lineTo(w-pR,y);ctx.stroke();ctx.fillStyle='#94a3b8';ctx.font='10px Segoe UI';ctx.textAlign='right';ctx.fillText('$'+v.toFixed(1),pL-6,y+4)}ms.forEach((m,i)=>{const x=pL+(cW/12)*i+(cW/12-bW)/2;const segs=[cap[i],en[i],con[i],reg[i],cel[i]];let cum=0;segs.forEach((s,si)=>{const sH=(s/maxY)*cH,y=pT+cH-cum-sH;ctx.fillStyle=colors[si];ctx.fillRect(x,y,bW,sH);cum+=sH});ctx.fillStyle='#94a3b8';ctx.font='10px Segoe UI';ctx.textAlign='center';ctx.fillText(m,x+bW/2,h-24)});let lx=pL;labels.forEach((l,i)=>{ctx.fillStyle=colors[i];ctx.fillRect(lx,h-14,10,10);ctx.fillStyle='#94a3b8';ctx.font='10px Segoe UI';ctx.textAlign='left';ctx.fillText(l,lx+14,h-5);lx+=ctx.measureText(l).width+25})}
+function drawEnergyStacked(){const s=setupCanvas('energyStackedChart',300);if(!s)return;const{ctx,w,h}=s;const ms=['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];const cap=[.66,.73,.66,.66,.63,.64,.62,.61,.63,.61,.63,.61],en=[.76,.61,.66,.53,.55,.50,.52,.49,.50,.52,.60,.55],con=[.21,.15,.15,.30,.33,.13,.10,.09,.17,.13,.16,.15],reg=[.54,.54,.54,.54,.54,.54,.54,.54,.54,.54,.54,.54],cel=[.06,.06,.06,.05,.05,.05,.05,.05,.05,.05,.05,.05];const pL=50,pR=20,pT=20,pB=60,cW=w-pL-pR,cH=h-pT-pB,maxY=2.5,bW=cW/12*.7;const colors=['#f59e0b','#00889A','#ef4444','#FCA311','#8b5cf6'],labels=['Capacity','Energy','Congestion','Regulated','CELs'];for(let v=0;v<=2.5;v+=.5){const y=pT+cH-(v/maxY)*cH;ctx.strokeStyle='#2a3550';ctx.lineWidth=1;ctx.beginPath();ctx.moveTo(pL,y);ctx.lineTo(w-pR,y);ctx.stroke();ctx.fillStyle='#94a3b8';ctx.font='10px Segoe UI';ctx.textAlign='right';ctx.fillText('$'+v.toFixed(1),pL-6,y+4)}ms.forEach((m,i)=>{const x=pL+(cW/12)*i+(cW/12-bW)/2;const segs=[cap[i],en[i],con[i],reg[i],cel[i]];let cum=0;segs.forEach((s,si)=>{const sH=(s/maxY)*cH,y=pT+cH-cum-sH;ctx.fillStyle=colors[si];ctx.fillRect(x,y,bW,sH);cum+=sH});ctx.fillStyle='#94a3b8';ctx.font='10px Segoe UI';ctx.textAlign='center';ctx.fillText(m,x+bW/2,h-24)});let lx=pL;labels.forEach((l,i)=>{ctx.fillStyle=colors[i];ctx.fillRect(lx,h-14,10,10);ctx.fillStyle='#94a3b8';ctx.font='10px Segoe UI';ctx.textAlign='left';ctx.fillText(l,lx+14,h-5);lx+=ctx.measureText(l).width+25})}
 
 // ENERGY USD COMPARISON
-function drawEnergyUsd(){const s=setupCanvas('energyUsdChart',250);if(!s)return;const{ctx,w,h}=s;const ms=['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];const ibd=[.1297,.1215,.1203,.1209,.1221,.1081,.1064,.1035,.1099,.1076,.1151,.1105];const blq=[.1285,.1331,.1256,.1320,.1326,.1192,.1180,.1163,.1203,.1180,.1198,.1203];const pL=55,pR=20,pT=20,pB=50,cW=w-pL-pR,cH=h-pT-pB,minY=.09,maxY=.14,rY=maxY-minY;for(let v=.09;v<=.14;v+=.01){const y=pT+cH-((v-minY)/rY)*cH;ctx.strokeStyle='#1a2235';ctx.lineWidth=1;ctx.beginPath();ctx.moveTo(pL,y);ctx.lineTo(w-pR,y);ctx.stroke();ctx.fillStyle='#64748b';ctx.font='10px Segoe UI';ctx.textAlign='right';ctx.fillText('$'+v.toFixed(3),pL-6,y+4)}function drawLine(data,color,dash){ctx.strokeStyle=color;ctx.lineWidth=3;if(dash)ctx.setLineDash([6,4]);ctx.beginPath();data.forEach((v,i)=>{const x=pL+(cW/11)*i,y=pT+cH-((v-minY)/rY)*cH;i===0?ctx.moveTo(x,y):ctx.lineTo(x,y)});ctx.stroke();ctx.setLineDash([]);data.forEach((v,i)=>{const x=pL+(cW/11)*i,y=pT+cH-((v-minY)/rY)*cH;ctx.fillStyle=color;ctx.beginPath();ctx.arc(x,y,4,0,Math.PI*2);ctx.fill()})}drawLine(ibd,'#76b900',false);drawLine(blq,'#f59e0b',true);ms.forEach((m,i)=>{ctx.fillStyle='#94a3b8';ctx.font='10px Segoe UI';ctx.textAlign='center';ctx.fillText(m,pL+(cW/11)*i,h-14)});ctx.fillStyle='#76b900';ctx.fillRect(pL+10,8,20,3);ctx.fillStyle='#94a3b8';ctx.font='11px Segoe UI';ctx.textAlign='left';ctx.fillText('Pass-Through IBD (avg $0.109)',pL+35,13);ctx.strokeStyle='#f59e0b';ctx.lineWidth=2;ctx.setLineDash([6,4]);ctx.beginPath();ctx.moveTo(pL+240,10);ctx.lineTo(pL+260,10);ctx.stroke();ctx.setLineDash([]);ctx.fillStyle='#94a3b8';ctx.fillText('Bloque IBD (avg $0.119)',pL+265,13)}
+function drawEnergyUsd(){const s=setupCanvas('energyUsdChart',250);if(!s)return;const{ctx,w,h}=s;const ms=['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];const ibd=[.1297,.1215,.1203,.1209,.1221,.1081,.1064,.1035,.1099,.1076,.1151,.1105];const blq=[.1285,.1331,.1256,.1320,.1326,.1192,.1180,.1163,.1203,.1180,.1198,.1203];const pL=55,pR=20,pT=20,pB=50,cW=w-pL-pR,cH=h-pT-pB,minY=.09,maxY=.14,rY=maxY-minY;for(let v=.09;v<=.14;v+=.01){const y=pT+cH-((v-minY)/rY)*cH;ctx.strokeStyle='#1a2235';ctx.lineWidth=1;ctx.beginPath();ctx.moveTo(pL,y);ctx.lineTo(w-pR,y);ctx.stroke();ctx.fillStyle='#64748b';ctx.font='10px Segoe UI';ctx.textAlign='right';ctx.fillText('$'+v.toFixed(3),pL-6,y+4)}function drawLine(data,color,dash){ctx.strokeStyle=color;ctx.lineWidth=3;if(dash)ctx.setLineDash([6,4]);ctx.beginPath();data.forEach((v,i)=>{const x=pL+(cW/11)*i,y=pT+cH-((v-minY)/rY)*cH;i===0?ctx.moveTo(x,y):ctx.lineTo(x,y)});ctx.stroke();ctx.setLineDash([]);data.forEach((v,i)=>{const x=pL+(cW/11)*i,y=pT+cH-((v-minY)/rY)*cH;ctx.fillStyle=color;ctx.beginPath();ctx.arc(x,y,4,0,Math.PI*2);ctx.fill()})}drawLine(ibd,'#00889A',false);drawLine(blq,'#f59e0b',true);ms.forEach((m,i)=>{ctx.fillStyle='#94a3b8';ctx.font='10px Segoe UI';ctx.textAlign='center';ctx.fillText(m,pL+(cW/11)*i,h-14)});ctx.fillStyle='#00889A';ctx.fillRect(pL+10,8,20,3);ctx.fillStyle='#94a3b8';ctx.font='11px Segoe UI';ctx.textAlign='left';ctx.fillText('Pass-Through IBD (avg $0.109)',pL+35,13);ctx.strokeStyle='#f59e0b';ctx.lineWidth=2;ctx.setLineDash([6,4]);ctx.beginPath();ctx.moveTo(pL+240,10);ctx.lineTo(pL+260,10);ctx.stroke();ctx.setLineDash([]);ctx.fillStyle='#94a3b8';ctx.fillText('Bloque IBD (avg $0.119)',pL+265,13)}
 
 // ENERGY SAVINGS
-function drawEnergySavings(){const s=setupCanvas('energySavingsChart',250);if(!s)return;const{ctx,w,h}=s;const sc=[{l:'CFE Basic (est.)',r:2.80,c:'#ef4444'},{l:'Bloque IBD',r:2.04,c:'#f59e0b'},{l:'Pass-Through IBD',r:1.87,c:'#76b900'}];const annKwh=10512000,pL=140,pR=20,pT=30,pB=30,cW=w-pL-pR,maxC=sc[0].r*annKwh,bH=50,gap=20;sc.forEach((s,i)=>{const y=pT+i*(bH+gap),annC=s.r*annKwh,bw=(annC/maxC)*cW;ctx.fillStyle='#94a3b8';ctx.font='12px Segoe UI';ctx.textAlign='right';ctx.fillText(s.l,pL-10,y+bH*.6);ctx.fillStyle=s.c;rRect(ctx,pL,y,bw,bH,5);ctx.fillStyle='#e2e8f0';ctx.font='bold 12px Segoe UI';ctx.textAlign='center';ctx.fillText('$'+(annC/1e6).toFixed(1)+'M MXN/yr',pL+bw/2,y+bH*.6);ctx.fillStyle='#94a3b8';ctx.font='10px Segoe UI';ctx.textAlign='left';ctx.fillText('$'+s.r.toFixed(2)+'/kWh',pL+bw+8,y+bH*.6)});const savings=(sc[0].r-sc[2].r)*annKwh;ctx.fillStyle='#22c55e';ctx.font='bold 13px Segoe UI';ctx.textAlign='left';ctx.fillText('Savings vs CFE: $'+(savings/1e6).toFixed(1)+'M MXN/yr ($'+(savings/17.2/1e6).toFixed(2)+'M USD)',pL,h-10)}
+function drawEnergySavings(){const s=setupCanvas('energySavingsChart',250);if(!s)return;const{ctx,w,h}=s;const sc=[{l:'CFE Basic (est.)',r:2.80,c:'#ef4444'},{l:'Bloque IBD',r:2.04,c:'#f59e0b'},{l:'Pass-Through IBD',r:1.87,c:'#00889A'}];const annKwh=10512000,pL=140,pR=20,pT=30,pB=30,cW=w-pL-pR,maxC=sc[0].r*annKwh,bH=50,gap=20;sc.forEach((s,i)=>{const y=pT+i*(bH+gap),annC=s.r*annKwh,bw=(annC/maxC)*cW;ctx.fillStyle='#94a3b8';ctx.font='12px Segoe UI';ctx.textAlign='right';ctx.fillText(s.l,pL-10,y+bH*.6);ctx.fillStyle=s.c;rRect(ctx,pL,y,bw,bH,5);ctx.fillStyle='#e2e8f0';ctx.font='bold 12px Segoe UI';ctx.textAlign='center';ctx.fillText('$'+(annC/1e6).toFixed(1)+'M MXN/yr',pL+bw/2,y+bH*.6);ctx.fillStyle='#94a3b8';ctx.font='10px Segoe UI';ctx.textAlign='left';ctx.fillText('$'+s.r.toFixed(2)+'/kWh',pL+bw+8,y+bH*.6)});const savings=(sc[0].r-sc[2].r)*annKwh;ctx.fillStyle='#22c55e';ctx.font='bold 13px Segoe UI';ctx.textAlign='left';ctx.fillText('Savings vs CFE: $'+(savings/1e6).toFixed(1)+'M MXN/yr ($'+(savings/17.2/1e6).toFixed(2)+'M USD)',pL,h-10)}
 
 // OPEX PIE
-function drawOpexPie(){drawDonut('opexPieChart',[{l:'Energy',v:1246772},{l:'Telecom',v:456963},{l:'O&M Infra',v:316744},{l:'Personnel',v:286047},{l:'Insurance',v:244186},{l:'OEM Support',v:101163},{l:'NOC',v:48837},{l:'FSCA',v:46744},{l:'Brokkr Platform',v:27907}],['#f59e0b','#00b4d8','#76b900','#8b5cf6','#ef4444','#22c55e','#06b6d4','#94a3b8','#64748b'],'$2.7M/yr',320)}
+function drawOpexPie(){drawDonut('opexPieChart',[{l:'Energy',v:1246772},{l:'Telecom',v:456963},{l:'O&M Infra',v:316744},{l:'Personnel',v:286047},{l:'Insurance',v:244186},{l:'OEM Support',v:101163},{l:'NOC',v:48837},{l:'FSCA',v:46744},{l:'Brokkr Platform',v:27907}],['#f59e0b','#FCA311','#00889A','#8b5cf6','#ef4444','#22c55e','#06b6d4','#94a3b8','#64748b'],'$2.7M/yr',320)}
 
 // CAPEX WATERFALL
-function drawCapexWaterfall(){const s=setupCanvas('capexWaterfallChart',300);if(!s)return;const{ctx,w,h}=s;const items=[{l:'GPUs',v:37260000,c:'#76b900'},{l:'Aux CAPEX',v:5011956,c:'#f59e0b'},{l:'Construct.',v:2521318,c:'#00b4d8'},{l:'BCYSA OE',v:310713,c:'#06b6d4'},{l:'BCYSA Feas.',v:250000,c:'#8b5cf6'},{l:'CFE',v:248020,c:'#22c55e'},{l:'Commissn.',v:149146,c:'#64748b'},{l:'Engineerg.',v:85396,c:'#e879f9'},{l:'Permits',v:10000,c:'#94a3b8'},{l:'Conting.',v:584640,c:'#ef4444'}];const total=items.reduce((a,b)=>a+b.v,0);const pL=16,pR=16,pT=30,pB=60,cW=w-pL-pR,cH=h-pT-pB;const n=items.length+1,bW=Math.min(50,cW/n*.7);for(let i=0;i<=4;i++){const y=pT+(cH/4)*i,val=total*1.05-(total*1.05/4)*i;ctx.strokeStyle='#1a2235';ctx.lineWidth=1;ctx.beginPath();ctx.moveTo(pL,y);ctx.lineTo(w-pR,y);ctx.stroke();ctx.fillStyle='#64748b';ctx.font='9px Segoe UI';ctx.textAlign='right';ctx.fillText('$'+(val/1e6).toFixed(0)+'M',pL+42,y-3)}let cum=0;items.forEach((item,i)=>{const x=pL+50+(cW-50)/n*i+((cW-50)/n-bW)/2;const bH2=(item.v/(total*1.05))*cH;const prevH=(cum/(total*1.05))*cH;cum+=item.v;const y=pT+cH-prevH-bH2;ctx.fillStyle=item.c;rRect(ctx,x,y,bW,bH2,3);ctx.fillStyle='#e2e8f0';ctx.font='bold 9px Segoe UI';ctx.textAlign='center';ctx.fillText('$'+(item.v/1e6).toFixed(1)+'M',x+bW/2,y-5);ctx.save();ctx.translate(x+bW/2,h-pB+8);ctx.rotate(-.5);ctx.fillStyle='#94a3b8';ctx.font='9px Segoe UI';ctx.textAlign='right';ctx.fillText(item.l,0,0);ctx.restore()});const tx=pL+50+(cW-50)/n*items.length+((cW-50)/n-bW)/2;const tH=(cum/(total*1.05))*cH;const tY=pT+cH-tH;ctx.fillStyle='#e2e8f0';rRect(ctx,tx,tY,bW,tH,3);ctx.fillStyle='#e2e8f0';ctx.font='bold 10px Segoe UI';ctx.textAlign='center';ctx.fillText('$'+(cum/1e6).toFixed(1)+'M',tx+bW/2,tY-5);ctx.save();ctx.translate(tx+bW/2,h-pB+8);ctx.rotate(-.5);ctx.fillStyle='#e2e8f0';ctx.font='bold 9px Segoe UI';ctx.textAlign='right';ctx.fillText('TOTAL',0,0);ctx.restore()}
+function drawCapexWaterfall(){const s=setupCanvas('capexWaterfallChart',300);if(!s)return;const{ctx,w,h}=s;const items=[{l:'GPUs',v:37260000,c:'#00889A'},{l:'Aux CAPEX',v:5011956,c:'#f59e0b'},{l:'Construct.',v:2521318,c:'#FCA311'},{l:'BCYSA OE',v:310713,c:'#06b6d4'},{l:'BCYSA Feas.',v:250000,c:'#8b5cf6'},{l:'CFE',v:248020,c:'#22c55e'},{l:'Commissn.',v:149146,c:'#64748b'},{l:'Engineerg.',v:85396,c:'#e879f9'},{l:'Permits',v:10000,c:'#94a3b8'},{l:'Conting.',v:584640,c:'#ef4444'}];const total=items.reduce((a,b)=>a+b.v,0);const pL=16,pR=16,pT=30,pB=60,cW=w-pL-pR,cH=h-pT-pB;const n=items.length+1,bW=Math.min(50,cW/n*.7);for(let i=0;i<=4;i++){const y=pT+(cH/4)*i,val=total*1.05-(total*1.05/4)*i;ctx.strokeStyle='#1a2235';ctx.lineWidth=1;ctx.beginPath();ctx.moveTo(pL,y);ctx.lineTo(w-pR,y);ctx.stroke();ctx.fillStyle='#64748b';ctx.font='9px Segoe UI';ctx.textAlign='right';ctx.fillText('$'+(val/1e6).toFixed(0)+'M',pL+42,y-3)}let cum=0;items.forEach((item,i)=>{const x=pL+50+(cW-50)/n*i+((cW-50)/n-bW)/2;const bH2=(item.v/(total*1.05))*cH;const prevH=(cum/(total*1.05))*cH;cum+=item.v;const y=pT+cH-prevH-bH2;ctx.fillStyle=item.c;rRect(ctx,x,y,bW,bH2,3);ctx.fillStyle='#e2e8f0';ctx.font='bold 9px Segoe UI';ctx.textAlign='center';ctx.fillText('$'+(item.v/1e6).toFixed(1)+'M',x+bW/2,y-5);ctx.save();ctx.translate(x+bW/2,h-pB+8);ctx.rotate(-.5);ctx.fillStyle='#94a3b8';ctx.font='9px Segoe UI';ctx.textAlign='right';ctx.fillText(item.l,0,0);ctx.restore()});const tx=pL+50+(cW-50)/n*items.length+((cW-50)/n-bW)/2;const tH=(cum/(total*1.05))*cH;const tY=pT+cH-tH;ctx.fillStyle='#e2e8f0';rRect(ctx,tx,tY,bW,tH,3);ctx.fillStyle='#e2e8f0';ctx.font='bold 10px Segoe UI';ctx.textAlign='center';ctx.fillText('$'+(cum/1e6).toFixed(1)+'M',tx+bW/2,tY-5);ctx.save();ctx.translate(tx+bW/2,h-pB+8);ctx.rotate(-.5);ctx.fillStyle='#e2e8f0';ctx.font='bold 9px Segoe UI';ctx.textAlign='right';ctx.fillText('TOTAL',0,0);ctx.restore()}
 
 // CAPEX DONUT
-function drawCapexDonut(){drawDonut('capexDonutChart',[{l:'GPUs (B300 HPC)',v:37260000},{l:'Auxiliary CAPEX',v:5011956},{l:'Construction',v:2521318},{l:'Contingency (7%)',v:584640},{l:'BCYSA Owner\'s Eng.',v:310713},{l:'BCYSA Feasibility',v:250000},{l:'CFE Commitments',v:248020},{l:'Commissioning',v:149146},{l:'Engineering',v:85396},{l:'Permits',v:10000}],['#76b900','#f59e0b','#00b4d8','#ef4444','#06b6d4','#8b5cf6','#22c55e','#64748b','#e879f9','#94a3b8'],'$46.2M',320)}
+function drawCapexDonut(){drawDonut('capexDonutChart',[{l:'GPUs (B300 HPC)',v:37260000},{l:'Auxiliary CAPEX',v:5011956},{l:'Construction',v:2521318},{l:'Contingency (7%)',v:584640},{l:'BCYSA Owner\'s Eng.',v:310713},{l:'BCYSA Feasibility',v:250000},{l:'CFE Commitments',v:248020},{l:'Commissioning',v:149146},{l:'Engineering',v:85396},{l:'Permits',v:10000}],['#00889A','#f59e0b','#FCA311','#ef4444','#06b6d4','#8b5cf6','#22c55e','#64748b','#e879f9','#94a3b8'],'$46.2M',320)}
 
 // EPC BREAKDOWN
-function drawEpcBreakdown(){drawHBars('epcBreakdownChart',[{l:'LV Electrical Works',v:929373,c:'#f59e0b'},{l:'Mechanical Works',v:815367,c:'#00b4d8'},{l:'Civil Ground Floor',v:415874,c:'#76b900'},{l:'Chiller Structure',v:393745,c:'#06b6d4'},{l:'Demolitions',v:187647,c:'#ef4444'},{l:'Civil Basement',v:165287,c:'#8b5cf6'},{l:'Detail Engineering',v:155874,c:'#22c55e'},{l:'Sound Insulation',v:128957,c:'#64748b'},{l:'Commissioning',v:105684,c:'#94a3b8'},{l:'MV Electrical',v:95874,c:'#f59e0b'},{l:'Test Equipment',v:25000,c:'#94a3b8'}],340,{lW:150})}
+function drawEpcBreakdown(){drawHBars('epcBreakdownChart',[{l:'LV Electrical Works',v:929373,c:'#f59e0b'},{l:'Mechanical Works',v:815367,c:'#FCA311'},{l:'Civil Ground Floor',v:415874,c:'#00889A'},{l:'Chiller Structure',v:393745,c:'#06b6d4'},{l:'Demolitions',v:187647,c:'#ef4444'},{l:'Civil Basement',v:165287,c:'#8b5cf6'},{l:'Detail Engineering',v:155874,c:'#22c55e'},{l:'Sound Insulation',v:128957,c:'#64748b'},{l:'Commissioning',v:105684,c:'#94a3b8'},{l:'MV Electrical',v:95874,c:'#f59e0b'},{l:'Test Equipment',v:25000,c:'#94a3b8'}],340,{lW:150})}
 
 // CRITICAL EQUIPMENT
-function drawCritEquip(){drawHBars('critEquipChart',[{l:'Chillers (2x 340T)',v:1179316,c:'#00b4d8'},{l:'UPS (2x 1000kVA)',v:1130494,c:'#76b900'},{l:'Generators (2x)',v:831748,c:'#ef4444'},{l:'LV Switchgear+ATS',v:333327,c:'#f59e0b'},{l:'MV Transformer',v:196874,c:'#f59e0b'},{l:'CRAH (7x 3T)',v:146013,c:'#06b6d4'},{l:'Minor Equipment',v:85987,c:'#94a3b8'},{l:'MV Driescher',v:55698,c:'#64748b'}],260,{lW:160})}
+function drawCritEquip(){drawHBars('critEquipChart',[{l:'Chillers (2x 340T)',v:1179316,c:'#FCA311'},{l:'UPS (2x 1000kVA)',v:1130494,c:'#00889A'},{l:'Generators (2x)',v:831748,c:'#ef4444'},{l:'LV Switchgear+ATS',v:333327,c:'#f59e0b'},{l:'MV Transformer',v:196874,c:'#f59e0b'},{l:'CRAH (7x 3T)',v:146013,c:'#06b6d4'},{l:'Minor Equipment',v:85987,c:'#94a3b8'},{l:'MV Driescher',v:55698,c:'#64748b'}],260,{lW:160})}
 
 // SPECIAL SYSTEMS
-function drawSpecialSys(){drawHBars('specialSysChart',[{l:'Fire Suppression (Novec)',v:235874,c:'#ef4444'},{l:'VESDA Detection',v:230254,c:'#f59e0b'},{l:'Infra Monitoring (BMS)',v:185874,c:'#76b900'},{l:'Flood Suppression',v:142407,c:'#00b4d8'},{l:'CCTV',v:65254,c:'#8b5cf6'},{l:'Access Control',v:52359,c:'#06b6d4'},{l:'Telecom MMR',v:45254,c:'#64748b'}],230,{lW:170,rP:100})}
+function drawSpecialSys(){drawHBars('specialSysChart',[{l:'Fire Suppression (Novec)',v:235874,c:'#ef4444'},{l:'VESDA Detection',v:230254,c:'#f59e0b'},{l:'Infra Monitoring (BMS)',v:185874,c:'#00889A'},{l:'Flood Suppression',v:142407,c:'#FCA311'},{l:'CCTV',v:65254,c:'#8b5cf6'},{l:'Access Control',v:52359,c:'#06b6d4'},{l:'Telecom MMR',v:45254,c:'#64748b'}],230,{lW:170,rP:100})}
 
 // OEM COST COMPARISON CHART
-function drawDellCost(){const s=setupCanvas('dellCostChart',240);if(!s)return;const{ctx,w,h}=s;const quotes=[{l:'Dell PSP MC',pre:34230887,tax:5476942,c:'#76b900',unit:475429},{l:'Dell NBD',pre:33780167,tax:5404827,c:'#22c55e',unit:469169},{l:'Supermicro',pre:37846701,tax:0,c:'#00b4d8',unit:525649},{l:'Lenovo',pre:0,tax:0,c:'#f59e0b',unit:0}];const maxV=Math.max(...quotes.map(q=>q.pre+q.tax));const pL=120,pR=160,pT=15,bH=34,gap=14;quotes.forEach((q,i)=>{const y=pT+i*(bH+gap);ctx.fillStyle='#94a3b8';ctx.font='12px Segoe UI';ctx.textAlign='right';ctx.fillText(q.l,pL-10,y+bH*.6);if(q.pre===0){ctx.fillStyle='#64748b';ctx.font='italic 11px Segoe UI';ctx.textAlign='left';ctx.fillText('Price pending (config only)',pL+8,y+bH*.6);ctx.strokeStyle='#2a3550';ctx.setLineDash([4,4]);ctx.strokeRect(pL,y,w-pL-pR,bH);ctx.setLineDash([]);return}const total=q.pre+q.tax,bw=(q.pre/maxV)*(w-pL-pR),tw=(q.tax/maxV)*(w-pL-pR);ctx.fillStyle=q.c;rRect(ctx,pL,y,bw,bH,4);if(tw>2){ctx.fillStyle=q.c+'80';ctx.fillRect(pL+bw,y,tw,bH)}ctx.fillStyle='#e2e8f0';ctx.font='bold 11px Segoe UI';ctx.textAlign='left';const lbl='$'+(total/1e6).toFixed(1)+'M'+(q.tax>0?' (incl IVA)':' (ex-tax, US)');ctx.fillText(lbl,pL+bw+tw+8,y+bH*.6);ctx.fillStyle='#fff';ctx.font='10px Segoe UI';ctx.textAlign='center';if(bw>100)ctx.fillText('$'+q.unit.toLocaleString()+'/node',pL+bw/2,y+bH*.6)});ctx.fillStyle='#94a3b8';ctx.font='bold 11px Segoe UI';ctx.textAlign='center';ctx.fillText('Pre-tax comparison: Dell $34.2M vs Supermicro $37.8M (+$3.6M, includes BF3 DPUs)',w/2,h-8)}
+function drawDellCost(){const s=setupCanvas('dellCostChart',240);if(!s)return;const{ctx,w,h}=s;const quotes=[{l:'Dell PSP MC',pre:34230887,tax:5476942,c:'#00889A',unit:475429},{l:'Dell NBD',pre:33780167,tax:5404827,c:'#22c55e',unit:469169},{l:'Supermicro',pre:37846701,tax:0,c:'#FCA311',unit:525649},{l:'Lenovo',pre:0,tax:0,c:'#f59e0b',unit:0}];const maxV=Math.max(...quotes.map(q=>q.pre+q.tax));const pL=120,pR=160,pT=15,bH=34,gap=14;quotes.forEach((q,i)=>{const y=pT+i*(bH+gap);ctx.fillStyle='#94a3b8';ctx.font='12px Segoe UI';ctx.textAlign='right';ctx.fillText(q.l,pL-10,y+bH*.6);if(q.pre===0){ctx.fillStyle='#64748b';ctx.font='italic 11px Segoe UI';ctx.textAlign='left';ctx.fillText('Price pending (config only)',pL+8,y+bH*.6);ctx.strokeStyle='#2a3550';ctx.setLineDash([4,4]);ctx.strokeRect(pL,y,w-pL-pR,bH);ctx.setLineDash([]);return}const total=q.pre+q.tax,bw=(q.pre/maxV)*(w-pL-pR),tw=(q.tax/maxV)*(w-pL-pR);ctx.fillStyle=q.c;rRect(ctx,pL,y,bw,bH,4);if(tw>2){ctx.fillStyle=q.c+'80';ctx.fillRect(pL+bw,y,tw,bH)}ctx.fillStyle='#e2e8f0';ctx.font='bold 11px Segoe UI';ctx.textAlign='left';const lbl='$'+(total/1e6).toFixed(1)+'M'+(q.tax>0?' (incl IVA)':' (ex-tax, US)');ctx.fillText(lbl,pL+bw+tw+8,y+bH*.6);ctx.fillStyle='#fff';ctx.font='10px Segoe UI';ctx.textAlign='center';if(bw>100)ctx.fillText('$'+q.unit.toLocaleString()+'/node',pL+bw/2,y+bH*.6)});ctx.fillStyle='#94a3b8';ctx.font='bold 11px Segoe UI';ctx.textAlign='center';ctx.fillText('Pre-tax comparison: Dell $34.2M vs Supermicro $37.8M (+$3.6M, includes BF3 DPUs)',w/2,h-8)}
 
 // ENERGY OPEX BAR
 function drawEnergyOpex(){const s=setupCanvas('energyOpexChart',200);if(!s)return;const{ctx,w,h}=s;const items=[{l:'IT Load (1 MW)',v:1489200,c:'#f59e0b'},{l:'Cooling (PUE 1.33)',v:245718,c:'#ef4444'}];const total=items.reduce((a,b)=>a+b.v,0);const maxV=items[0].v;const pL=130,pR=120,pT=20,bH=40,gap=20;items.forEach((item,i)=>{const y=pT+i*(bH+gap),bw=Math.max(2,(item.v/maxV)*(w-pL-pR));ctx.fillStyle='#94a3b8';ctx.font='12px Segoe UI';ctx.textAlign='right';ctx.fillText(item.l,pL-10,y+bH*.6);ctx.fillStyle=item.c;rRect(ctx,pL,y,bw,bH,5);ctx.fillStyle='#e2e8f0';ctx.font='bold 11px Segoe UI';ctx.textAlign='left';const pct=Math.round(item.v/total*100);ctx.fillText('$'+(item.v/1e6).toFixed(1)+'M/mo ('+pct+'%)',pL+bw+8,y+bH*.6)});ctx.fillStyle='#94a3b8';ctx.font='bold 12px Segoe UI';ctx.textAlign='center';ctx.fillText('Total: $'+(total/1e6).toFixed(1)+'M MXN/mo | $'+(total*12/1e6).toFixed(1)+'M MXN/yr | $'+(total*12/17.2/1e6).toFixed(1)+'M USD/yr',w/2,h-8)}
 
 // NETWORK OPEX BAR
-function drawNetOpexBar(canvasId){const s=setupCanvas(canvasId,200);if(!s)return;const{ctx,w,h}=s;const items=[{l:'100Gb Transit',v:560000,c:'#00b4d8'},{l:'/25 Subnet',v:55200,c:'#8b5cf6'},{l:'1Gb Mgmt',v:39780,c:'#76b900'}];const total=items.reduce((a,b)=>a+b.v,0);const maxV=items[0].v;const pL=110,pR=100,pT=15,bH=36,gap=16;items.forEach((item,i)=>{const y=pT+i*(bH+gap),bw=Math.max(2,(item.v/maxV)*(w-pL-pR));ctx.fillStyle='#94a3b8';ctx.font='12px Segoe UI';ctx.textAlign='right';ctx.fillText(item.l,pL-10,y+bH*.6);ctx.fillStyle=item.c;rRect(ctx,pL,y,bw,bH,5);ctx.fillStyle='#e2e8f0';ctx.font='bold 11px Segoe UI';ctx.textAlign='left';const pct=Math.round(item.v/total*100);ctx.fillText('$'+Math.round(item.v/1e3)+'K/mo ('+pct+'%)',pL+bw+8,y+bH*.6)});ctx.fillStyle='#94a3b8';ctx.font='bold 12px Segoe UI';ctx.textAlign='center';ctx.fillText('Total: $'+Math.round(total/1e3)+'K MXN/mo | $'+(total*12/1e6).toFixed(1)+'M MXN/yr',w/2,h-8)}
+function drawNetOpexBar(canvasId){const s=setupCanvas(canvasId,200);if(!s)return;const{ctx,w,h}=s;const items=[{l:'100Gb Transit',v:560000,c:'#FCA311'},{l:'/25 Subnet',v:55200,c:'#8b5cf6'},{l:'1Gb Mgmt',v:39780,c:'#00889A'}];const total=items.reduce((a,b)=>a+b.v,0);const maxV=items[0].v;const pL=110,pR=100,pT=15,bH=36,gap=16;items.forEach((item,i)=>{const y=pT+i*(bH+gap),bw=Math.max(2,(item.v/maxV)*(w-pL-pR));ctx.fillStyle='#94a3b8';ctx.font='12px Segoe UI';ctx.textAlign='right';ctx.fillText(item.l,pL-10,y+bH*.6);ctx.fillStyle=item.c;rRect(ctx,pL,y,bw,bH,5);ctx.fillStyle='#e2e8f0';ctx.font='bold 11px Segoe UI';ctx.textAlign='left';const pct=Math.round(item.v/total*100);ctx.fillText('$'+Math.round(item.v/1e3)+'K/mo ('+pct+'%)',pL+bw+8,y+bH*.6)});ctx.fillStyle='#94a3b8';ctx.font='bold 12px Segoe UI';ctx.textAlign='center';ctx.fillText('Total: $'+Math.round(total/1e3)+'K MXN/mo | $'+(total*12/1e6).toFixed(1)+'M MXN/yr',w/2,h-8)}
 function drawNetOpex(){drawNetOpexBar('netOpexChart')}
 function drawNetOpex2(){drawNetOpexBar('netOpexChart2')}
 
 // OPEX TREEMAP
-function drawOpexTreemap(){const s=setupCanvas('opexTreemapChart',320);if(!s)return;const{ctx,w,h}=s;const items=[{l:'Energy',v:21444480,c:'#f59e0b'},{l:'Telecom',v:7859760,c:'#00b4d8'},{l:'O&M Infra',v:5448000,c:'#76b900'},{l:'Personnel',v:4920000,c:'#8b5cf6'},{l:'Insurance',v:4200000,c:'#ef4444'},{l:'OEM Support',v:1740000,c:'#22c55e'},{l:'NOC',v:840000,c:'#06b6d4'},{l:'FSCA',v:804000,c:'#94a3b8'},{l:'Brokkr',v:480000,c:'#64748b'}];const total=items.reduce((a,b)=>a+b.v,0);const pad=4,tW=w-pad*2,tH=h-pad*2-20;function layoutRow(its,x,y,rw,rh){const rowTotal=its.reduce((a,b)=>a+b.v,0);let cx=x;its.forEach(it=>{const frac=it.v/rowTotal;let bw,bh;if(rw>=rh){bw=rw*frac;bh=rh}else{bw=rw;bh=rh*frac}ctx.fillStyle=it.c+'cc';ctx.beginPath();ctx.roundRect(cx,y,bw-2,bh-2,4);ctx.fill();ctx.strokeStyle=it.c;ctx.lineWidth=1;ctx.stroke();ctx.fillStyle='#fff';ctx.font='bold 12px Segoe UI';ctx.textAlign='center';const lbl=it.l;const val='$'+(it.v/1e6).toFixed(1)+'M';if(bw>60&&bh>40){ctx.fillText(lbl,cx+bw/2-1,y+bh/2-4);ctx.font='10px Segoe UI';ctx.fillStyle='#e2e8f0';ctx.fillText(val,cx+bw/2-1,y+bh/2+12);ctx.font='9px Segoe UI';ctx.fillText(Math.round(it.v/total*100)+'%',cx+bw/2-1,y+bh/2+24)}else if(bw>40&&bh>25){ctx.font='10px Segoe UI';ctx.fillText(lbl,cx+bw/2-1,y+bh/2+4)}if(rw>=rh)cx+=bw;else y+=bh})}const r1=items.slice(0,2),r2=items.slice(2,5),r3=items.slice(5);const r1H=tH*.45,r2H=tH*.32,r3H=tH*.23;layoutRow(r1,pad,pad,tW,r1H);layoutRow(r2,pad,pad+r1H,tW,r2H);layoutRow(r3,pad,pad+r1H+r2H,tW,r3H);ctx.fillStyle='#94a3b8';ctx.font='bold 11px Segoe UI';ctx.textAlign='center';ctx.fillText('Total Annual OPEX: $'+(total/1e6).toFixed(1)+'M MXN ($'+(total/17.2/1e6).toFixed(1)+'M USD)',w/2,h-4)}
+function drawOpexTreemap(){const s=setupCanvas('opexTreemapChart',320);if(!s)return;const{ctx,w,h}=s;const items=[{l:'Energy',v:21444480,c:'#f59e0b'},{l:'Telecom',v:7859760,c:'#FCA311'},{l:'O&M Infra',v:5448000,c:'#00889A'},{l:'Personnel',v:4920000,c:'#8b5cf6'},{l:'Insurance',v:4200000,c:'#ef4444'},{l:'OEM Support',v:1740000,c:'#22c55e'},{l:'NOC',v:840000,c:'#06b6d4'},{l:'FSCA',v:804000,c:'#94a3b8'},{l:'Brokkr',v:480000,c:'#64748b'}];const total=items.reduce((a,b)=>a+b.v,0);const pad=4,tW=w-pad*2,tH=h-pad*2-20;function layoutRow(its,x,y,rw,rh){const rowTotal=its.reduce((a,b)=>a+b.v,0);let cx=x;its.forEach(it=>{const frac=it.v/rowTotal;let bw,bh;if(rw>=rh){bw=rw*frac;bh=rh}else{bw=rw;bh=rh*frac}ctx.fillStyle=it.c+'cc';ctx.beginPath();ctx.roundRect(cx,y,bw-2,bh-2,4);ctx.fill();ctx.strokeStyle=it.c;ctx.lineWidth=1;ctx.stroke();ctx.fillStyle='#fff';ctx.font='bold 12px Segoe UI';ctx.textAlign='center';const lbl=it.l;const val='$'+(it.v/1e6).toFixed(1)+'M';if(bw>60&&bh>40){ctx.fillText(lbl,cx+bw/2-1,y+bh/2-4);ctx.font='10px Segoe UI';ctx.fillStyle='#e2e8f0';ctx.fillText(val,cx+bw/2-1,y+bh/2+12);ctx.font='9px Segoe UI';ctx.fillText(Math.round(it.v/total*100)+'%',cx+bw/2-1,y+bh/2+24)}else if(bw>40&&bh>25){ctx.font='10px Segoe UI';ctx.fillText(lbl,cx+bw/2-1,y+bh/2+4)}if(rw>=rh)cx+=bw;else y+=bh})}const r1=items.slice(0,2),r2=items.slice(2,5),r3=items.slice(5);const r1H=tH*.45,r2H=tH*.32,r3H=tH*.23;layoutRow(r1,pad,pad,tW,r1H);layoutRow(r2,pad,pad+r1H,tW,r2H);layoutRow(r3,pad,pad+r1H+r2H,tW,r3H);ctx.fillStyle='#94a3b8';ctx.font='bold 11px Segoe UI';ctx.textAlign='center';ctx.fillText('Total Annual OPEX: $'+(total/1e6).toFixed(1)+'M MXN ($'+(total/17.2/1e6).toFixed(1)+'M USD)',w/2,h-4)}
 
 // ===== DIGITAL TWIN SIMULATION =====
 const DT={running:false,tick:0,cabinets:[],gpuHistory:[],coolHistory:[],alerts:[]};
@@ -1857,18 +1857,18 @@ function dtDraw3D(){
   // CHILLER YARD (back left)
   for(let c=0;c<2;c++){
     const cx2=-140+c*35,cy2=-30;
-    const clr=c<2?'#00b4d8':'#00b4d880';
-    isoBox(cx2,cy2,0,28,20,25,'#0d4f6680','#0a3d5180',clr,'#00b4d8');
+    const clr=c<2?'#FCA311':'#FCA31180';
+    isoBox(cx2,cy2,0,28,20,25,'#0d4f6680','#0a3d5180',clr,'#FCA311');
     // fan animation
     const fc=iso(cx2+14,cy2+10,26);
     ctx.beginPath();ctx.arc(fc.x,fc.y,8,0,Math.PI*2);ctx.fillStyle='#0d4f66';ctx.fill();
-    ctx.strokeStyle='#00b4d8';ctx.lineWidth=1.5;
+    ctx.strokeStyle='#FCA311';ctx.lineWidth=1.5;
     for(let b=0;b<3;b++){const a2=t*3+b*2.094+c;ctx.beginPath();ctx.moveTo(fc.x,fc.y);ctx.lineTo(fc.x+Math.cos(a2)*7,fc.y+Math.sin(a2)*7);ctx.stroke();}
     ctx.fillStyle='#94a3b8';ctx.font='8px Segoe UI';ctx.textAlign='center';
     ctx.fillText('Chiller '+(c+1)+(c===1?' (N+1)':''),fc.x,fc.y+18);
   }
   // chilled water pipes
-  ctx.strokeStyle='#00b4d8';ctx.lineWidth=2;ctx.setLineDash([4,4]);
+  ctx.strokeStyle='#FCA311';ctx.lineWidth=2;ctx.setLineDash([4,4]);
   ctx.lineDashOffset=-DT.tick*2;
   const pipeStart=iso(-50,-10,3),pipeEnd=iso(-50,180,3);
   ctx.beginPath();ctx.moveTo(pipeStart.x,pipeStart.y);ctx.lineTo(pipeEnd.x,pipeEnd.y);ctx.stroke();
@@ -1895,8 +1895,8 @@ function dtDraw3D(){
   // UPS (mid left)
   for(let u=0;u<2;u++){
     const ux=-140+u*28,uy=30;
-    isoBox(ux,uy,0,24,16,20,'#1a3a1a','#143014','#1e4a1e','#76b90080');
-    const ul=iso(ux+12,uy+8,21);ctx.fillStyle='#76b900';ctx.font='bold 8px Segoe UI';ctx.textAlign='center';ctx.fillText('UPS '+(u+1),ul.x,ul.y);ctx.fillStyle='#94a3b8';ctx.font='7px Segoe UI';ctx.fillText('1,250kVA',ul.x,ul.y+10);
+    isoBox(ux,uy,0,24,16,20,'#1a3a1a','#143014','#1e4a1e','#00889A80');
+    const ul=iso(ux+12,uy+8,21);ctx.fillStyle='#00889A';ctx.font='bold 8px Segoe UI';ctx.textAlign='center';ctx.fillText('UPS '+(u+1),ul.x,ul.y);ctx.fillStyle='#94a3b8';ctx.font='7px Segoe UI';ctx.fillText('1,250kVA',ul.x,ul.y+10);
   }
   // CABINET ROWS (main hall)
   // Row A: 9 cabinets (CAB-01..CAB-09 = GPU Type A)
@@ -1906,7 +1906,7 @@ function dtDraw3D(){
     const tNorm=(cab.temp-16)/8;
     let topC,rightC,leftC,stroke;
     if(isNet){
-      topC='#00b4d840';rightC='#00b4d830';leftC='#00b4d820';stroke='#00b4d880';
+      topC='#FCA31140';rightC='#FCA31130';leftC='#FCA31120';stroke='#FCA31180';
     }else{
       const r2=Math.round(30+tNorm*180),g2=Math.round(180-tNorm*140),b2=Math.round(30);
       topC='rgb('+r2+','+g2+','+b2+')';
@@ -1918,14 +1918,14 @@ function dtDraw3D(){
     isoBox(rx,ry,0,22,14,bh,topC,rightC,leftC,stroke);
     const ledP=iso(rx+11,ry,bh+1);
     ctx.beginPath();ctx.arc(ledP.x,ledP.y,2.5,0,Math.PI*2);
-    if(isNet){ctx.fillStyle='#00b4d8';}
-    else{ctx.fillStyle=cab.util>95?'#ef4444':cab.util>80?'#76b900':'#f59e0b';}
+    if(isNet){ctx.fillStyle='#FCA311';}
+    else{ctx.fillStyle=cab.util>95?'#ef4444':cab.util>80?'#00889A':'#f59e0b';}
     ctx.fill();
     ctx.fillStyle='#e2e8f0';ctx.font='bold 7px Segoe UI';ctx.textAlign='center';
     ctx.fillText(cab.id.replace('CAB-','C').replace('NET-','N'),ledP.x,ledP.y-6);
     const maxLoad=isNet?15:55;
     const barBase=iso(rx+2,ry,1),barTop=iso(rx+2,ry,1+cab.load/maxLoad*(bh-3));
-    ctx.strokeStyle=isNet?'#00b4d8':topC;ctx.lineWidth=3;ctx.globalAlpha=.6;
+    ctx.strokeStyle=isNet?'#FCA311':topC;ctx.lineWidth=3;ctx.globalAlpha=.6;
     ctx.beginPath();ctx.moveTo(barBase.x,barBase.y);ctx.lineTo(barTop.x,barTop.y);ctx.stroke();
     ctx.globalAlpha=1;
   }
@@ -1941,7 +1941,7 @@ function dtDraw3D(){
   const gpuBpos=iso(-120+5*30+11,rowBy,38);
   ctx.fillStyle='#f59e0b';ctx.font='bold 6px Segoe UI';ctx.textAlign='center';ctx.fillText('2-node',gpuBpos.x,gpuBpos.y-3);
   const net1pos=iso(-120+6*30+11,rowBy,33);
-  ctx.fillStyle='#00b4d8';ctx.font='bold 6px Segoe UI';ctx.fillText('IB/ETH',net1pos.x,net1pos.y-3);
+  ctx.fillStyle='#FCA311';ctx.font='bold 6px Segoe UI';ctx.fillText('IB/ETH',net1pos.x,net1pos.y-3);
   const net2pos=iso(-120+7*30+11,rowBy,33);
   ctx.fillText('IB/ETH',net2pos.x,net2pos.y-3);
 
@@ -1949,7 +1949,7 @@ function dtDraw3D(){
   const ha=iso(-20,rowAy+28,38);
   ctx.fillStyle='#ef444480';ctx.font='bold 10px Segoe UI';ctx.textAlign='center';ctx.fillText('HOT AISLE',ha.x,ha.y);
   // cold aisle labels
-  const ca1=iso(-20,rowAy-10,38);ctx.fillStyle='#00b4d880';ctx.font='bold 9px Segoe UI';ctx.fillText('COLD AISLE',ca1.x,ca1.y);
+  const ca1=iso(-20,rowAy-10,38);ctx.fillStyle='#FCA31180';ctx.font='bold 9px Segoe UI';ctx.fillText('COLD AISLE',ca1.x,ca1.y);
   const ca2=iso(-20,rowBy+20,38);ctx.fillText('COLD AISLE',ca2.x,ca2.y);
   // ROW LABELS
   ctx.fillStyle='#e2e8f0';ctx.font='bold 10px Segoe UI';
@@ -1960,9 +1960,9 @@ function dtDraw3D(){
   // InfiniBand fabric spine (2 boxes)
   for(let n=0;n<2;n++){
     const nx=130,ny=75+n*35;
-    isoBox(nx,ny,0,20,12,18,'#00b4d830','#00b4d820','#00b4d815','#00b4d880');
+    isoBox(nx,ny,0,20,12,18,'#FCA31130','#FCA31120','#FCA31115','#FCA31180');
     const nl=iso(nx+10,ny+6,19);
-    ctx.fillStyle='#00b4d8';ctx.font='bold 7px Segoe UI';ctx.textAlign='center';
+    ctx.fillStyle='#FCA311';ctx.font='bold 7px Segoe UI';ctx.textAlign='center';
     ctx.fillText('IB Spine',nl.x,nl.y);
     ctx.fillStyle='#94a3b8';ctx.font='6px Segoe UI';
     ctx.fillText(n===0?'Q3400 x6':'Q3400 x6',nl.x,nl.y+9);
@@ -1975,7 +1975,7 @@ function dtDraw3D(){
 
   // FIBER RUNS (animated)
   // IB fabric to cabinets
-  ctx.strokeStyle='#00b4d8';ctx.lineWidth=1.5;ctx.setLineDash([3,3]);ctx.lineDashOffset=-DT.tick*2;
+  ctx.strokeStyle='#FCA311';ctx.lineWidth=1.5;ctx.setLineDash([3,3]);ctx.lineDashOffset=-DT.tick*2;
   for(let i=0;i<9;i++){
     const cabTop=iso(-120+i*30+18,rowAy,18);
     const ibHub=iso(130,85,10);
@@ -2016,7 +2016,7 @@ function dtDraw3D(){
     const py=rowAy+14+((DT.tick*2+p*37)%50);
     const pz=5+Math.random()*25;
     const pp=iso(px,py,pz);
-    ctx.fillStyle=py<rowAy+35?'#00b4d8':'#ef4444';
+    ctx.fillStyle=py<rowAy+35?'#FCA311':'#ef4444';
     ctx.beginPath();ctx.arc(pp.x,pp.y,1.5,0,Math.PI*2);ctx.fill();
   }
   ctx.globalAlpha=1;
@@ -2025,9 +2025,9 @@ function dtDraw3D(){
   const ly=h-50;
   ctx.fillStyle='#94a3b8';ctx.font='9px Segoe UI';ctx.textAlign='left';
   const legend=[
-    {c:'#76b900',l:'GPU Cabinet (DDC S-Series v4)'},{c:'#00b4d8',l:'Network Cabinet (IB/ETH)'},
+    {c:'#00889A',l:'GPU Cabinet (DDC S-Series v4)'},{c:'#FCA311',l:'Network Cabinet (IB/ETH)'},
     {c:'#f59e0b',l:'Generators (3x 800kW N+1)'},{c:'#8b5cf6',l:'Transformer (2 MVA)'},
-    {c:'#00b4d8',l:'Chiller (2x 134.4 TR N+1)'},{c:'#22c55e',l:'Fiber Uplink (4x 100Gb)'}
+    {c:'#FCA311',l:'Chiller (2x 134.4 TR N+1)'},{c:'#22c55e',l:'Fiber Uplink (4x 100Gb)'}
   ];
   legend.forEach((item,i)=>{
     const lx=20+i%3*180;const lly=ly+(i<3?0:14);
@@ -2037,14 +2037,14 @@ function dtDraw3D(){
   });
 
   // LABELS (top)
-  ctx.fillStyle='#76b900';ctx.font='bold 12px Segoe UI';ctx.textAlign='left';
+  ctx.fillStyle='#00889A';ctx.font='bold 12px Segoe UI';ctx.textAlign='left';
   ctx.fillText('FDO Fermaca Digital Origins',12,20);
   ctx.fillStyle='#94a3b8';ctx.font='11px Segoe UI';
   ctx.fillText('1 MW | 15 GPU + 2 NET Cabinets | 576 NVIDIA B300 GPUs | 12x IB Q3400 | 4x 100Gb Uplinks',12,36);
   const totalLoad=DT.cabinets.reduce((a,c)=>a+c.load,0);
   ctx.fillStyle='#e2e8f0';ctx.font='bold 11px Segoe UI';ctx.textAlign='right';
   ctx.fillText('IT Load: '+Math.round(totalLoad)+' kW / 1,000 kW',w-12,20);
-  ctx.fillStyle=totalLoad>950?'#ef4444':'#76b900';ctx.font='11px Segoe UI';
+  ctx.fillStyle=totalLoad>950?'#ef4444':'#00889A';ctx.font='11px Segoe UI';
   ctx.fillText('Status: '+(totalLoad>950?'HIGH LOAD':'NOMINAL'),w-12,36);
 }
 
@@ -2066,7 +2066,7 @@ function dtDrawHeatmap(){
       const tNorm=Math.max(0,Math.min(1,(cab.temp-16)/8));
       const r=Math.round(40+tNorm*200),g=Math.round(200-tNorm*160),b=Math.round(40-tNorm*20);
       const isNet=cab.type==='NET';
-      if(isNet){ctx.fillStyle='#00b4d830';ctx.strokeStyle='#00b4d860';ctx.lineWidth=1;
+      if(isNet){ctx.fillStyle='#FCA31130';ctx.strokeStyle='#FCA31160';ctx.lineWidth=1;
         ctx.beginPath();ctx.roundRect(x+1,y,cellW-2,cellH,4);ctx.fill();ctx.stroke();
       }else{
         ctx.fillStyle='rgb('+r+','+g+','+b+')';
@@ -2105,12 +2105,12 @@ function dtDrawPower(){
   const nodes=[
     {x:col(0),y:midY,w:nw,h:nh,label:'CFE 23kV',sub:Math.round(facilityLoad)+' kW',c:'#f59e0b'},
     {x:col(1),y:midY,w:nw,h:nh,label:'Transformer',sub:'2 MVA',c:'#8b5cf6'},
-    {x:col(2),y:midY-20,w:nw,h:nh-2,label:'UPS A',sub:'1250 kVA',c:'#76b900'},
-    {x:col(2),y:midY+22,w:nw,h:nh-2,label:'UPS B',sub:'1250 kVA',c:'#76b900'},
-    {x:col(3),y:midY,w:nw,h:nh,label:'Switchgear',sub:'480V',c:'#00b4d8'},
-    {x:col(4),y:midY-30,w:nw,h:nh-2,label:'Row A (9 cab)',sub:Math.round(totalLoad*9/17)+' kW',c:'#76b900'},
-    {x:col(4),y:midY+2,w:nw,h:nh-2,label:'Row B (8 cab)',sub:Math.round(totalLoad*8/17)+' kW',c:'#76b900'},
-    {x:col(4),y:midY+34,w:nw,h:nh-2,label:'Cooling',sub:Math.round(facilityLoad-totalLoad)+' kW',c:'#00b4d8'},
+    {x:col(2),y:midY-20,w:nw,h:nh-2,label:'UPS A',sub:'1250 kVA',c:'#00889A'},
+    {x:col(2),y:midY+22,w:nw,h:nh-2,label:'UPS B',sub:'1250 kVA',c:'#00889A'},
+    {x:col(3),y:midY,w:nw,h:nh,label:'Switchgear',sub:'480V',c:'#FCA311'},
+    {x:col(4),y:midY-30,w:nw,h:nh-2,label:'Row A (9 cab)',sub:Math.round(totalLoad*9/17)+' kW',c:'#00889A'},
+    {x:col(4),y:midY+2,w:nw,h:nh-2,label:'Row B (8 cab)',sub:Math.round(totalLoad*8/17)+' kW',c:'#00889A'},
+    {x:col(4),y:midY+34,w:nw,h:nh-2,label:'Cooling',sub:Math.round(facilityLoad-totalLoad)+' kW',c:'#FCA311'},
   ];
   // animated connections
   ctx.lineWidth=2;ctx.setLineDash([4,4]);ctx.lineDashOffset=-DT.tick*2;
@@ -2124,8 +2124,8 @@ function dtDrawPower(){
   }
   conn(nodes[0],nodes[1],'#f59e0b80');
   conn(nodes[1],nodes[2],'#8b5cf680');conn(nodes[1],nodes[3],'#8b5cf680');
-  conn(nodes[2],nodes[4],'#76b90080');conn(nodes[3],nodes[4],'#76b90080');
-  conn(nodes[4],nodes[5],'#76b90060');conn(nodes[4],nodes[6],'#76b90060');conn(nodes[4],nodes[7],'#00b4d860');
+  conn(nodes[2],nodes[4],'#00889A80');conn(nodes[3],nodes[4],'#00889A80');
+  conn(nodes[4],nodes[5],'#00889A60');conn(nodes[4],nodes[6],'#00889A60');conn(nodes[4],nodes[7],'#FCA31160');
   ctx.setLineDash([]);
   // draw node boxes
   nodes.forEach(n=>{
@@ -2178,7 +2178,7 @@ function dtDrawCooling(){
   for(let i=0;i<=4;i++){const y=pT+cH/4*i;ctx.beginPath();ctx.moveTo(pL,y);ctx.lineTo(pL+cW,y);ctx.stroke();}
   // TR line
   const maxTR=450,minTR=200;
-  ctx.beginPath();ctx.strokeStyle='#00b4d8';ctx.lineWidth=2;
+  ctx.beginPath();ctx.strokeStyle='#FCA311';ctx.lineWidth=2;
   data.forEach((d,i)=>{const x=pL+i/(data.length-1)*cW;const y=pT+cH-(d.tr-minTR)/(maxTR-minTR)*cH;i===0?ctx.moveTo(x,y):ctx.lineTo(x,y);});
   ctx.stroke();
   // Temp line
@@ -2195,7 +2195,7 @@ function dtDrawCooling(){
   ctx.fillText(maxTR+' TR',pL-4,pT+8);ctx.fillText(minTR+' TR',pL-4,pT+cH);
   ctx.textAlign='center';ctx.fillText('60s',pL,h-8);ctx.fillText('Now',pL+cW,h-8);
   // legend
-  ctx.fillStyle='#00b4d8';ctx.fillRect(pL+cW-180,pT+8,10,3);ctx.fillStyle='#e2e8f0';ctx.font='9px Segoe UI';ctx.textAlign='left';ctx.fillText('Cooling Load (TR)',pL+cW-165,pT+13);
+  ctx.fillStyle='#FCA311';ctx.fillRect(pL+cW-180,pT+8,10,3);ctx.fillStyle='#e2e8f0';ctx.font='9px Segoe UI';ctx.textAlign='left';ctx.fillText('Cooling Load (TR)',pL+cW-165,pT+13);
   ctx.fillStyle='#ef4444';ctx.fillRect(pL+cW-180,pT+22,10,3);ctx.fillStyle='#e2e8f0';ctx.fillText('Avg Inlet Temp (C)',pL+cW-165,pT+27);
 }
 
@@ -2212,11 +2212,11 @@ function dtDrawGpu(){
   // Load area
   ctx.beginPath();
   data.forEach((d,i)=>{const x=pL+i/(data.length-1)*cW;const y=pT+cH-(d.load-800)/300*cH;i===0?ctx.moveTo(x,y):ctx.lineTo(x,y);});
-  ctx.strokeStyle='#76b900';ctx.lineWidth=2;ctx.stroke();
+  ctx.strokeStyle='#00889A';ctx.lineWidth=2;ctx.stroke();
   // fill
   const lastX=pL+(data.length-1)/(data.length-1)*cW;
   ctx.lineTo(lastX,pT+cH);ctx.lineTo(pL,pT+cH);ctx.closePath();
-  ctx.fillStyle='#76b90015';ctx.fill();
+  ctx.fillStyle='#00889A15';ctx.fill();
   // utilization line
   ctx.beginPath();ctx.strokeStyle='#f59e0b';ctx.lineWidth=1.5;
   data.forEach((d,i)=>{const x=pL+i/(data.length-1)*cW;const y=pT+cH-d.util/100*cH;i===0?ctx.moveTo(x,y):ctx.lineTo(x,y);});
@@ -2231,7 +2231,7 @@ function dtDrawGpu(){
   ctx.fillText('1100 kW',pL-4,pT+8);ctx.fillText('800 kW',pL-4,pT+cH);
   ctx.textAlign='center';ctx.fillText('60s',pL,h-8);ctx.fillText('Now',pL+cW,h-8);
   // legend
-  ctx.fillStyle='#76b900';ctx.fillRect(pL+cW-180,pT+8,10,3);ctx.fillStyle='#e2e8f0';ctx.font='9px Segoe UI';ctx.textAlign='left';ctx.fillText('IT Load (kW)',pL+cW-165,pT+13);
+  ctx.fillStyle='#00889A';ctx.fillRect(pL+cW-180,pT+8,10,3);ctx.fillStyle='#e2e8f0';ctx.font='9px Segoe UI';ctx.textAlign='left';ctx.fillText('IT Load (kW)',pL+cW-165,pT+13);
   ctx.fillStyle='#f59e0b';ctx.fillRect(pL+cW-180,pT+22,10,3);ctx.fillStyle='#e2e8f0';ctx.fillText('GPU Utilization (%)',pL+cW-165,pT+27);
   // current values
   const last=data[data.length-1];
@@ -2266,8 +2266,8 @@ function drawEpcBidCompare(){
   var ctx=s.ctx,w=s.w,h=s.h;
   var pL=60,pR=30,pT=30,pB=50,cW=w-pL-pR,cH=h-pT-pB;
   var contractors=[
-    {name:'ATN',cost:6.88,weeks:27,color:'#76b900'},
-    {name:'PRIMA',cost:7.91,weeks:13,color:'#00b4d8'},
+    {name:'ATN',cost:6.88,weeks:27,color:'#00889A'},
+    {name:'PRIMA',cost:7.91,weeks:13,color:'#FCA311'},
     {name:'MiELECTRIC',cost:7.76,weeks:28,color:'#f59e0b'}
   ];
   var minC=6,maxC=8.5,minW=10,maxW=32;
@@ -2276,7 +2276,7 @@ function drawEpcBidCompare(){
 
   ctx.fillStyle='#0d1320';ctx.fillRect(pL,pT,cW,cH);
   // quadrant shading - lower cost + reasonable time = best
-  ctx.fillStyle='#76b90010';ctx.fillRect(pL,pT,cW/2,cH);
+  ctx.fillStyle='#00889A10';ctx.fillRect(pL,pT,cW/2,cH);
   // grid
   ctx.strokeStyle='#1a2235';ctx.lineWidth=1;
   for(var c=6.5;c<=8.5;c+=0.5){var x=xScale(c);ctx.beginPath();ctx.moveTo(x,pT);ctx.lineTo(x,pT+cH);ctx.stroke();
@@ -2301,7 +2301,7 @@ function drawEpcBidCompare(){
   });
   // winner badge
   var wx=xScale(6.88),wy=yScale(27);
-  ctx.fillStyle='#76b900';ctx.font='bold 9px Segoe UI';ctx.textAlign='center';
+  ctx.fillStyle='#00889A';ctx.font='bold 9px Segoe UI';ctx.textAlign='center';
   ctx.fillText('RECOMMENDED',wx,wy-28);
 }
 
@@ -2311,8 +2311,8 @@ function drawEpcPueLoad(){
   var pL=60,pR=20,pT=25,pB=45,cW=w-pL-pR,cH=h-pT-pB;
   var data=[
     {name:'Estimate',pue:1.39,load:1.44,color:'#94a3b8'},
-    {name:'ATN',pue:1.34,load:1.337,color:'#76b900'},
-    {name:'PRIMA',pue:1.48,load:1.474,color:'#00b4d8'},
+    {name:'ATN',pue:1.34,load:1.337,color:'#00889A'},
+    {name:'PRIMA',pue:1.48,load:1.474,color:'#FCA311'},
     {name:'MiELECTRIC',pue:1.57,load:1.568,color:'#f59e0b'}
   ];
   var barW=cW/data.length*0.35;
@@ -2347,8 +2347,8 @@ function drawEpcPueLoad(){
 
   // legend
   ctx.fillStyle='#94a3b8';ctx.font='9px Segoe UI';ctx.textAlign='left';
-  ctx.fillStyle='#76b90080';ctx.fillRect(pL+8,pT+6,10,10);ctx.fillStyle='#e2e8f0';ctx.fillText('PUE',pL+22,pT+15);
-  ctx.fillStyle='#76b90040';ctx.fillRect(pL+60,pT+6,10,10);ctx.fillStyle='#e2e8f0';ctx.fillText('Total Load (MW)',pL+74,pT+15);
+  ctx.fillStyle='#00889A80';ctx.fillRect(pL+8,pT+6,10,10);ctx.fillStyle='#e2e8f0';ctx.fillText('PUE',pL+22,pT+15);
+  ctx.fillStyle='#00889A40';ctx.fillRect(pL+60,pT+6,10,10);ctx.fillStyle='#e2e8f0';ctx.fillText('Total Load (MW)',pL+74,pT+15);
 }
 
 function drawEpcBidEvo(){
@@ -2380,8 +2380,8 @@ function drawEpcBidEvo(){
       ctx.fillText('$'+v.toFixed(2)+'M',x,y2-10);
     });
   }
-  drawLine(atn,'#76b900');
-  drawLine(prima,'#00b4d8');
+  drawLine(atn,'#00889A');
+  drawLine(prima,'#FCA311');
   drawLine(mie,'#f59e0b');
 
   ctx.fillStyle='#94a3b8';ctx.font='10px Segoe UI';ctx.textAlign='center';
@@ -2394,7 +2394,7 @@ function drawEpcBidEvo(){
   });
 
   var lx=pL+8,ly=pT+8;
-  [{c:'#76b900',l:'ATN'},{c:'#00b4d8',l:'PRIMA'},{c:'#f59e0b',l:'MiELECTRIC'}].forEach(function(item,i){
+  [{c:'#00889A',l:'ATN'},{c:'#FCA311',l:'PRIMA'},{c:'#f59e0b',l:'MiELECTRIC'}].forEach(function(item,i){
     ctx.fillStyle=item.c;ctx.fillRect(lx+i*90,ly,12,3);
     ctx.fillStyle='#e2e8f0';ctx.font='10px Segoe UI';ctx.textAlign='left';ctx.fillText(item.l,lx+i*90+16,ly+4);
   });
@@ -2413,7 +2413,7 @@ function drawEpcHvac(){
   ];
   var barH=cH/items.length*0.22;
   var rowH=cH/items.length;
-  var colors={atn:'#76b900',prima:'#00b4d8',mie:'#f59e0b'};
+  var colors={atn:'#00889A',prima:'#FCA311',mie:'#f59e0b'};
 
   ctx.fillStyle='#0d1320';ctx.fillRect(pL,pT,cW,cH);
 
@@ -2435,7 +2435,7 @@ function drawEpcHvac(){
 
   // legend
   var lx=pL+8,ly=pT+4;
-  [{c:'#76b900',l:'ATN'},{c:'#00b4d8',l:'PRIMA'},{c:'#f59e0b',l:'MiELECTRIC'}].forEach(function(item,i){
+  [{c:'#00889A',l:'ATN'},{c:'#FCA311',l:'PRIMA'},{c:'#f59e0b',l:'MiELECTRIC'}].forEach(function(item,i){
     ctx.fillStyle=item.c;ctx.fillRect(lx+i*85,ly,10,3);
     ctx.fillStyle='#e2e8f0';ctx.font='9px Segoe UI';ctx.textAlign='left';ctx.fillText(item.l,lx+i*85+14,ly+4);
   });
@@ -2481,25 +2481,25 @@ function drawLegalOrgChart(){
 
   // Row 0: UBOs
   drawNode(leftX,y0,nW,nH,'Fernando Calvillo A.','Co-Founder / UBO (49%)','#f59e0b','#78590020');
-  drawNode(rightX,y0,nW,nH,'Manuel Calvillo A.','Co-Founder / UBO (49%)','#00b4d8','#00b4d820');
+  drawNode(rightX,y0,nW,nH,'Manuel Calvillo A.','Co-Founder / UBO (49%)','#FCA311','#FCA31120');
 
   // Row 1: Holdings
   drawNode(leftX,y1,nW,nH,'Fermaca Dreams Holding','S.A. de C.V.','#ec4899','#ec489920');
-  drawNode(rightX,y1,nW,nH,'Cia. Mexicana de Gas Natural','S.A. de C.V.','#00b4d8','#00b4d815');
+  drawNode(rightX,y1,nW,nH,'Cia. Mexicana de Gas Natural','S.A. de C.V.','#FCA311','#FCA31115');
 
   // Arrows UBO -> Holdings
   drawArrow(leftX,y0+nH/2,leftX,y1-nH/2,'49%');
   drawArrow(rightX,y0+nH/2,rightX,y1-nH/2,'49%');
 
   // Row 2: SPV
-  drawNode(cx,y2,220,52,'Fermaca Domes, S.A. de C.V.','Project SPV — RFC: FSC141124IGA','#76b900','#76b90015');
+  drawNode(cx,y2,220,52,'Fermaca Domes, S.A. de C.V.','Project SPV — RFC: FSC141124IGA','#00889A','#00889A15');
 
   // Arrows Holdings -> SPV
   drawArrow(leftX,y1+nH/2,cx-30,y2-26,'99.99%');
   drawArrow(rightX,y1+nH/2,cx+30,y2-26,'0.01%');
 
   // Row 3: Project
-  drawNode(cx,y3,220,44,'FDO Data Center Project','1 MW AI Factory — CDMX','#76b900','#76b90008');
+  drawNode(cx,y3,220,44,'FDO Data Center Project','1 MW AI Factory — CDMX','#00889A','#00889A08');
   drawArrow(cx,y2+26,cx,y3-22,'');
 
   // Legal rep badge
@@ -2550,9 +2550,9 @@ function drawRiskHeatMap(){
     [1,1,'Low Utilization','#f59e0b'],
     [1,2,'Interest Rate','#22c55e'],
     [2,2,'Cooling Failure','#f59e0b'],
-    [1,2,'Regulatory','#00b4d8'],
-    [1,2,'Seismic Event','#00b4d8'],
-    [1,2,'Cybersecurity','#00b4d8'],
+    [1,2,'Regulatory','#FCA311'],
+    [1,2,'Seismic Event','#FCA311'],
+    [1,2,'Cybersecurity','#FCA311'],
     [0,2,'Key Person','#22c55e']
   ];
   // scatter with jitter to avoid overlap
@@ -2583,8 +2583,8 @@ function drawRiskSensitivity(){
       var rev=rate*576*24*30*util;
       var net=rev-monthlyFixed;
       var color;
-      if(net>2000000)color='#76b90060';
-      else if(net>1000000)color='#76b90040';
+      if(net>2000000)color='#00889A60';
+      else if(net>1000000)color='#00889A40';
       else if(net>500000)color='#22c55e30';
       else if(net>0)color='#f59e0b25';
       else if(net>-500000)color='#ef444425';
@@ -2607,9 +2607,9 @@ function drawRiskSensitivity(){
   // FDO marker
   var fdoX=pL+((5.50-minRate)/(maxRate-minRate))*cW;
   var fdoY=pT+cH-((0.90-minUtil)/(maxUtil-minUtil))*cH;
-  ctx.beginPath();ctx.arc(fdoX,fdoY,7,0,Math.PI*2);ctx.fillStyle='#76b900';ctx.fill();
+  ctx.beginPath();ctx.arc(fdoX,fdoY,7,0,Math.PI*2);ctx.fillStyle='#00889A';ctx.fill();
   ctx.strokeStyle='#fff';ctx.lineWidth=2;ctx.stroke();
-  ctx.fillStyle='#76b900';ctx.font='bold 10px Segoe UI';ctx.textAlign='left';
+  ctx.fillStyle='#00889A';ctx.font='bold 10px Segoe UI';ctx.textAlign='left';
   ctx.fillText('FDO Base',fdoX+12,fdoY+4);
   // bear marker
   var bearX=pL+((3.50-minRate)/(maxRate-minRate))*cW;
@@ -2627,7 +2627,7 @@ function drawRiskSensitivity(){
   ctx.save();ctx.translate(14,pT+cH/2);ctx.rotate(-Math.PI/2);ctx.textAlign='center';ctx.fillText('Utilization',0,0);ctx.restore();
   // legend
   var lx=pL+8,ly=pT+6;
-  [{c:'#76b90060',l:'Net >$2M/mo'},{c:'#76b90040',l:'>$1M'},{c:'#22c55e30',l:'>$500K'},{c:'#f59e0b25',l:'Marginal'},{c:'#ef444445',l:'Loss'}].forEach(function(item,i){
+  [{c:'#00889A60',l:'Net >$2M/mo'},{c:'#00889A40',l:'>$1M'},{c:'#22c55e30',l:'>$500K'},{c:'#f59e0b25',l:'Marginal'},{c:'#ef444445',l:'Loss'}].forEach(function(item,i){
     ctx.fillStyle=item.c;ctx.fillRect(lx+i*80,ly,10,10);
     ctx.fillStyle='#e2e8f0';ctx.font='9px Segoe UI';ctx.textAlign='left';ctx.fillText(item.l,lx+i*80+14,ly+9);
   });
@@ -2645,7 +2645,7 @@ function drawRiskDecay(){
   // B300 scenarios
   var b300start=5.50;
   var scen=[
-    {label:'Optimistic (slower decay)',mult:[1.00,0.95,0.90,0.85,0.82,0.78,0.74,0.72],color:'#76b900'},
+    {label:'Optimistic (slower decay)',mult:[1.00,0.95,0.90,0.85,0.82,0.78,0.74,0.72],color:'#00889A'},
     {label:'H100-mirrored decay',mult:h100decay,color:'#f59e0b'},
     {label:'Aggressive decay',mult:[1.00,0.85,0.72,0.60,0.52,0.45,0.40,0.38],color:'#ef4444'}
   ];
@@ -2700,8 +2700,8 @@ function drawRiskCashFlow(){
   var monthlyDebt=975000,monthlyOpex=225000,bridgeInterest=220000;
   var totalFixed=monthlyDebt+monthlyOpex; // $1.2M/mo during operations
   var scenarios=[
-    {label:'Bull ($5.50, 95%)',rate:5.50,util:0.95,color:'#76b900'},
-    {label:'Base ($4.50, 90%)',rate:4.50,util:0.90,color:'#00b4d8'},
+    {label:'Bull ($5.50, 95%)',rate:5.50,util:0.95,color:'#00889A'},
+    {label:'Base ($4.50, 90%)',rate:4.50,util:0.90,color:'#FCA311'},
     {label:'Bear ($3.50, 80%)',rate:3.50,util:0.80,color:'#f59e0b'}
   ];
   var gpus=576;
@@ -2803,9 +2803,9 @@ function drawGpuPriceEvo(){
   }
   // B300 reference line
   var b300y=yScale(5.50);
-  ctx.strokeStyle='#76b90050';ctx.lineWidth=1;ctx.setLineDash([6,4]);
+  ctx.strokeStyle='#00889A50';ctx.lineWidth=1;ctx.setLineDash([6,4]);
   ctx.beginPath();ctx.moveTo(pL,b300y);ctx.lineTo(pL+cW,b300y);ctx.stroke();ctx.setLineDash([]);
-  ctx.fillStyle='#76b900';ctx.font='bold 10px Segoe UI';ctx.textAlign='left';ctx.fillText('B300 Spot: $5.50',pL+6,b300y-5);
+  ctx.fillStyle='#00889A';ctx.font='bold 10px Segoe UI';ctx.textAlign='left';ctx.fillText('B300 Spot: $5.50',pL+6,b300y-5);
 
   function drawLine(data,color,lw){
     ctx.strokeStyle=color;ctx.lineWidth=lw;ctx.beginPath();var started=false;
@@ -2816,15 +2816,15 @@ function drawGpuPriceEvo(){
       ctx.beginPath();ctx.arc(x,y2,3,0,Math.PI*2);ctx.fillStyle=color;ctx.fill();
     });
   }
-  drawLine(h100,'#76b900',2.5);
-  drawLine(h200,'#00b4d8',2.5);
+  drawLine(h100,'#00889A',2.5);
+  drawLine(h200,'#FCA311',2.5);
   drawLine(b200,'#f59e0b',2.5);
 
   ctx.fillStyle='#94a3b8';ctx.font='9px Segoe UI';ctx.textAlign='center';
   months.forEach(function(m,i){if(i%2===0||i===months.length-1){ctx.save();ctx.translate(xScale(i),h-pB+14);ctx.rotate(-0.4);ctx.fillText(m,0,0);ctx.restore();}});
 
   var lx=pL+10,ly=pT+10;
-  [{c:'#76b900',l:'H100'},{c:'#00b4d8',l:'H200'},{c:'#f59e0b',l:'B200'}].forEach(function(item,i){
+  [{c:'#00889A',l:'H100'},{c:'#FCA311',l:'H200'},{c:'#f59e0b',l:'B200'}].forEach(function(item,i){
     ctx.fillStyle=item.c;ctx.fillRect(lx+i*70,ly,12,3);
     ctx.fillStyle='#e2e8f0';ctx.font='10px Segoe UI';ctx.textAlign='left';ctx.fillText(item.l,lx+i*70+16,ly+4);
   });
@@ -2849,7 +2849,7 @@ function drawGpuDealVol(){
     ctx.fillStyle='#94a3b8';ctx.font='10px Segoe UI';ctx.textAlign='right';ctx.fillText(Math.round(maxStack*(4-g)/4),pL-6,gy+3);
   }
 
-  var colors=['#76b900','#00b4d8','#f59e0b','#64748b'];
+  var colors=['#00889A','#FCA311','#f59e0b','#64748b'];
   for(var mi=0;mi<months.length;mi++){
     var x=pL+mi/months.length*cW+cW/months.length*0.15;
     var vals=[h100d[mi],h200d[mi],b200d[mi],otherd[mi]];
@@ -2865,7 +2865,7 @@ function drawGpuDealVol(){
   months.forEach(function(m,i){if(i%2===0||i===months.length-1){var xp=pL+i/months.length*cW+cW/months.length*0.5;ctx.save();ctx.translate(xp,h-pB+14);ctx.rotate(-0.4);ctx.fillText(m,0,0);ctx.restore();}});
 
   var lx=pL+10,ly=pT+8;
-  [{c:'#76b900',l:'H100'},{c:'#00b4d8',l:'H200'},{c:'#f59e0b',l:'B200'},{c:'#64748b',l:'Other'}].forEach(function(item,i){
+  [{c:'#00889A',l:'H100'},{c:'#FCA311',l:'H200'},{c:'#f59e0b',l:'B200'},{c:'#64748b',l:'Other'}].forEach(function(item,i){
     ctx.fillStyle=item.c;ctx.fillRect(lx+i*65,ly,10,3);
     ctx.fillStyle='#e2e8f0';ctx.font='10px Segoe UI';ctx.textAlign='left';ctx.fillText(item.l,lx+i*65+14,ly+4);
   });
@@ -2873,7 +2873,7 @@ function drawGpuDealVol(){
 
 function drawGpuTermDist(){
   var data=[{l:'Spot',v:1049},{l:'1 Month',v:167},{l:'12 Month',v:102},{l:'3 Month',v:83},{l:'Misc',v:158},{l:'NA',v:176},{l:'6 Month',v:45},{l:'24 Month',v:10},{l:'9 Month',v:8},{l:'Other',v:19}];
-  var colors=['#76b900','#00b4d8','#f59e0b','#ef4444','#8b5cf6','#64748b','#06b6d4','#ec4899','#14b8a6','#a3a3a3'];
+  var colors=['#00889A','#FCA311','#f59e0b','#ef4444','#8b5cf6','#64748b','#06b6d4','#ec4899','#14b8a6','#a3a3a3'];
   drawDonut('gpuTermDist',data,colors,'1,817',300);
 }
 
@@ -2881,9 +2881,9 @@ function drawGpuSpread(){
   var s=setupCanvas('gpuSpread',300);if(!s)return;
   var ctx=s.ctx,w=s.w,h=s.h;
   var data=[
-    {gpu:'B300',buyer:5.50,supplier:4.76,spread:0.74,color:'#76b900'},
+    {gpu:'B300',buyer:5.50,supplier:4.76,spread:0.74,color:'#00889A'},
     {gpu:'B200',buyer:3.41,supplier:3.04,spread:0.37,color:'#f59e0b'},
-    {gpu:'H200',buyer:2.32,supplier:2.05,spread:0.27,color:'#00b4d8'},
+    {gpu:'H200',buyer:2.32,supplier:2.05,spread:0.27,color:'#FCA311'},
     {gpu:'H100',buyer:1.97,supplier:1.72,spread:0.25,color:'#22c55e'},
     {gpu:'A100',buyer:1.28,supplier:1.09,spread:0.19,color:'#8b5cf6'},
     {gpu:'L40S',buyer:0.91,supplier:0.74,spread:0.17,color:'#06b6d4'},
@@ -2943,14 +2943,14 @@ function drawGpuBuyerSupplier(){
     ctx.strokeStyle=cSup;ctx.lineWidth=1.5;ctx.setLineDash([4,3]);ctx.beginPath();started=false;
     supplier.forEach(function(v,i){if(v===null)return;var x=xScale(i),y2=yScale(v);if(!started){ctx.moveTo(x,y2);started=true;}else ctx.lineTo(x,y2);});ctx.stroke();ctx.setLineDash([]);
   }
-  drawPair(h100b,h100s,'#76b900','#76b900');
-  drawPair(h200b,h200s,'#00b4d8','#00b4d8');
+  drawPair(h100b,h100s,'#00889A','#00889A');
+  drawPair(h200b,h200s,'#FCA311','#FCA311');
 
   ctx.fillStyle='#94a3b8';ctx.font='9px Segoe UI';ctx.textAlign='center';
   months.forEach(function(m,i){if(i%2===0||i===months.length-1){ctx.save();ctx.translate(xScale(i),h-pB+14);ctx.rotate(-0.4);ctx.fillText(m,0,0);ctx.restore();}});
 
   var lx=pL+8,ly=pT+8;
-  var items=[{c:'#76b900',l:'H100 Buy',d:false},{c:'#76b900',l:'H100 Sup',d:true},{c:'#00b4d8',l:'H200 Buy',d:false},{c:'#00b4d8',l:'H200 Sup',d:true}];
+  var items=[{c:'#00889A',l:'H100 Buy',d:false},{c:'#00889A',l:'H100 Sup',d:true},{c:'#FCA311',l:'H200 Buy',d:false},{c:'#FCA311',l:'H200 Sup',d:true}];
   var lsp=Math.min(95,(cW-20)/4);
   items.forEach(function(item,i){
     ctx.strokeStyle=item.c;ctx.lineWidth=item.d?1.5:2;if(item.d)ctx.setLineDash([4,3]);else ctx.setLineDash([]);
@@ -2963,8 +2963,8 @@ function drawGpuB300Rev(){
   var s=setupCanvas('gpuB300Rev',300);if(!s)return;
   var ctx=s.ctx,w=s.w,h=s.h;
   var scenarios=[
-    {label:'Bull ($5.50, 95%)',rate:5.50,util:0.95,color:'#76b900'},
-    {label:'Base ($4.50, 90%)',rate:4.50,util:0.90,color:'#00b4d8'},
+    {label:'Bull ($5.50, 95%)',rate:5.50,util:0.95,color:'#00889A'},
+    {label:'Base ($4.50, 90%)',rate:4.50,util:0.90,color:'#FCA311'},
     {label:'Bear ($3.50, 80%)',rate:3.50,util:0.80,color:'#f59e0b'}
   ];
   var gpus=576;
@@ -3029,7 +3029,7 @@ function drawModelPnl(){
     var x=pL+i*gap+gap*0.15;
     // Revenue bar
     var rH=(rev[i]/maxV)*cH;
-    ctx.fillStyle='rgba(118,185,0,0.7)';ctx.fillRect(x,h-pB-rH,barW*0.45,rH);
+    ctx.fillStyle='rgba(0,136,154,0.7)';ctx.fillRect(x,h-pB-rH,barW*0.45,rH);
     // OPEX portion
     var oH=(opx[i]/maxV)*cH;
     ctx.fillStyle='rgba(239,68,68,0.5)';ctx.fillRect(x+barW*0.5,h-pB-oH,barW*0.45,oH);
@@ -3041,14 +3041,14 @@ function drawModelPnl(){
     ctx.fillText(labels[i],x+barW*0.25,h-pB+14);
   }
   // Net income line
-  ctx.beginPath();ctx.strokeStyle='#00b4d8';ctx.lineWidth=2.5;
+  ctx.beginPath();ctx.strokeStyle='#FCA311';ctx.lineWidth=2.5;
   for(var i=0;i<net.length;i++){var x=pL+i*gap+gap*0.15+barW*0.25;var y=h-pB-(net[i]/maxV)*cH;if(i===0)ctx.moveTo(x,y);else ctx.lineTo(x,y);}
   ctx.stroke();
   // dots on net line
-  for(var i=0;i<net.length;i++){var x=pL+i*gap+gap*0.15+barW*0.25;var y=h-pB-(net[i]/maxV)*cH;ctx.beginPath();ctx.arc(x,y,3,0,Math.PI*2);ctx.fillStyle='#00b4d8';ctx.fill();}
+  for(var i=0;i<net.length;i++){var x=pL+i*gap+gap*0.15+barW*0.25;var y=h-pB-(net[i]/maxV)*cH;ctx.beginPath();ctx.arc(x,y,3,0,Math.PI*2);ctx.fillStyle='#FCA311';ctx.fill();}
   // Legend
   var lx=pL+10,ly=pT+10;
-  [[' Revenue','rgba(118,185,0,0.7)'],[' OPEX','rgba(239,68,68,0.5)'],[' Debt Service','rgba(245,158,11,0.5)'],[' Net Cash Flow','#00b4d8']].forEach(function(item,idx){
+  [[' Revenue','rgba(0,136,154,0.7)'],[' OPEX','rgba(239,68,68,0.5)'],[' Debt Service','rgba(245,158,11,0.5)'],[' Net Cash Flow','#FCA311']].forEach(function(item,idx){
     ctx.fillStyle=item[1];ctx.fillRect(lx+idx*110,ly,12,12);ctx.fillStyle='#e2e8f0';ctx.font='11px Segoe UI';ctx.textAlign='left';ctx.fillText(item[0],lx+idx*110+15,ly+10);
   });
 }
@@ -3082,22 +3082,22 @@ function drawModelCumCf(){
   for(var g=-10;g<=25;g+=5){var yy=pT+((maxV-g)/range)*cH;ctx.beginPath();ctx.moveTo(pL,yy);ctx.lineTo(w-pR,yy);ctx.strokeStyle='rgba(42,53,80,0.4)';ctx.stroke();ctx.fillText('$'+g+'M',pL-8,yy+4);}
   // Draw lines
   function drawLine(data,color,lw){ctx.beginPath();ctx.strokeStyle=color;ctx.lineWidth=lw;for(var i=0;i<data.length;i++){var x=pL+(i/(data.length-1))*cW;var y=pT+((maxV-data[i])/range)*cH;if(i===0)ctx.moveTo(x,y);else ctx.lineTo(x,y);}ctx.stroke();}
-  drawLine(bull,'#76b900',2.5);
-  drawLine(base,'#00b4d8',2.5);
+  drawLine(bull,'#00889A',2.5);
+  drawLine(base,'#FCA311',2.5);
   drawLine(bear,'#ef4444',2.5);
   // Dots and end labels
   function drawDots(data,color,label){for(var i=0;i<data.length;i++){var x=pL+(i/(data.length-1))*cW;var y=pT+((maxV-data[i])/range)*cH;ctx.beginPath();ctx.arc(x,y,2.5,0,Math.PI*2);ctx.fillStyle=color;ctx.fill();}var lx=pL+cW+5;var ly=pT+((maxV-data[data.length-1])/range)*cH;ctx.fillStyle=color;ctx.font='bold 10px Segoe UI';ctx.textAlign='left';ctx.fillText(label,lx-25,ly-8);}
-  drawDots(bull,'#76b900','Bull');drawDots(base,'#00b4d8','Base');drawDots(bear,'#ef4444','Bear');
+  drawDots(bull,'#00889A','Bull');drawDots(base,'#FCA311','Base');drawDots(bear,'#ef4444','Bear');
   // X labels
   ctx.fillStyle='#94a3b8';ctx.textAlign='center';ctx.font='10px Segoe UI';
   for(var i=0;i<labels.length;i++){var x=pL+(i/(labels.length-1))*cW;ctx.fillText(labels[i],x,h-pB+16);}
   // Payback label
-  ctx.fillStyle='rgba(118,185,0,0.15)';
+  ctx.fillStyle='rgba(0,136,154,0.15)';
   // find bull payback (where crosses 0)
-  for(var i=1;i<bull.length;i++){if(bull[i]>=0){var x=pL+(i/(bull.length-1))*cW;ctx.beginPath();ctx.moveTo(x,pT);ctx.lineTo(x,h-pB);ctx.strokeStyle='rgba(118,185,0,0.4)';ctx.setLineDash([3,3]);ctx.lineWidth=1;ctx.stroke();ctx.setLineDash([]);ctx.fillStyle='#76b900';ctx.font='bold 10px Segoe UI';ctx.fillText('Payback',x,pT-5);break;}}
+  for(var i=1;i<bull.length;i++){if(bull[i]>=0){var x=pL+(i/(bull.length-1))*cW;ctx.beginPath();ctx.moveTo(x,pT);ctx.lineTo(x,h-pB);ctx.strokeStyle='rgba(0,136,154,0.4)';ctx.setLineDash([3,3]);ctx.lineWidth=1;ctx.stroke();ctx.setLineDash([]);ctx.fillStyle='#00889A';ctx.font='bold 10px Segoe UI';ctx.fillText('Payback',x,pT-5);break;}}
   // Legend
   ctx.font='11px Segoe UI';ctx.textAlign='left';var ly2=pT+10;
-  [['Bull (95%, $5.50)','#76b900'],['Base (90%, decay)','#00b4d8'],['Bear (80%, $3.50)','#ef4444']].forEach(function(it,idx){
+  [['Bull (95%, $5.50)','#00889A'],['Base (90%, decay)','#FCA311'],['Bear (80%, $3.50)','#ef4444']].forEach(function(it,idx){
     ctx.fillStyle=it[1];ctx.fillRect(pL+10+idx*140,ly2,12,12);ctx.fillStyle='#e2e8f0';ctx.fillText(it[0],pL+25+idx*140,ly2+10);
   });
 }
@@ -3116,8 +3116,8 @@ function drawModelDscr(){
   ctx.fillStyle='#ef4444';ctx.font='bold 11px Segoe UI';ctx.textAlign='left';ctx.fillText('Minimum 1.0x',pL+5,oneY-6);
   // Comfort zone at 1.25
   var comfY=pT+((maxV-1.25)/range)*cH;
-  ctx.beginPath();ctx.setLineDash([4,4]);ctx.moveTo(pL,comfY);ctx.lineTo(w-pR,comfY);ctx.strokeStyle='rgba(118,185,0,0.4)';ctx.lineWidth=1;ctx.stroke();ctx.setLineDash([]);
-  ctx.fillStyle='#76b900';ctx.fillText('Lender comfort 1.25x',pL+5,comfY-6);
+  ctx.beginPath();ctx.setLineDash([4,4]);ctx.moveTo(pL,comfY);ctx.lineTo(w-pR,comfY);ctx.strokeStyle='rgba(0,136,154,0.4)';ctx.lineWidth=1;ctx.stroke();ctx.setLineDash([]);
+  ctx.fillStyle='#00889A';ctx.fillText('Lender comfort 1.25x',pL+5,comfY-6);
   // Y grid
   ctx.font='11px Segoe UI';ctx.fillStyle='#94a3b8';ctx.textAlign='right';
   for(var g=0.8;g<=1.5;g+=0.1){var yy=pT+((maxV-g)/range)*cH;ctx.beginPath();ctx.moveTo(pL,yy);ctx.lineTo(w-pR,yy);ctx.strokeStyle='rgba(42,53,80,0.3)';ctx.lineWidth=0.5;ctx.stroke();ctx.fillText(g.toFixed(1)+'x',pL-8,yy+4);}
@@ -3125,13 +3125,13 @@ function drawModelDscr(){
   ctx.beginPath();ctx.moveTo(pL,h-pB);
   for(var i=0;i<dscr.length;i++){var x=pL+(i/(dscr.length-1))*cW;var y=pT+((maxV-dscr[i])/range)*cH;ctx.lineTo(x,y);}
   ctx.lineTo(pL+cW,h-pB);ctx.closePath();
-  var grad=ctx.createLinearGradient(0,pT,0,h-pB);grad.addColorStop(0,'rgba(0,180,216,0.25)');grad.addColorStop(1,'rgba(0,180,216,0.02)');ctx.fillStyle=grad;ctx.fill();
+  var grad=ctx.createLinearGradient(0,pT,0,h-pB);grad.addColorStop(0,'rgba(252,163,17,0.25)');grad.addColorStop(1,'rgba(252,163,17,0.02)');ctx.fillStyle=grad;ctx.fill();
   // Line
-  ctx.beginPath();ctx.strokeStyle='#00b4d8';ctx.lineWidth=2.5;
+  ctx.beginPath();ctx.strokeStyle='#FCA311';ctx.lineWidth=2.5;
   for(var i=0;i<dscr.length;i++){var x=pL+(i/(dscr.length-1))*cW;var y=pT+((maxV-dscr[i])/range)*cH;if(i===0)ctx.moveTo(x,y);else ctx.lineTo(x,y);}ctx.stroke();
   // Dots with values
   ctx.font='bold 10px Segoe UI';ctx.textAlign='center';
-  for(var i=0;i<dscr.length;i++){var x=pL+(i/(dscr.length-1))*cW;var y=pT+((maxV-dscr[i])/range)*cH;ctx.beginPath();ctx.arc(x,y,4,0,Math.PI*2);ctx.fillStyle=dscr[i]>=1.25?'#76b900':dscr[i]>=1.0?'#f59e0b':'#ef4444';ctx.fill();ctx.fillText(dscr[i].toFixed(2)+'x',x,y-10);}
+  for(var i=0;i<dscr.length;i++){var x=pL+(i/(dscr.length-1))*cW;var y=pT+((maxV-dscr[i])/range)*cH;ctx.beginPath();ctx.arc(x,y,4,0,Math.PI*2);ctx.fillStyle=dscr[i]>=1.25?'#00889A':dscr[i]>=1.0?'#f59e0b':'#ef4444';ctx.fill();ctx.fillText(dscr[i].toFixed(2)+'x',x,y-10);}
   // X labels
   ctx.fillStyle='#94a3b8';ctx.font='10px Segoe UI';ctx.textAlign='center';
   for(var i=0;i<labels.length;i++){var x=pL+(i/(labels.length-1))*cW;ctx.fillText(labels[i],x,h-pB+16);}
@@ -3194,7 +3194,7 @@ function drawModelReturns(){
   // Y grid
   ctx.font='11px Segoe UI';ctx.fillStyle='#94a3b8';ctx.textAlign='right';
   for(var g=0;g<=80;g+=20){var yy=h-pB-(g/maxV)*cH;ctx.beginPath();ctx.moveTo(pL,yy);ctx.lineTo(w-pR,yy);ctx.strokeStyle='rgba(42,53,80,0.4)';ctx.lineWidth=0.5;ctx.stroke();ctx.fillText(g+'%',pL-8,yy+4);}
-  var colors=['#76b900','#00b4d8','#8b5cf6'];
+  var colors=['#00889A','#FCA311','#8b5cf6'];
   var metricLabels=['Project IRR','Equity IRR','MOIC'];
   for(var gi=0;gi<groups.length;gi++){
     var gx=pL+gi*groupW+groupW*0.15;
@@ -3210,7 +3210,7 @@ function drawModelReturns(){
       ctx.fillText(txt,x+barW/2,h-pB-bH-6);
     }
     // Group label
-    ctx.fillStyle=gi===0?'#76b900':gi===1?'#00b4d8':'#f59e0b';
+    ctx.fillStyle=gi===0?'#00889A':gi===1?'#FCA311':'#f59e0b';
     ctx.font='bold 12px Segoe UI';ctx.textAlign='center';
     ctx.fillText(groups[gi].label,gx+barW*1.5+4,h-pB+16);
   }
@@ -3236,10 +3236,10 @@ function drawModelDeprec(){
     var x=pL+i*gap+gap*0.25;
     // Depreciation bar
     var dH=(depr[i]/maxV)*cH;
-    ctx.fillStyle='rgba(0,180,216,0.7)';ctx.fillRect(x,h-pB-dH,barW*0.45,dH);
+    ctx.fillStyle='rgba(252,163,17,0.7)';ctx.fillRect(x,h-pB-dH,barW*0.45,dH);
     // Tax shield bar
     var tH=(taxShield[i]/maxV)*cH;
-    ctx.fillStyle='rgba(118,185,0,0.7)';ctx.fillRect(x+barW*0.5,h-pB-tH,barW*0.45,tH);
+    ctx.fillStyle='rgba(0,136,154,0.7)';ctx.fillRect(x+barW*0.5,h-pB-tH,barW*0.45,tH);
     // Labels
     ctx.fillStyle='#e2e8f0';ctx.font='bold 11px Segoe UI';ctx.textAlign='center';
     ctx.fillText('$'+depr[i]+'M',x+barW*0.22,h-pB-dH-8);
@@ -3250,8 +3250,8 @@ function drawModelDeprec(){
   }
   // Legend
   ctx.textAlign='left';ctx.font='11px Segoe UI';
-  ctx.fillStyle='rgba(0,180,216,0.7)';ctx.fillRect(pL+10,pT+5,12,12);ctx.fillStyle='#e2e8f0';ctx.fillText('Depreciation',pL+26,pT+15);
-  ctx.fillStyle='rgba(118,185,0,0.7)';ctx.fillRect(pL+120,pT+5,12,12);ctx.fillStyle='#e2e8f0';ctx.fillText('Tax Shield (30%)',pL+136,pT+15);
+  ctx.fillStyle='rgba(252,163,17,0.7)';ctx.fillRect(pL+10,pT+5,12,12);ctx.fillStyle='#e2e8f0';ctx.fillText('Depreciation',pL+26,pT+15);
+  ctx.fillStyle='rgba(0,136,154,0.7)';ctx.fillRect(pL+120,pT+5,12,12);ctx.fillStyle='#e2e8f0';ctx.fillText('Tax Shield (30%)',pL+136,pT+15);
   // Note
   ctx.fillStyle='#94a3b8';ctx.font='10px Segoe UI';ctx.textAlign='center';
   ctx.fillText('89% accelerated depreciation on GPU hardware (Year 1)',w/2,h-8);
@@ -3265,11 +3265,11 @@ function drawModelEquityCf(){
   // Equity waterfall: Investment → Y1 CF → Y2 CF → Y3 CF → Residual → Total Return
   var items=[
     {l:'Investment',v:-9.1,color:'#ef4444'},
-    {l:'Year 1 CF',v:4.13,color:'#76b900'},
-    {l:'Year 2 CF',v:2.68,color:'#76b900'},
-    {l:'Year 3 CF',v:0.89,color:'#00b4d8'},
+    {l:'Year 1 CF',v:4.13,color:'#00889A'},
+    {l:'Year 2 CF',v:2.68,color:'#00889A'},
+    {l:'Year 3 CF',v:0.89,color:'#FCA311'},
     {l:'Residual',v:14.2,color:'#8b5cf6'},
-    {l:'Total Return',v:12.8,color:'#76b900'}
+    {l:'Total Return',v:12.8,color:'#00889A'}
   ];
   var maxV=25,minV=-12;var range=maxV-minV;
   var barW=cW/items.length*0.6;var gap=cW/items.length;
@@ -3309,7 +3309,7 @@ function drawModelEquityCf(){
     ctx.fillText(items[i].l,x+barW/2,h-pB+14);
   }
   // MOIC callout
-  ctx.fillStyle='#76b900';ctx.font='bold 14px Segoe UI';ctx.textAlign='center';
+  ctx.fillStyle='#00889A';ctx.font='bold 14px Segoe UI';ctx.textAlign='center';
   ctx.fillText('MOIC: 2.4x',w/2,pT+10);
 }
 
@@ -3333,7 +3333,7 @@ function drawModelAmort(){
   // DC area
   ctx.beginPath();ctx.moveTo(pL,h-pB);
   for(var i=0;i<12;i++){var x=pL+(i/(11))*cW;var y=h-pB-(dcBal[i]/maxV)*cH;ctx.lineTo(x,y);}
-  ctx.lineTo(pL+cW,h-pB);ctx.closePath();ctx.fillStyle='rgba(0,180,216,0.3)';ctx.fill();
+  ctx.lineTo(pL+cW,h-pB);ctx.closePath();ctx.fillStyle='rgba(252,163,17,0.3)';ctx.fill();
   // GPU+DC area
   ctx.beginPath();ctx.moveTo(pL,h-pB);
   for(var i=0;i<12;i++){var x=pL+(i/(11))*cW;var y=h-pB-((gpuBal[i]+dcBal[i])/maxV)*cH;ctx.lineTo(x,y);}
@@ -3342,12 +3342,12 @@ function drawModelAmort(){
   ctx.beginPath();ctx.strokeStyle='#f59e0b';ctx.lineWidth=2;
   for(var i=0;i<12;i++){var x=pL+(i/(11))*cW;var y=h-pB-((gpuBal[i]+dcBal[i])/maxV)*cH;if(i===0)ctx.moveTo(x,y);else ctx.lineTo(x,y);}ctx.stroke();
   // DC line
-  ctx.beginPath();ctx.strokeStyle='#00b4d8';ctx.lineWidth=2;
+  ctx.beginPath();ctx.strokeStyle='#FCA311';ctx.lineWidth=2;
   for(var i=0;i<12;i++){var x=pL+(i/(11))*cW;var y=h-pB-(dcBal[i]/maxV)*cH;if(i===0)ctx.moveTo(x,y);else ctx.lineTo(x,y);}ctx.stroke();
   // End labels
   ctx.fillStyle='#f59e0b';ctx.font='bold 10px Segoe UI';ctx.textAlign='left';
   ctx.fillText('GPU: $'+gpuBal[11]+'M',pL+cW+5,h-pB-((gpuBal[11]+dcBal[11])/maxV)*cH);
-  ctx.fillStyle='#00b4d8';
+  ctx.fillStyle='#FCA311';
   ctx.fillText('DC: $'+dcBal[11]+'M',pL+cW+5,h-pB-(dcBal[11]/maxV)*cH);
   // X labels
   ctx.fillStyle='#94a3b8';ctx.font='10px Segoe UI';ctx.textAlign='center';
@@ -3355,7 +3355,7 @@ function drawModelAmort(){
   // Legend
   ctx.textAlign='left';ctx.font='11px Segoe UI';
   ctx.fillStyle='rgba(245,158,11,0.5)';ctx.fillRect(pL+10,pT+5,12,12);ctx.fillStyle='#e2e8f0';ctx.fillText('GPU Debt (15%, 3yr)',pL+26,pT+15);
-  ctx.fillStyle='rgba(0,180,216,0.5)';ctx.fillRect(pL+180,pT+5,12,12);ctx.fillStyle='#e2e8f0';ctx.fillText('DC Debt (8%, 10yr)',pL+196,pT+15);
+  ctx.fillStyle='rgba(252,163,17,0.5)';ctx.fillRect(pL+180,pT+5,12,12);ctx.fillStyle='#e2e8f0';ctx.fillText('DC Debt (8%, 10yr)',pL+196,pT+15);
 }
 
 const sectionCharts={overview:[drawRiskHeatMap,drawRiskSensitivity,drawRiskDecay,drawRiskCashFlow],power:[drawPowerFlow,drawPowerBudget,drawEnergyMonthly,drawTariffDonut,drawEnergyStacked,drawEnergyUsd,drawEnergySavings],cooling:[],racks:[],network:[drawNetOpex2],facility:[],timeline:[drawGantt],financial:[],model:[drawModelPnl,drawModelCumCf,drawModelDscr,drawModelSens,drawModelReturns,drawModelDeprec,drawModelEquityCf,drawModelAmort],capex:[drawCapexWaterfall,drawCapexDonut],opex:[drawOpexPie,drawOpexTreemap,drawEnergyOpex,drawNetOpex],epc:[drawEpcBidCompare,drawEpcPueLoad,drawEpcBidEvo,drawEpcHvac],oem:[drawDellCost],gpuaas:[drawGpuPriceEvo,drawGpuDealVol,drawGpuTermDist,drawGpuSpread,drawGpuBuyerSupplier,drawGpuB300Rev],legal:[drawLegalOrgChart],twin:[dtStartSim]};

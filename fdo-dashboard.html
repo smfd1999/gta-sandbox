@@ -82,6 +82,7 @@
   <button class="nav-btn" data-section="financial">Financial</button>
   <button class="nav-btn" data-section="capex">CAPEX</button>
   <button class="nav-btn" data-section="opex">OPEX</button>
+  <button class="nav-btn" data-section="epc">EPC Eval</button>
   <button class="nav-btn" data-section="oem">OEM</button>
   <button class="nav-btn" data-section="gpuaas">GPUaaS</button>
   <button class="nav-btn" data-section="legal">Legal</button>
@@ -949,6 +950,149 @@
       <div style="background:rgba(139,92,246,.08);border:1px solid rgba(139,92,246,.3);border-radius:8px;padding:14px;text-align:center"><div style="font-size:20px;margin-bottom:4px">&#128737;</div><div style="font-size:12px;font-weight:700;color:#8b5cf6">Single Responsible Party</div><div style="font-size:10px;color:var(--text2);margin-top:4px">Performance accountability, not just supply</div></div>
     </div>
   </div>
+</div>
+
+<!-- EPC EVALUATION -->
+<div class="section" id="sec-epc">
+  <div class="section-title">EPC Technical &amp; Economic Evaluation — BCYSA Independent Assessment</div>
+
+  <!-- KPI ROW -->
+  <div class="kpi-row">
+    <div class="kpi-card"><div class="kpi-label">Bidders Evaluated</div><div class="kpi-value kpi-blue">6</div><div class="kpi-sub">3 finalists, 3 discarded</div></div>
+    <div class="kpi-card"><div class="kpi-label">Recommended EPC</div><div class="kpi-value kpi-green" style="font-size:22px">ATN</div><div class="kpi-sub">Ingenier&iacute;a y Servicios</div></div>
+    <div class="kpi-card"><div class="kpi-label">Winning Bid</div><div class="kpi-value kpi-green">$6.88M</div><div class="kpi-sub">USD — lowest of 3 finalists</div></div>
+    <div class="kpi-card"><div class="kpi-label">Execution Time</div><div class="kpi-value kpi-yellow">27 wks</div><div class="kpi-sub">Engineering + Construction</div></div>
+    <div class="kpi-card"><div class="kpi-label">Best PUE</div><div class="kpi-value kpi-green">1.34</div><div class="kpi-sub">ATN — lowest of all bids</div></div>
+    <div class="kpi-card"><div class="kpi-label">Total Load (ATN)</div><div class="kpi-value kpi-green">1.337 MW</div><div class="kpi-sub">vs 1.44 MW estimate</div></div>
+  </div>
+
+  <!-- RECOMMENDATION PANEL -->
+  <div class="panel mb-24" style="border:1px solid var(--accent);padding:24px">
+    <div style="display:flex;align-items:flex-start;gap:20px;flex-wrap:wrap">
+      <div style="flex:1;min-width:300px">
+        <div style="display:flex;align-items:center;gap:12px;margin-bottom:12px">
+          <span class="tag tag-green" style="font-size:13px;padding:6px 14px">BCYSA RECOMMENDATION</span>
+          <span style="font-size:12px;color:var(--text2)">Oficio FDO-0-D-FD-DP-AA-OF-003 — March 12, 2026</span>
+        </div>
+        <p style="font-size:13px;color:var(--text2);line-height:1.7;margin-bottom:12px">
+          Following evaluation of 6 EPC contractors across 9 criteria, <strong style="color:var(--accent)">BCYSA unanimously recommends ATN Ingenier&iacute;a y Servicios</strong> for the FDO 1 MW Data Center construction. ATN delivers the best energy performance (PUE 1.34), lowest total electrical load (1.337 MW), the most competitive price ($6.88M USD), and the deepest experience in comparable projects (8 data center builds). ATN's use of <strong style="color:var(--text)">Schneider precision cooling</strong> (2+1 chillers, 134.4 TR each) and <strong style="color:var(--text)">2x 1,250 kW Schneider UPS</strong> fully covers the DC load — the only bidder achieving full UPS compliance.
+        </p>
+        <p style="font-size:13px;color:var(--text2);line-height:1.7">
+          PRIMA's 13-week timeline is the fastest, but carries significant structural risk and 15% higher cost ($7.91M). MiELECTRIC is disqualified on multiple technical grounds: undersized UPS (6x 250 kW K-TRONIX), wrong transformer K-factor, comfort-grade HVAC from unrecognized brand, and no altitude derating for generators at 2,395m.
+        </p>
+      </div>
+      <div style="flex:0 0 200px">
+        <div style="text-align:center;padding:16px;background:var(--surface2);border-radius:10px;border:1px solid var(--accent)">
+          <div style="font-size:11px;color:var(--text2);text-transform:uppercase;margin-bottom:4px">Award To</div>
+          <div style="font-size:28px;font-weight:800;color:var(--accent)">ATN</div>
+          <div style="font-size:14px;font-weight:700;color:var(--text);margin:4px 0">$6.88M USD</div>
+          <div style="font-size:11px;color:var(--text2)">27 weeks | PUE 1.34</div>
+          <div style="font-size:11px;color:var(--text2);margin-top:4px">8 comparable projects</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- CHARTS: Bid Comparison + PUE/Load -->
+  <div class="grid-2 mb-24">
+    <div class="panel">
+      <div class="panel-title"><span class="dot dot-green"></span> Final Bid Comparison — Cost vs Timeline</div>
+      <canvas id="epcBidCompare" height="320"></canvas>
+    </div>
+    <div class="panel">
+      <div class="panel-title"><span class="dot dot-blue"></span> Energy Performance — PUE &amp; Total Load</div>
+      <canvas id="epcPueLoad" height="320"></canvas>
+    </div>
+  </div>
+
+  <!-- CHARTS: Bid Evolution + HVAC Comparison -->
+  <div class="grid-2 mb-24">
+    <div class="panel">
+      <div class="panel-title"><span class="dot dot-yellow"></span> Bid Evolution — 4 Rounds (USD Millions)</div>
+      <canvas id="epcBidEvo" height="300"></canvas>
+    </div>
+    <div class="panel">
+      <div class="panel-title"><span class="dot dot-red"></span> HVAC System Comparison</div>
+      <canvas id="epcHvac" height="300"></canvas>
+    </div>
+  </div>
+
+  <!-- DETAILED TECHNICAL COMPARISON TABLE -->
+  <div class="panel mb-24">
+    <div class="panel-title"><span class="dot dot-yellow"></span> Anexo 3 — Detailed Technical Comparison</div>
+    <table class="data-table">
+      <thead><tr>
+        <th>Criterion</th><th>ATN</th><th>PRIMA</th><th>MiELECTRIC</th>
+      </tr></thead>
+      <tbody>
+        <tr><td style="font-weight:600">Final Price</td><td style="color:var(--accent);font-weight:700">$6.88M</td><td>$7.91M</td><td>$7.76M</td></tr>
+        <tr><td style="font-weight:600">Execution Time</td><td>27 weeks</td><td style="color:var(--accent2);font-weight:600">13 weeks</td><td>28 weeks</td></tr>
+        <tr><td style="font-weight:600">Experience</td><td style="color:var(--accent);font-weight:700">8 projects</td><td>4 projects</td><td style="color:var(--danger)">1 project</td></tr>
+        <tr><td style="font-weight:600">PUE</td><td style="color:var(--accent);font-weight:700">1.34</td><td>1.48</td><td style="color:var(--danger)">1.57</td></tr>
+        <tr><td style="font-weight:600">Total Load</td><td style="color:var(--accent);font-weight:700">1.337 MW</td><td>1.474 MW</td><td style="color:var(--danger)">1.568 MW</td></tr>
+        <tr><td style="font-weight:600">Chillers</td><td style="color:var(--accent)">2+1 Schneider 134T</td><td>9+1 York 35T</td><td style="color:var(--danger)">4+1 GREE 102T (comfort)</td></tr>
+        <tr><td style="font-weight:600">HVAC Consumption</td><td style="color:var(--accent);font-weight:700">246.6 kW</td><td>360.3 kW</td><td style="color:var(--danger)">472 kW</td></tr>
+        <tr><td style="font-weight:600">UPS</td><td style="color:var(--accent)">2x 1,250 kW Schneider <span class="tag tag-green">Full compliance</span></td><td style="color:var(--warn)">2x 750 kW Schneider <span class="tag tag-yellow">Partial</span></td><td style="color:var(--danger)">6x 250 kW K-TRONIX <span class="tag tag-red">Non-compliant</span></td></tr>
+        <tr><td style="font-weight:600">ATS</td><td><span class="tag tag-green">Generac 2000A</span></td><td><span class="tag tag-red">Generac 1,250A (undersized)</span></td><td><span class="tag tag-green">Siemens</span></td></tr>
+        <tr><td style="font-weight:600">Transformer</td><td><span class="tag tag-green">Schneider K13/K20</span></td><td><span class="tag tag-green">IEMSA</span></td><td><span class="tag tag-red">Voltran K-4 (wrong factor)</span></td></tr>
+        <tr><td style="font-weight:600">Generators</td><td style="color:var(--accent)">3x 800 kW Generac (2N+1)</td><td style="color:var(--warn)">2x 618 kW Generac</td><td style="color:var(--danger)">3x 739 kW Planelec — no altitude derating</td></tr>
+        <tr><td style="font-weight:600">Structural Impact</td><td><span class="tag tag-green">Minor facade adj.</span></td><td><span class="tag tag-red">Major — steel structure, reinforcement</span></td><td><span class="tag tag-red">Major — glass removal + water tank</span></td></tr>
+        <tr><td style="font-weight:600">Operational Risk</td><td><span class="tag tag-green">Low-Medium</span></td><td><span class="tag tag-yellow">Medium</span></td><td><span class="tag tag-red">High</span></td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- BIDDER STATUS TABLE -->
+  <div class="grid-2 mb-24">
+    <div class="panel">
+      <div class="panel-title"><span class="dot dot-green"></span> All 6 Bidders — Status</div>
+      <table class="data-table">
+        <thead><tr><th>Rank</th><th>Contractor</th><th>Status</th><th>Key Factor</th></tr></thead>
+        <tbody>
+          <tr><td style="color:var(--accent);font-weight:700">1</td><td style="font-weight:600">ATN</td><td><span class="tag tag-green">Recommended</span></td><td>Best PUE, price, experience</td></tr>
+          <tr><td style="color:var(--accent2);font-weight:700">2</td><td style="font-weight:600">PRIMA</td><td><span class="tag tag-yellow">Finalist</span></td><td>Fastest (13 wks), structural risk</td></tr>
+          <tr><td style="color:var(--warn);font-weight:700">3</td><td style="font-weight:600">MiELECTRIC</td><td><span class="tag tag-yellow">Finalist</span></td><td>UPS/HVAC non-compliant</td></tr>
+          <tr><td style="color:var(--text2)">4</td><td>DataEvolution</td><td><span class="tag tag-red">Discarded</span></td><td>Incomplete proposal</td></tr>
+          <tr><td style="color:var(--text2)">5</td><td>Bovis</td><td><span class="tag tag-red">Discarded</span></td><td>Partial scope, no tech support</td></tr>
+          <tr><td style="color:var(--text2)">6</td><td>En Red</td><td><span class="tag tag-red">Discarded</span></td><td>No proposal submitted</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="panel">
+      <div class="panel-title"><span class="dot dot-blue"></span> Payment Terms — Finalists</div>
+      <table class="data-table">
+        <thead><tr><th>Milestone</th><th>ATN</th><th>PRIMA</th><th>MiELECTRIC</th></tr></thead>
+        <tbody>
+          <tr><td>Advance</td><td>25%</td><td>25%</td><td>25%</td></tr>
+          <tr><td>Equipment arrival</td><td>50%</td><td>50%</td><td>—</td></tr>
+          <tr><td>Eng. approval</td><td>—</td><td>—</td><td>25%</td></tr>
+          <tr><td>Install / FAT</td><td>15%</td><td>—</td><td>25%</td></tr>
+          <tr><td>Final acceptance</td><td>10%</td><td>25%</td><td>25%</td></tr>
+          <tr><td style="font-weight:600">Payment terms</td><td style="color:var(--accent);font-weight:600">30 days</td><td>60 days</td><td>—</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- ANCILLARY SYSTEMS -->
+  <div class="panel mb-24">
+    <div class="panel-title"><span class="dot" style="background:#8b5cf6"></span> Ancillary Systems — Scope Comparison</div>
+    <table class="data-table">
+      <thead><tr><th>System</th><th>ATN</th><th>PRIMA</th><th>MiELECTRIC</th></tr></thead>
+      <tbody>
+        <tr><td style="font-weight:600">Voice &amp; Data</td><td>Included (no detail)</td><td>Included (no detail)</td><td style="color:var(--accent2)">Exceeded: IP-PBX, 8 IP phones</td></tr>
+        <tr><td style="font-weight:600">Structured Cabling</td><td>Included (no detail)</td><td>Included (no detail)</td><td style="color:var(--accent2)">Exceeded: Cat.6, 144 connectors</td></tr>
+        <tr><td style="font-weight:600">CCTV</td><td>Included (no detail)</td><td>Included (no detail)</td><td style="color:var(--accent2)">Exceeded: 25 cameras, NVR 256ch</td></tr>
+        <tr><td style="font-weight:600">Access Control</td><td>Included (no detail)</td><td>Included (no detail)</td><td style="color:var(--accent2)">Exceeded: 30 readers, 30 mag locks</td></tr>
+        <tr><td style="font-weight:600">Fire Suppression</td><td>Included (no detail)</td><td>Included (no detail)</td><td style="color:var(--accent2)">Exceeded: 50 smoke det., Vortex sys.</td></tr>
+        <tr><td style="font-weight:600">BMS/DCIM</td><td>Included (no detail)</td><td>Included (no detail)</td><td style="color:var(--accent2)">Exceeded: 12 main + 16 sec. modules</td></tr>
+      </tbody>
+    </table>
+    <p style="font-size:11px;color:var(--text2);margin-top:8px;padding-top:8px;border-top:1px solid var(--border)">
+      Note: MiELECTRIC exceeded scope on ancillary systems, which contributes to their higher bid price but is not a differentiator for EPC selection. Core DC infrastructure compliance (UPS, HVAC, generators) is weighted higher.
+    </p>
+  </div>
+
 </div>
 
 <!-- OEM -->
@@ -2012,6 +2156,188 @@ function dtStartSim(){
 }
 function dtStopSim(){DT.running=false;if(dtAnimId)cancelAnimationFrame(dtAnimId);dtAnimId=null;}
 
+// ===== EPC EVALUATION CHARTS =====
+
+function drawEpcBidCompare(){
+  var s=setupCanvas('epcBidCompare',320);if(!s)return;
+  var ctx=s.ctx,w=s.w,h=s.h;
+  var pL=60,pR=30,pT=30,pB=50,cW=w-pL-pR,cH=h-pT-pB;
+  var contractors=[
+    {name:'ATN',cost:6.88,weeks:27,color:'#76b900'},
+    {name:'PRIMA',cost:7.91,weeks:13,color:'#00b4d8'},
+    {name:'MiELECTRIC',cost:7.76,weeks:28,color:'#f59e0b'}
+  ];
+  var minC=6,maxC=8.5,minW=10,maxW=32;
+  function xScale(v){return pL+(v-minC)/(maxC-minC)*cW;}
+  function yScale(v){return pT+cH-(v-minW)/(maxW-minW)*cH;}
+
+  ctx.fillStyle='#0d1320';ctx.fillRect(pL,pT,cW,cH);
+  // quadrant shading - lower cost + reasonable time = best
+  ctx.fillStyle='#76b90010';ctx.fillRect(pL,pT,cW/2,cH);
+  // grid
+  ctx.strokeStyle='#1a2235';ctx.lineWidth=1;
+  for(var c=6.5;c<=8.5;c+=0.5){var x=xScale(c);ctx.beginPath();ctx.moveTo(x,pT);ctx.lineTo(x,pT+cH);ctx.stroke();
+    ctx.fillStyle='#94a3b8';ctx.font='10px Segoe UI';ctx.textAlign='center';ctx.fillText('$'+c.toFixed(1)+'M',x,h-pB+16);
+  }
+  for(var wk=15;wk<=30;wk+=5){var y=yScale(wk);ctx.beginPath();ctx.moveTo(pL,y);ctx.lineTo(pL+cW,y);ctx.stroke();
+    ctx.fillStyle='#94a3b8';ctx.font='10px Segoe UI';ctx.textAlign='right';ctx.fillText(wk+' wks',pL-6,y+4);
+  }
+  ctx.fillStyle='#94a3b8';ctx.font='10px Segoe UI';ctx.textAlign='center';
+  ctx.fillText('Cost (USD Millions)',pL+cW/2,h-pB+34);
+  ctx.save();ctx.translate(14,pT+cH/2);ctx.rotate(-Math.PI/2);ctx.fillText('Timeline (weeks)',0,0);ctx.restore();
+
+  // plot contractors as bubbles
+  contractors.forEach(function(ct){
+    var bx=xScale(ct.cost),by=yScale(ct.weeks);
+    ctx.beginPath();ctx.arc(bx,by,22,0,Math.PI*2);ctx.fillStyle=ct.color+'30';ctx.fill();
+    ctx.strokeStyle=ct.color;ctx.lineWidth=2.5;ctx.stroke();
+    ctx.fillStyle='#e2e8f0';ctx.font='bold 12px Segoe UI';ctx.textAlign='center';
+    ctx.fillText(ct.name,bx,by+4);
+    ctx.fillStyle=ct.color;ctx.font='10px Segoe UI';
+    ctx.fillText('$'+ct.cost.toFixed(2)+'M | '+ct.weeks+'wk',bx,by+18);
+  });
+  // winner badge
+  var wx=xScale(6.88),wy=yScale(27);
+  ctx.fillStyle='#76b900';ctx.font='bold 9px Segoe UI';ctx.textAlign='center';
+  ctx.fillText('RECOMMENDED',wx,wy-28);
+}
+
+function drawEpcPueLoad(){
+  var s=setupCanvas('epcPueLoad',320);if(!s)return;
+  var ctx=s.ctx,w=s.w,h=s.h;
+  var pL=60,pR=20,pT=25,pB=45,cW=w-pL-pR,cH=h-pT-pB;
+  var data=[
+    {name:'Estimate',pue:1.39,load:1.44,color:'#94a3b8'},
+    {name:'ATN',pue:1.34,load:1.337,color:'#76b900'},
+    {name:'PRIMA',pue:1.48,load:1.474,color:'#00b4d8'},
+    {name:'MiELECTRIC',pue:1.57,load:1.568,color:'#f59e0b'}
+  ];
+  var barW=cW/data.length*0.35;
+  var gap=cW/data.length;
+
+  // PUE bars (left axis)
+  var maxPue=1.7,minPue=1.2;
+  ctx.fillStyle='#0d1320';ctx.fillRect(pL,pT,cW,cH);
+  ctx.strokeStyle='#1a2235';ctx.lineWidth=1;
+  for(var p=1.2;p<=1.7;p+=0.1){var y=pT+cH-(p-minPue)/(maxPue-minPue)*cH;ctx.beginPath();ctx.moveTo(pL,y);ctx.lineTo(pL+cW,y);ctx.stroke();
+    ctx.fillStyle='#94a3b8';ctx.font='10px Segoe UI';ctx.textAlign='right';ctx.fillText(p.toFixed(1),pL-6,y+4);
+  }
+
+  data.forEach(function(d,i){
+    var x=pL+i*gap+gap*0.15;
+    // PUE bar
+    var bh=(d.pue-minPue)/(maxPue-minPue)*cH;
+    var by=pT+cH-bh;
+    ctx.fillStyle=d.color+'80';ctx.fillRect(x,by,barW,bh);
+    ctx.fillStyle='#e2e8f0';ctx.font='bold 11px Segoe UI';ctx.textAlign='center';
+    ctx.fillText(d.pue.toFixed(2),x+barW/2,by-6);
+    // Load bar (right side)
+    var loadH=(d.load-1.2)/(1.7-1.2)*cH;
+    var loadY=pT+cH-loadH;
+    ctx.fillStyle=d.color+'40';ctx.fillRect(x+barW+4,loadY,barW,loadH);
+    ctx.fillStyle=d.color;ctx.font='bold 10px Segoe UI';
+    ctx.fillText(d.load.toFixed(3),x+barW+4+barW/2,loadY-6);
+    // label
+    ctx.fillStyle='#94a3b8';ctx.font='11px Segoe UI';ctx.textAlign='center';
+    ctx.fillText(d.name,x+barW+2,h-pB+16);
+  });
+
+  // legend
+  ctx.fillStyle='#94a3b8';ctx.font='9px Segoe UI';ctx.textAlign='left';
+  ctx.fillStyle='#76b90080';ctx.fillRect(pL+8,pT+6,10,10);ctx.fillStyle='#e2e8f0';ctx.fillText('PUE',pL+22,pT+15);
+  ctx.fillStyle='#76b90040';ctx.fillRect(pL+60,pT+6,10,10);ctx.fillStyle='#e2e8f0';ctx.fillText('Total Load (MW)',pL+74,pT+15);
+}
+
+function drawEpcBidEvo(){
+  var s=setupCanvas('epcBidEvo',300);if(!s)return;
+  var ctx=s.ctx,w=s.w,h=s.h;
+  var pL=55,pR=20,pT=25,pB=50,cW=w-pL-pR,cH=h-pT-pB;
+  var rounds=['Round 1\n10/01','Round 2\n30/01','Round 3\n19/02','Final\n03/03'];
+  var atn=[8.07,7.93,8.17,6.88];
+  var prima=[null,11.68,11.94,7.91];
+  var mie=[5.74,7.16,8.12,7.76];
+  var minY=5,maxY=13;
+  function yScale(v){return v===null?null:pT+cH-(v-minY)/(maxY-minY)*cH;}
+  function xScale(i){return pL+i/(rounds.length-1)*cW;}
+
+  ctx.fillStyle='#0d1320';ctx.fillRect(pL,pT,cW,cH);
+  ctx.strokeStyle='#1a2235';ctx.lineWidth=1;
+  for(var v=6;v<=12;v+=2){var y=yScale(v);ctx.beginPath();ctx.moveTo(pL,y);ctx.lineTo(pL+cW,y);ctx.stroke();
+    ctx.fillStyle='#94a3b8';ctx.font='10px Segoe UI';ctx.textAlign='right';ctx.fillText('$'+v+'M',pL-6,y+4);
+  }
+
+  function drawLine(data,color){
+    ctx.strokeStyle=color;ctx.lineWidth=2.5;ctx.beginPath();var started=false;
+    data.forEach(function(v,i){if(v===null)return;var x=xScale(i),y2=yScale(v);
+      if(!started){ctx.moveTo(x,y2);started=true;}else ctx.lineTo(x,y2);
+    });ctx.stroke();
+    data.forEach(function(v,i){if(v===null)return;var x=xScale(i),y2=yScale(v);
+      ctx.beginPath();ctx.arc(x,y2,4,0,Math.PI*2);ctx.fillStyle=color;ctx.fill();
+      ctx.fillStyle='#e2e8f0';ctx.font='bold 9px Segoe UI';ctx.textAlign='center';
+      ctx.fillText('$'+v.toFixed(2)+'M',x,y2-10);
+    });
+  }
+  drawLine(atn,'#76b900');
+  drawLine(prima,'#00b4d8');
+  drawLine(mie,'#f59e0b');
+
+  ctx.fillStyle='#94a3b8';ctx.font='10px Segoe UI';ctx.textAlign='center';
+  rounds.forEach(function(r,i){
+    var lines=r.split('\n');
+    ctx.fillText(lines[0],xScale(i),h-pB+16);
+    ctx.fillStyle='#64748b';ctx.font='9px Segoe UI';
+    ctx.fillText(lines[1],xScale(i),h-pB+28);
+    ctx.fillStyle='#94a3b8';ctx.font='10px Segoe UI';
+  });
+
+  var lx=pL+8,ly=pT+8;
+  [{c:'#76b900',l:'ATN'},{c:'#00b4d8',l:'PRIMA'},{c:'#f59e0b',l:'MiELECTRIC'}].forEach(function(item,i){
+    ctx.fillStyle=item.c;ctx.fillRect(lx+i*90,ly,12,3);
+    ctx.fillStyle='#e2e8f0';ctx.font='10px Segoe UI';ctx.textAlign='left';ctx.fillText(item.l,lx+i*90+16,ly+4);
+  });
+}
+
+function drawEpcHvac(){
+  var s=setupCanvas('epcHvac',300);if(!s)return;
+  var ctx=s.ctx,w=s.w,h=s.h;
+  var pL=110,pR=70,pT=25,pB=30,cW=w-pL-pR,cH=h-pT-pB;
+  var items=[
+    {label:'HVAC Power (kW)',atn:246.6,prima:360.3,mie:472,max:500},
+    {label:'Chiller Capacity (TR)',atn:268,prima:315,mie:409,max:450},
+    {label:'Equipment Weight (ton)',atn:14.97,prima:10,mie:24.7,max:30},
+    {label:'Noise (dB)',atn:63.7,prima:54,mie:66,max:70},
+    {label:'Pump Power (HP)',atn:14,prima:75,mie:0,max:80}
+  ];
+  var barH=cH/items.length*0.22;
+  var rowH=cH/items.length;
+  var colors={atn:'#76b900',prima:'#00b4d8',mie:'#f59e0b'};
+
+  ctx.fillStyle='#0d1320';ctx.fillRect(pL,pT,cW,cH);
+
+  items.forEach(function(item,i){
+    var baseY=pT+i*rowH+8;
+    ctx.fillStyle='#94a3b8';ctx.font='11px Segoe UI';ctx.textAlign='right';
+    ctx.fillText(item.label,pL-8,baseY+barH*1.5+4);
+
+    var vals=[{v:item.atn,c:colors.atn,l:'ATN'},{v:item.prima,c:colors.prima,l:'PRI'},{v:item.mie,c:colors.mie,l:'MIE'}];
+    vals.forEach(function(d,j){
+      var bw=d.v/item.max*cW;
+      var by=baseY+j*(barH+3);
+      ctx.fillStyle=d.c;ctx.fillRect(pL,by,bw,barH);
+      ctx.fillStyle='#e2e8f0';ctx.font='bold 9px Segoe UI';ctx.textAlign='left';
+      var valText=d.v===0?'N/S':d.v.toString();
+      ctx.fillText(valText,pL+bw+4,by+barH-2);
+    });
+  });
+
+  // legend
+  var lx=pL+8,ly=pT+4;
+  [{c:'#76b900',l:'ATN'},{c:'#00b4d8',l:'PRIMA'},{c:'#f59e0b',l:'MiELECTRIC'}].forEach(function(item,i){
+    ctx.fillStyle=item.c;ctx.fillRect(lx+i*85,ly,10,3);
+    ctx.fillStyle='#e2e8f0';ctx.font='9px Segoe UI';ctx.textAlign='left';ctx.fillText(item.l,lx+i*85+14,ly+4);
+  });
+}
+
 // ===== LEGAL ORG CHART =====
 
 function drawLegalOrgChart(){
@@ -2577,7 +2903,7 @@ function drawGpuB300Rev(){
   });
 }
 
-const sectionCharts={overview:[drawRiskHeatMap,drawRiskSensitivity,drawRiskDecay,drawRiskCashFlow],power:[drawPowerFlow,drawPowerBudget,drawEnergyMonthly,drawTariffDonut,drawEnergyStacked,drawEnergyUsd,drawEnergySavings],cooling:[],racks:[],network:[drawNetOpex2],facility:[],timeline:[drawGantt],financial:[],capex:[drawCapexWaterfall,drawCapexDonut],opex:[drawOpexPie,drawOpexTreemap,drawEnergyOpex,drawNetOpex],oem:[drawDellCost],gpuaas:[drawGpuPriceEvo,drawGpuDealVol,drawGpuTermDist,drawGpuSpread,drawGpuBuyerSupplier,drawGpuB300Rev],legal:[drawLegalOrgChart],twin:[dtStartSim]};
+const sectionCharts={overview:[drawRiskHeatMap,drawRiskSensitivity,drawRiskDecay,drawRiskCashFlow],power:[drawPowerFlow,drawPowerBudget,drawEnergyMonthly,drawTariffDonut,drawEnergyStacked,drawEnergyUsd,drawEnergySavings],cooling:[],racks:[],network:[drawNetOpex2],facility:[],timeline:[drawGantt],financial:[],capex:[drawCapexWaterfall,drawCapexDonut],opex:[drawOpexPie,drawOpexTreemap,drawEnergyOpex,drawNetOpex],epc:[drawEpcBidCompare,drawEpcPueLoad,drawEpcBidEvo,drawEpcHvac],oem:[drawDellCost],gpuaas:[drawGpuPriceEvo,drawGpuDealVol,drawGpuTermDist,drawGpuSpread,drawGpuBuyerSupplier,drawGpuB300Rev],legal:[drawLegalOrgChart],twin:[dtStartSim]};
 
 // INIT - draw charts for the currently active section
 function drawActiveSection(){const active=document.querySelector('.nav-btn.active');if(!active)return;const sec=active.dataset.section;const fns=sectionCharts[sec];if(fns)fns.forEach(f=>f());}

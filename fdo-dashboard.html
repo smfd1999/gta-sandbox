@@ -1490,18 +1490,28 @@ function drawOpexTreemap(){const s=setupCanvas('opexTreemapChart',320);if(!s)ret
 const DT={running:false,tick:0,cabinets:[],gpuHistory:[],coolHistory:[],alerts:[]};
 function dtInit(){
   DT.cabinets=[];
-  for(let i=0;i<17;i++){
-    DT.cabinets.push({id:'CAB-'+String(i+1).padStart(2,'0'),nodes:5,gpus:40,
-      load:52+Math.random()*8,temp:18+Math.random()*3,exitTemp:32+Math.random()*4,
-      flow:34+Math.random()*5,util:85+Math.random()*12,
+  // 14 GPU cabinets x 5 nodes (Type A), 1 GPU cabinet x 2 nodes (Type B), 2 network cabinets
+  for(let i=0;i<15;i++){
+    const nodes=i<14?5:2;const gpus=nodes*8;
+    DT.cabinets.push({id:'CAB-'+String(i+1).padStart(2,'0'),type:i<14?'GPU-A':'GPU-B',nodes:nodes,gpus:gpus,
+      load:nodes===5?(52+Math.random()*8):(22+Math.random()*4),temp:18+Math.random()*3,exitTemp:32+Math.random()*4,
+      flow:nodes===5?(34+Math.random()*5):(14+Math.random()*3),util:85+Math.random()*12,
       waterIn:14+Math.random()*.5,waterOut:22+Math.random()*2});
+  }
+  // 2 network cabinets
+  for(let i=0;i<2;i++){
+    DT.cabinets.push({id:'NET-'+String(i+1).padStart(2,'0'),type:'NET',nodes:0,gpus:0,
+      load:8+Math.random()*4,temp:20+Math.random()*2,exitTemp:28+Math.random()*3,
+      flow:10+Math.random()*3,util:0,
+      waterIn:14+Math.random()*.5,waterOut:18+Math.random()*1});
   }
   DT.gpuHistory=[];DT.coolHistory=[];
   DT.alerts=[
-    {t:Date.now()-120000,type:'ok',msg:'All chillers operating normally — 348 TR / 435 TR capacity'},
+    {t:Date.now()-120000,type:'ok',msg:'All chillers operating normally — 2x 134.4 TR Schneider XRAC1812A (N+1)'},
     {t:Date.now()-90000,type:'ok',msg:'UPS A & B online — Battery 98% SOC, 9.8 min runtime'},
     {t:Date.now()-60000,type:'warn',msg:'CAB-07 inlet temp 22.1C — above baseline (monitor)'},
     {t:Date.now()-30000,type:'ok',msg:'CFE utility feed stable — 23kV, PF 0.98, THD < 3%'},
+    {t:Date.now()-15000,type:'ok',msg:'InfiniBand fabric: 12x Q3400-X800 NDR — 0 errors, full fat-tree healthy'},
     {t:Date.now()-10000,type:'ok',msg:'Iberdrola MEM billing: $1.86 MXN/kWh current rate'}
   ];
 }
@@ -1509,17 +1519,26 @@ function dtUpdate(){
   DT.tick++;
   const t=DT.tick*.05;
   DT.cabinets.forEach((c,i)=>{
-    c.load=52+Math.sin(t+i*.7)*4+Math.random()*2;
-    c.util=85+Math.sin(t+i*.5)*8+Math.random()*3;
-    c.temp=18+Math.sin(t*.3+i*.4)*1.5+Math.random()*.5+(i===6?.8:0);
+    if(c.type==='NET'){
+      c.load=8+Math.sin(t+i*.5)*2+Math.random();
+      c.util=0;
+      c.temp=20+Math.sin(t*.3+i*.4)*.8+Math.random()*.3;
+    }else{
+      const base=c.nodes===5?52:22;
+      c.load=base+Math.sin(t+i*.7)*4+Math.random()*2;
+      c.util=85+Math.sin(t+i*.5)*8+Math.random()*3;
+      c.temp=18+Math.sin(t*.3+i*.4)*1.5+Math.random()*.5+(i===6?.8:0);
+    }
     c.exitTemp=c.temp+14+Math.random()*2;
-    c.flow=34+Math.sin(t*.2+i)*2+Math.random();
+    c.flow=(c.type==='NET'?10:c.nodes===5?34:14)+Math.sin(t*.2+i)*2+Math.random();
     c.waterIn=14+Math.sin(t*.1)*.3;
-    c.waterOut=c.waterIn+8+Math.random();
+    c.waterOut=c.waterIn+(c.type==='NET'?4:8)+Math.random();
   });
   const totalLoad=DT.cabinets.reduce((a,c)=>a+c.load,0);
-  const avgTemp=DT.cabinets.reduce((a,c)=>a+c.temp,0)/17;
-  const avgUtil=DT.cabinets.reduce((a,c)=>a+c.util,0)/17;
+  const nCabs=DT.cabinets.length;
+  const avgTemp=DT.cabinets.reduce((a,c)=>a+c.temp,0)/nCabs;
+  const gpuCabs=DT.cabinets.filter(c=>c.type!=='NET');
+  const avgUtil=gpuCabs.reduce((a,c)=>a+c.util,0)/gpuCabs.length;
   const coolTR=totalLoad*3412/12000*.2+totalLoad*.33;
   DT.gpuHistory.push({t:DT.tick,load:totalLoad,util:avgUtil});
   DT.coolHistory.push({t:DT.tick,tr:coolTR,temp:avgTemp});
@@ -1538,7 +1557,7 @@ function dtUpdate(){
   // random alert
   if(DT.tick%80===0){
     const msgs=[
-      {type:'ok',msg:'Chiller #'+(1+Math.floor(Math.random()*2))+' COP: '+(5.2+Math.random()*.5).toFixed(1)+' — nominal'},
+      {type:'ok',msg:'Chiller #'+(1+Math.floor(Math.random()*2))+' (134.4 TR) COP: '+(5.2+Math.random()*.5).toFixed(1)+' — nominal'},
       {type:'ok',msg:'GPU cluster checkpoint — '+Math.round(avgUtil)+'% avg utilization, 0 errors'},
       {type:'warn',msg:'CAB-'+String(1+Math.floor(Math.random()*17)).padStart(2,'0')+' delta-T '+(15+Math.random()*3).toFixed(1)+'C — within tolerance'},
       {type:'ok',msg:'Network fabric health: 0 CRC errors, '+Math.round(240+Math.random()*60)+' Gbps aggregate'},
@@ -1566,8 +1585,8 @@ function dtDraw3D(){
   const cv=document.getElementById('dt3dCanvas');if(!cv)return;
   const dpr=window.devicePixelRatio||1;
   const w=cv.parentElement.clientWidth-24;const h=600;
-  cv.style.width=w+'px';cv.style.height=h+'px';cv.width=w*dpr;cv.height=h*dpr;
-  const ctx=cv.getContext('2d');ctx.scale(dpr,dpr);
+  cv.style.width=w+'px';cv.style.height=h+'px';cv.width=Math.round(w*dpr);cv.height=Math.round(h*dpr);
+  const ctx=cv.getContext('2d');ctx.setTransform(dpr,0,0,dpr,0,0);
   ctx.clearRect(0,0,w,h);
   const cx=w/2,cy=200;
   // iso helpers — scaled up 30%
@@ -1633,50 +1652,52 @@ function dtDraw3D(){
     const ul=iso(ux+12,uy+8,21);ctx.fillStyle='#76b900';ctx.font='bold 8px Segoe UI';ctx.textAlign='center';ctx.fillText('UPS '+(u+1),ul.x,ul.y);ctx.fillStyle='#94a3b8';ctx.font='7px Segoe UI';ctx.fillText('1,250kVA',ul.x,ul.y+10);
   }
   // CABINET ROWS (main hall)
+  // Row A: 9 cabinets (CAB-01..CAB-09 = GPU Type A)
+  // Row B: 5 GPU-A (CAB-10..CAB-14) + 1 GPU-B (CAB-15) + 2 NET (NET-01, NET-02)
   const rowAy=70,rowBy=140;
-  for(let i=0;i<9;i++){
-    const cab=DT.cabinets[i];
-    const rx=-120+i*30,ry=rowAy;
-    // color by temp
+  function drawCab(cab,rx,ry,isNet){
     const tNorm=(cab.temp-16)/8;
-    const r2=Math.round(30+tNorm*180),g2=Math.round(180-tNorm*140),b2=Math.round(30);
-    const topC='rgb('+r2+','+g2+','+b2+')';
-    const rightC='rgb('+Math.round(r2*.7)+','+Math.round(g2*.7)+','+Math.round(b2*.7)+')';
-    const leftC='rgb('+Math.round(r2*.5)+','+Math.round(g2*.5)+','+Math.round(b2*.5)+')';
-    isoBox(rx,ry,0,22,14,35,topC,rightC,leftC,'#2a355080');
-    // LED indicator
-    const ledP=iso(rx+11,ry,36);
+    let topC,rightC,leftC,stroke;
+    if(isNet){
+      topC='#00b4d840';rightC='#00b4d830';leftC='#00b4d820';stroke='#00b4d880';
+    }else{
+      const r2=Math.round(30+tNorm*180),g2=Math.round(180-tNorm*140),b2=Math.round(30);
+      topC='rgb('+r2+','+g2+','+b2+')';
+      rightC='rgb('+Math.round(r2*.7)+','+Math.round(g2*.7)+','+Math.round(b2*.7)+')';
+      leftC='rgb('+Math.round(r2*.5)+','+Math.round(g2*.5)+','+Math.round(b2*.5)+')';
+      stroke='#2a355080';
+    }
+    const bh=isNet?30:35;
+    isoBox(rx,ry,0,22,14,bh,topC,rightC,leftC,stroke);
+    const ledP=iso(rx+11,ry,bh+1);
     ctx.beginPath();ctx.arc(ledP.x,ledP.y,2.5,0,Math.PI*2);
-    ctx.fillStyle=cab.util>95?'#ef4444':cab.util>80?'#76b900':'#f59e0b';ctx.fill();
-    // label
+    if(isNet){ctx.fillStyle='#00b4d8';}
+    else{ctx.fillStyle=cab.util>95?'#ef4444':cab.util>80?'#76b900':'#f59e0b';}
+    ctx.fill();
     ctx.fillStyle='#e2e8f0';ctx.font='bold 7px Segoe UI';ctx.textAlign='center';
-    ctx.fillText(cab.id.replace('CAB-','C'),ledP.x,ledP.y-6);
-    // load bar on front face
-    const barBase=iso(rx+2,ry,1),barTop=iso(rx+2,ry,1+cab.load/55*32);
-    ctx.strokeStyle=topC;ctx.lineWidth=3;ctx.globalAlpha=.6;
+    ctx.fillText(cab.id.replace('CAB-','C').replace('NET-','N'),ledP.x,ledP.y-6);
+    const maxLoad=isNet?15:55;
+    const barBase=iso(rx+2,ry,1),barTop=iso(rx+2,ry,1+cab.load/maxLoad*(bh-3));
+    ctx.strokeStyle=isNet?'#00b4d8':topC;ctx.lineWidth=3;ctx.globalAlpha=.6;
     ctx.beginPath();ctx.moveTo(barBase.x,barBase.y);ctx.lineTo(barTop.x,barTop.y);ctx.stroke();
     ctx.globalAlpha=1;
   }
-  // Row B (8 cabinets — 17 total)
+  // Row A: 9 GPU cabinets
+  for(let i=0;i<9;i++) drawCab(DT.cabinets[i],-120+i*30,rowAy,false);
+  // Row B: 5 GPU-A + 1 GPU-B + 2 NET (index 9..16)
   for(let i=0;i<8;i++){
     const cab=DT.cabinets[i+9];
-    const rx=-120+i*30,ry=rowBy;
-    const tNorm=(cab.temp-16)/8;
-    const r2=Math.round(30+tNorm*180),g2=Math.round(180-tNorm*140),b2=Math.round(30);
-    const topC='rgb('+r2+','+g2+','+b2+')';
-    const rightC='rgb('+Math.round(r2*.7)+','+Math.round(g2*.7)+','+Math.round(b2*.7)+')';
-    const leftC='rgb('+Math.round(r2*.5)+','+Math.round(g2*.5)+','+Math.round(b2*.5)+')';
-    isoBox(rx,ry,0,22,14,35,topC,rightC,leftC,'#2a355080');
-    const ledP=iso(rx+11,ry,36);
-    ctx.beginPath();ctx.arc(ledP.x,ledP.y,2.5,0,Math.PI*2);
-    ctx.fillStyle=cab.util>95?'#ef4444':cab.util>80?'#76b900':'#f59e0b';ctx.fill();
-    ctx.fillStyle='#e2e8f0';ctx.font='bold 7px Segoe UI';ctx.textAlign='center';
-    ctx.fillText(cab.id.replace('CAB-','C'),ledP.x,ledP.y-6);
-    const barBase=iso(rx+2,ry,1),barTop=iso(rx+2,ry,1+cab.load/55*32);
-    ctx.strokeStyle=topC;ctx.lineWidth=3;ctx.globalAlpha=.6;
-    ctx.beginPath();ctx.moveTo(barBase.x,barBase.y);ctx.lineTo(barTop.x,barTop.y);ctx.stroke();
-    ctx.globalAlpha=1;
+    const isNet=cab.type==='NET';
+    drawCab(cab,-120+i*30,rowBy,isNet);
   }
+  // Type labels for Row B special cabinets
+  const gpuBpos=iso(-120+5*30+11,rowBy,38);
+  ctx.fillStyle='#f59e0b';ctx.font='bold 6px Segoe UI';ctx.textAlign='center';ctx.fillText('2-node',gpuBpos.x,gpuBpos.y-3);
+  const net1pos=iso(-120+6*30+11,rowBy,33);
+  ctx.fillStyle='#00b4d8';ctx.font='bold 6px Segoe UI';ctx.fillText('IB/ETH',net1pos.x,net1pos.y-3);
+  const net2pos=iso(-120+7*30+11,rowBy,33);
+  ctx.fillText('IB/ETH',net2pos.x,net2pos.y-3);
+
   // HOT AISLE label between rows
   const ha=iso(-20,rowAy+28,38);
   ctx.fillStyle='#ef444480';ctx.font='bold 10px Segoe UI';ctx.textAlign='center';ctx.fillText('HOT AISLE',ha.x,ha.y);
@@ -1685,8 +1706,62 @@ function dtDraw3D(){
   const ca2=iso(-20,rowBy+20,38);ctx.fillText('COLD AISLE',ca2.x,ca2.y);
   // ROW LABELS
   ctx.fillStyle='#e2e8f0';ctx.font='bold 10px Segoe UI';
-  const ra=iso(-140,rowAy+7,18);ctx.fillText('Row A',ra.x-15,ra.y);
-  const rb=iso(-140,rowBy+7,18);ctx.fillText('Row B',rb.x-15,rb.y);
+  const ra=iso(-140,rowAy+7,18);ctx.fillText('Row A (9)',ra.x-20,ra.y);
+  const rb=iso(-140,rowBy+7,18);ctx.fillText('Row B (8)',rb.x-20,rb.y);
+
+  // NETWORK EQUIPMENT (right side of data hall)
+  // InfiniBand fabric spine (2 boxes)
+  for(let n=0;n<2;n++){
+    const nx=130,ny=75+n*35;
+    isoBox(nx,ny,0,20,12,18,'#00b4d830','#00b4d820','#00b4d815','#00b4d880');
+    const nl=iso(nx+10,ny+6,19);
+    ctx.fillStyle='#00b4d8';ctx.font='bold 7px Segoe UI';ctx.textAlign='center';
+    ctx.fillText('IB Spine',nl.x,nl.y);
+    ctx.fillStyle='#94a3b8';ctx.font='6px Segoe UI';
+    ctx.fillText(n===0?'Q3400 x6':'Q3400 x6',nl.x,nl.y+9);
+  }
+  // Ethernet switches
+  isoBox(130,150,0,20,12,14,'#8b5cf630','#8b5cf620','#8b5cf615','#8b5cf680');
+  const el2=iso(140,156,15);
+  ctx.fillStyle='#8b5cf6';ctx.font='bold 7px Segoe UI';ctx.textAlign='center';ctx.fillText('Ethernet',el2.x,el2.y);
+  ctx.fillStyle='#94a3b8';ctx.font='6px Segoe UI';ctx.fillText('SN5610 x8',el2.x,el2.y+9);
+
+  // FIBER RUNS (animated)
+  // IB fabric to cabinets
+  ctx.strokeStyle='#00b4d8';ctx.lineWidth=1.5;ctx.setLineDash([3,3]);ctx.lineDashOffset=-DT.tick*2;
+  for(let i=0;i<9;i++){
+    const cabTop=iso(-120+i*30+18,rowAy,18);
+    const ibHub=iso(130,85,10);
+    ctx.globalAlpha=.3;ctx.beginPath();ctx.moveTo(cabTop.x,cabTop.y);ctx.lineTo(ibHub.x,ibHub.y);ctx.stroke();
+  }
+  for(let i=0;i<6;i++){
+    const cabTop=iso(-120+i*30+18,rowBy,18);
+    const ibHub=iso(130,100,10);
+    ctx.globalAlpha=.3;ctx.beginPath();ctx.moveTo(cabTop.x,cabTop.y);ctx.lineTo(ibHub.x,ibHub.y);ctx.stroke();
+  }
+  ctx.globalAlpha=1;
+  // Uplink fiber (out to MMR)
+  ctx.strokeStyle='#22c55e';ctx.lineWidth=2;ctx.setLineDash([6,4]);ctx.lineDashOffset=-DT.tick*1.8;
+  const fiberStart=iso(140,80,10);
+  const fiberEnd=iso(155,-10,10);
+  ctx.beginPath();ctx.moveTo(fiberStart.x,fiberStart.y);ctx.lineTo(fiberEnd.x,fiberEnd.y);ctx.stroke();
+  ctx.setLineDash([]);
+  // MMR label
+  const mmrL=iso(155,-18,12);
+  ctx.fillStyle='#22c55e';ctx.font='bold 8px Segoe UI';ctx.textAlign='center';ctx.fillText('MMR',mmrL.x,mmrL.y);
+  ctx.fillStyle='#94a3b8';ctx.font='6px Segoe UI';ctx.fillText('4x 100Gb Uplinks',mmrL.x,mmrL.y+10);
+  ctx.fillText('Hydra Edge x4',mmrL.x,mmrL.y+19);
+
+  // Fiber pulse animation dots
+  ctx.globalAlpha=.8;
+  for(let d=0;d<4;d++){
+    const prog=((DT.tick*3+d*25)%100)/100;
+    const fx=fiberStart.x+(fiberEnd.x-fiberStart.x)*prog;
+    const fy=fiberStart.y+(fiberEnd.y-fiberStart.y)*prog;
+    ctx.beginPath();ctx.arc(fx,fy,2,0,Math.PI*2);ctx.fillStyle='#22c55e';ctx.fill();
+  }
+  ctx.globalAlpha=1;
+
   // airflow particles
   ctx.globalAlpha=.4;
   for(let p=0;p<30;p++){
@@ -1698,11 +1773,27 @@ function dtDraw3D(){
     ctx.beginPath();ctx.arc(pp.x,pp.y,1.5,0,Math.PI*2);ctx.fill();
   }
   ctx.globalAlpha=1;
-  // LABELS
+
+  // LEGEND (bottom)
+  const ly=h-50;
+  ctx.fillStyle='#94a3b8';ctx.font='9px Segoe UI';ctx.textAlign='left';
+  const legend=[
+    {c:'#76b900',l:'GPU Cabinet (DDC S-Series v4)'},{c:'#00b4d8',l:'Network Cabinet (IB/ETH)'},
+    {c:'#f59e0b',l:'Generators (3x 800kW N+1)'},{c:'#8b5cf6',l:'Transformer (2 MVA)'},
+    {c:'#00b4d8',l:'Chiller (2x 134.4 TR N+1)'},{c:'#22c55e',l:'Fiber Uplink (4x 100Gb)'}
+  ];
+  legend.forEach((item,i)=>{
+    const lx=20+i%3*180;const lly=ly+(i<3?0:14);
+    ctx.fillStyle=item.c;ctx.fillRect(lx,lly,8,8);
+    ctx.fillStyle='#94a3b8';ctx.font='9px Segoe UI';ctx.textAlign='left';
+    ctx.fillText(item.l,lx+12,lly+8);
+  });
+
+  // LABELS (top)
   ctx.fillStyle='#76b900';ctx.font='bold 12px Segoe UI';ctx.textAlign='left';
   ctx.fillText('FDO Fermaca Digital Origins',12,20);
   ctx.fillStyle='#94a3b8';ctx.font='11px Segoe UI';
-  ctx.fillText('1 MW | 17 DDC Cabinets | 576 NVIDIA B300 GPUs',12,36);
+  ctx.fillText('1 MW | 15 GPU + 2 NET Cabinets | 576 NVIDIA B300 GPUs | 12x IB Q3400 | 4x 100Gb Uplinks',12,36);
   const totalLoad=DT.cabinets.reduce((a,c)=>a+c.load,0);
   ctx.fillStyle='#e2e8f0';ctx.font='bold 11px Segoe UI';ctx.textAlign='right';
   ctx.fillText('IT Load: '+Math.round(totalLoad)+' kW / 1,000 kW',w-12,20);
@@ -1716,7 +1807,7 @@ function dtDrawHeatmap(){
   const dpr=window.devicePixelRatio||1;
   const w=cv.parentElement.clientWidth-24;const h=180;
   cv.style.width=w+'px';cv.style.height=h+'px';cv.width=w*dpr;cv.height=h*dpr;
-  const ctx=cv.getContext('2d');ctx.scale(dpr,dpr);ctx.clearRect(0,0,w,h);
+  const ctx=cv.getContext('2d');ctx.setTransform(dpr,0,0,dpr,0,0);ctx.clearRect(0,0,w,h);
   const cellW=(w-50)/9,cellH=50,padT=20,padL=40;
   ['Row A','Row B'].forEach((label,row)=>{
     const rowCount=row===0?9:8;
@@ -1727,12 +1818,18 @@ function dtDrawHeatmap(){
       const x=padL+i*cellW,y=padT+row*(cellH+12);
       const tNorm=Math.max(0,Math.min(1,(cab.temp-16)/8));
       const r=Math.round(40+tNorm*200),g=Math.round(200-tNorm*160),b=Math.round(40-tNorm*20);
-      ctx.fillStyle='rgb('+r+','+g+','+b+')';
-      ctx.beginPath();ctx.roundRect(x+1,y,cellW-2,cellH,4);ctx.fill();
+      const isNet=cab.type==='NET';
+      if(isNet){ctx.fillStyle='#00b4d830';ctx.strokeStyle='#00b4d860';ctx.lineWidth=1;
+        ctx.beginPath();ctx.roundRect(x+1,y,cellW-2,cellH,4);ctx.fill();ctx.stroke();
+      }else{
+        ctx.fillStyle='rgb('+r+','+g+','+b+')';
+        ctx.beginPath();ctx.roundRect(x+1,y,cellW-2,cellH,4);ctx.fill();
+      }
       ctx.fillStyle='#fff';ctx.font='bold 11px Segoe UI';ctx.textAlign='center';
       ctx.fillText(cab.temp.toFixed(1)+'C',x+cellW/2,y+cellH/2-4);
       ctx.font='8px Segoe UI';ctx.fillStyle='#e2e8f0';
-      ctx.fillText(cab.id.replace('CAB-','C')+' | '+Math.round(cab.load)+'kW',x+cellW/2,y+cellH/2+10);
+      const shortId=isNet?cab.id.replace('NET-','N'):cab.id.replace('CAB-','C');
+      ctx.fillText(shortId+' | '+Math.round(cab.load)+'kW',x+cellW/2,y+cellH/2+10);
     }
   });
   // scale
@@ -1751,7 +1848,7 @@ function dtDrawPower(){
   const dpr=window.devicePixelRatio||1;
   const w=cv.parentElement.clientWidth-24;const h=220;
   cv.style.width=w+'px';cv.style.height=h+'px';cv.width=w*dpr;cv.height=h*dpr;
-  const ctx=cv.getContext('2d');ctx.scale(dpr,dpr);ctx.clearRect(0,0,w,h);
+  const ctx=cv.getContext('2d');ctx.setTransform(dpr,0,0,dpr,0,0);ctx.clearRect(0,0,w,h);
   const totalLoad=DT.cabinets.reduce((a,c)=>a+c.load,0);
   const facilityLoad=totalLoad*1.33;
   // use proportional columns: 5 columns spread across width

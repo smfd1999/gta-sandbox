@@ -84,6 +84,7 @@
   <button class="nav-btn" data-section="opex">OPEX</button>
   <button class="nav-btn" data-section="oem">OEM</button>
   <button class="nav-btn" data-section="gpuaas">GPUaaS</button>
+  <button class="nav-btn" data-section="legal">Legal</button>
   <button class="nav-btn" data-section="twin">Digital Twin</button>
 </nav>
 <div class="main">
@@ -1186,6 +1187,117 @@
 </div>
 
 
+<!-- LEGAL -->
+<div class="section" id="sec-legal">
+  <div class="section-title">Legal &amp; Corporate Structure</div>
+
+  <!-- KPI ROW -->
+  <div class="kpi-row">
+    <div class="kpi-card"><div class="kpi-label">Project Entity</div><div class="kpi-value" style="font-size:18px;color:var(--accent)">Fermaca Domes</div><div class="kpi-sub">S.A. de C.V. — RFC: FSC141124IGA</div></div>
+    <div class="kpi-card"><div class="kpi-label">Incorporated</div><div class="kpi-value kpi-blue">Nov 2014</div><div class="kpi-sub">Active status (SAT)</div></div>
+    <div class="kpi-card"><div class="kpi-label">UBOs</div><div class="kpi-value kpi-yellow">2</div><div class="kpi-sub">Fernando &amp; Manuel Calvillo A.</div></div>
+    <div class="kpi-card"><div class="kpi-label">Escritura</div><div class="kpi-value" style="font-size:18px">No. 48,247</div><div class="kpi-sub">Inscribed at RPP (Public Registry)</div></div>
+    <div class="kpi-card"><div class="kpi-label">Legal Rep</div><div class="kpi-value" style="font-size:16px;color:var(--accent2)">Laura Trejo C.</div><div class="kpi-sub">Powers of attorney granted</div></div>
+    <div class="kpi-card"><div class="kpi-label">NDAs Executed</div><div class="kpi-value kpi-green">2</div><div class="kpi-sub">Metaversal (Mar 6) &amp; Moelis (Mar 11)</div></div>
+  </div>
+
+  <!-- CORPORATE STRUCTURE (Canvas org chart) -->
+  <div class="panel mb-24">
+    <div class="panel-title"><span class="dot dot-green"></span> Corporate &amp; Shareholder Structure — Fermaca Domes, S.A. de C.V.</div>
+    <canvas id="legalOrgChart" height="360"></canvas>
+  </div>
+
+  <!-- ESCRITURA + ENTITY DETAILS -->
+  <div class="grid-2 mb-24">
+    <div class="panel">
+      <div class="panel-title"><span class="dot dot-yellow"></span> Escritura P&uacute;blica No. 48,247 — Key Facts</div>
+      <p style="font-size:12px;color:var(--text2);line-height:1.6;margin-bottom:14px">
+        Public deed inscribed at the <strong style="color:var(--text)">Registro P&uacute;blico de la Propiedad (RPP)</strong> of Mexico City. This is the constitutive instrument of Fermaca Domes, S.A. de C.V. and contains the corporate bylaws, capital structure, and powers of attorney that govern the entity's legal capacity to execute contracts, acquire debt, and operate the FDO data center project.
+      </p>
+      <ul class="info-list">
+        <li><span class="il-label">Document</span><span class="il-value">Escritura P&uacute;blica No. 48,247</span></li>
+        <li><span class="il-label">Registry</span><span class="il-value">RPP — Mexico City</span></li>
+        <li><span class="il-label">Entity</span><span class="il-value">Fermaca Domes, S.A. de C.V.</span></li>
+        <li><span class="il-label">Legal Form</span><span class="il-value">Sociedad An&oacute;nima de Capital Variable</span></li>
+        <li><span class="il-label">Scope</span><span class="il-value">Constitution, bylaws, capital, powers</span></li>
+        <li><span class="il-label">Pages</span><span class="il-value">~52 (notarized, scanned)</span></li>
+        <li><span class="il-label">Legal Representative</span><span class="il-value">Laura Trejo Chaparro</span></li>
+        <li><span class="il-label">Powers Granted</span><span class="il-value">General powers of attorney for acts of administration, litigation, and collections</span></li>
+      </ul>
+    </div>
+    <div class="panel">
+      <div class="panel-title"><span class="dot dot-blue"></span> Entity Details — Fermaca Domes</div>
+      <ul class="info-list">
+        <li><span class="il-label">RFC (Tax ID)</span><span class="il-value" style="font-family:monospace">FSC141124IGA</span></li>
+        <li><span class="il-label">Trade Name</span><span class="il-value">Fermaca Servicios de Comercializaci&oacute;n</span></li>
+        <li><span class="il-label">Incorporation</span><span class="il-value">November 24, 2014</span></li>
+        <li><span class="il-label">Tax Status</span><span class="il-value"><span class="tag tag-green">ACTIVE</span></span></li>
+        <li><span class="il-label">Last Status Change</span><span class="il-value">November 30, 2025</span></li>
+        <li><span class="il-label">Tax Regime</span><span class="il-value">R&eacute;gimen General de Ley — Personas Morales</span></li>
+        <li><span class="il-label">Registered Address</span><span class="il-value" style="font-size:11px">Av. Vito Alessio Robles 117, Int. 103, Col. Ex Hacienda de Guadalupe, Alc. &Aacute;lvaro Obreg&oacute;n, CDMX, C.P. 01050</span></li>
+        <li><span class="il-label">Tax Obligations</span><span class="il-value" style="font-size:11px">Monthly IVA, ISR withholdings, annual ISR, provisional ISR</span></li>
+      </ul>
+      <div style="margin-top:16px;padding-top:12px;border-top:1px solid var(--border)">
+        <div style="font-size:11px;color:var(--text2);text-transform:uppercase;letter-spacing:.5px;margin-bottom:8px">Banking</div>
+        <ul class="info-list">
+          <li><span class="il-label">Bank</span><span class="il-value">BBVA Mexico</span></li>
+          <li><span class="il-label">Account (MXN)</span><span class="il-value" style="font-family:monospace">0126536204</span></li>
+          <li><span class="il-label">CLABE</span><span class="il-value" style="font-family:monospace;font-size:11px">012180001265362047</span></li>
+          <li><span class="il-label">Opened</span><span class="il-value">January 14, 2026</span></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- SHAREHOLDER TABLE + NDA / CONTRACTS -->
+  <div class="grid-2 mb-24">
+    <div class="panel">
+      <div class="panel-title"><span class="dot dot-green"></span> Shareholder Chain</div>
+      <table class="data-table">
+        <thead><tr><th>Level</th><th>Entity / Person</th><th>Ownership</th><th>Of</th></tr></thead>
+        <tbody>
+          <tr><td><span class="tag tag-yellow">UBO</span></td><td style="font-weight:600">Fernando Calvillo A.</td><td>49%</td><td>Fermaca Dreams Holding</td></tr>
+          <tr><td><span class="tag tag-yellow">UBO</span></td><td style="font-weight:600">Manuel Calvillo A.</td><td>49%</td><td>C&iacute;a. Mexicana de Gas Natural</td></tr>
+          <tr><td><span class="tag tag-blue">Holding</span></td><td>Fermaca Dreams Holding Co., S.A. de C.V.</td><td>99.99%</td><td>Fermaca Domes, S.A. de C.V.</td></tr>
+          <tr><td><span class="tag tag-blue">Minority</span></td><td>C&iacute;a. Mexicana de Gas Natural, S.A. de C.V.</td><td>0.01%</td><td>Fermaca Domes, S.A. de C.V.</td></tr>
+          <tr><td><span class="tag tag-green">SPV</span></td><td style="color:var(--accent);font-weight:700">Fermaca Domes, S.A. de C.V.</td><td>100%</td><td>FDO Project (operating entity)</td></tr>
+        </tbody>
+      </table>
+      <p style="font-size:11px;color:var(--text2);margin-top:12px;line-height:1.5">
+        Fernando and Manuel Calvillo are the ultimate beneficial owners through a dual-holding structure. Fermaca Dreams Holding (majority) and C&iacute;a. Mexicana de Gas Natural (minority) together hold 100% of the project SPV. The 49/49 split with 2% unallocated may reflect treasury shares or a nominal third-party holder per Mexican corporate law requirements.
+      </p>
+    </div>
+    <div class="panel">
+      <div class="panel-title"><span class="dot dot-red"></span> NDAs &amp; Key Contracts</div>
+      <table class="data-table">
+        <thead><tr><th>Document</th><th>Counterparty</th><th>Date</th><th>Status</th></tr></thead>
+        <tbody>
+          <tr><td style="font-weight:600">Mutual NDA</td><td>Metaversal Ventures, Inc.</td><td>Mar 6, 2026</td><td><span class="tag tag-green">Executed</span></td></tr>
+          <tr><td style="font-weight:600">NDA</td><td>Moelis &amp; Company</td><td>Mar 11, 2026</td><td><span class="tag tag-green">Executed</span></td></tr>
+          <tr><td style="font-weight:600">Sublease</td><td>TGT / BCYSA</td><td>—</td><td><span class="tag tag-blue">On file</span></td></tr>
+          <tr><td style="font-weight:600">PPA / MEM</td><td>Iberdrola (Qualified Supply)</td><td>Mar 12, 2026</td><td><span class="tag tag-green">Accepted</span></td></tr>
+          <tr><td style="font-weight:600">EPC Contract</td><td>ATN Ingenier&iacute;a y Servicios</td><td>—</td><td><span class="tag tag-yellow">In negotiation</span></td></tr>
+          <tr><td style="font-weight:600">Term Sheet</td><td>USD.AI (Permanent Takeout)</td><td>—</td><td><span class="tag tag-green">Fully Executed</span></td></tr>
+          <tr><td style="font-weight:600">Bridge Loan</td><td>Metaversal Ventures</td><td>—</td><td><span class="tag tag-yellow">NDA Signed</span></td></tr>
+          <tr><td style="font-weight:600">GPU Supply</td><td>Dell Technologies</td><td>—</td><td><span class="tag tag-yellow">Quote received</span></td></tr>
+        </tbody>
+      </table>
+      <div style="margin-top:16px;padding-top:12px;border-top:1px solid var(--border)">
+        <div style="font-size:11px;color:var(--text2);text-transform:uppercase;letter-spacing:.5px;margin-bottom:8px">Metaversal NDA Details</div>
+        <ul class="info-list">
+          <li><span class="il-label">Type</span><span class="il-value">Mutual Confidentiality Agreement</span></li>
+          <li><span class="il-label">Term</span><span class="il-value">1 year (expires Mar 6, 2027)</span></li>
+          <li><span class="il-label">Non-Circumvention</span><span class="il-value">12 months</span></li>
+          <li><span class="il-label">Governing Law</span><span class="il-value">Delaware, USA</span></li>
+          <li><span class="il-label">Signed by (FDO)</span><span class="il-value">Laura Trejo Chaparro</span></li>
+          <li><span class="il-label">Signed by (MV)</span><span class="il-value">Yossi Hassoon, CEO</span></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+</div>
+
 <!-- DIGITAL TWIN -->
 <div class="section" id="sec-twin">
   <div class="section-title">Digital Twin — Live Facility Simulation</div>
@@ -1803,6 +1915,79 @@ function dtStartSim(){
 }
 function dtStopSim(){DT.running=false;if(dtAnimId)cancelAnimationFrame(dtAnimId);dtAnimId=null;}
 
+// ===== LEGAL ORG CHART =====
+
+function drawLegalOrgChart(){
+  var s=setupCanvas('legalOrgChart',360);if(!s)return;
+  var ctx=s.ctx,w=s.w,h=s.h;
+  var cx=w/2,nW=200,nH=48,smallW=180,smallH=40;
+
+  function drawNode(x,y,bw,bh,label,sub,borderColor,bgColor){
+    ctx.fillStyle=bgColor||'#1a2235';
+    ctx.strokeStyle=borderColor;ctx.lineWidth=2;
+    ctx.beginPath();ctx.roundRect(x-bw/2,y-bh/2,bw,bh,8);ctx.fill();ctx.stroke();
+    ctx.fillStyle='#e2e8f0';ctx.font='bold 12px Segoe UI';ctx.textAlign='center';
+    ctx.fillText(label,x,y+(sub?-4:4));
+    if(sub){ctx.fillStyle='#94a3b8';ctx.font='10px Segoe UI';ctx.fillText(sub,x,y+12);}
+  }
+  function drawArrow(x1,y1,x2,y2,label){
+    ctx.strokeStyle='#94a3b850';ctx.lineWidth=1.5;ctx.beginPath();ctx.moveTo(x1,y1);ctx.lineTo(x2,y2);ctx.stroke();
+    // arrowhead
+    var angle=Math.atan2(y2-y1,x2-x1);var aLen=8;
+    ctx.beginPath();ctx.moveTo(x2,y2);
+    ctx.lineTo(x2-aLen*Math.cos(angle-0.4),y2-aLen*Math.sin(angle-0.4));
+    ctx.moveTo(x2,y2);
+    ctx.lineTo(x2-aLen*Math.cos(angle+0.4),y2-aLen*Math.sin(angle+0.4));
+    ctx.stroke();
+    if(label){
+      var mx=(x1+x2)/2,my=(y1+y2)/2;
+      ctx.fillStyle='#f59e0b';ctx.font='bold 11px Segoe UI';ctx.textAlign='center';
+      ctx.fillText(label,mx+16,my+4);
+    }
+  }
+
+  // Positions
+  var y0=40; // UBOs
+  var y1=130; // Holdings
+  var y2=240; // SPV
+  var y3=310; // Project
+  var leftX=cx-140,rightX=cx+140;
+
+  // Row 0: UBOs
+  drawNode(leftX,y0,nW,nH,'Fernando Calvillo A.','Co-Founder / UBO (49%)','#f59e0b','#78590020');
+  drawNode(rightX,y0,nW,nH,'Manuel Calvillo A.','Co-Founder / UBO (49%)','#00b4d8','#00b4d820');
+
+  // Row 1: Holdings
+  drawNode(leftX,y1,nW,nH,'Fermaca Dreams Holding','S.A. de C.V.','#ec4899','#ec489920');
+  drawNode(rightX,y1,nW,nH,'Cia. Mexicana de Gas Natural','S.A. de C.V.','#00b4d8','#00b4d815');
+
+  // Arrows UBO -> Holdings
+  drawArrow(leftX,y0+nH/2,leftX,y1-nH/2,'49%');
+  drawArrow(rightX,y0+nH/2,rightX,y1-nH/2,'49%');
+
+  // Row 2: SPV
+  drawNode(cx,y2,220,52,'Fermaca Domes, S.A. de C.V.','Project SPV — RFC: FSC141124IGA','#76b900','#76b90015');
+
+  // Arrows Holdings -> SPV
+  drawArrow(leftX,y1+nH/2,cx-30,y2-26,'99.99%');
+  drawArrow(rightX,y1+nH/2,cx+30,y2-26,'0.01%');
+
+  // Row 3: Project
+  drawNode(cx,y3,220,44,'FDO Data Center Project','1 MW AI Factory — CDMX','#76b900','#76b90008');
+  drawArrow(cx,y2+26,cx,y3-22,'');
+
+  // Legal rep badge
+  ctx.fillStyle='#1a2235';ctx.strokeStyle='#8b5cf6';ctx.lineWidth=1.5;
+  ctx.beginPath();ctx.roundRect(cx+140,y2-18,160,36,6);ctx.fill();ctx.stroke();
+  ctx.fillStyle='#8b5cf6';ctx.font='bold 10px Segoe UI';ctx.textAlign='center';
+  ctx.fillText('Legal Representative',cx+220,y2-4);
+  ctx.fillStyle='#e2e8f0';ctx.font='11px Segoe UI';
+  ctx.fillText('Laura Trejo Chaparro',cx+220,y2+12);
+  // connector
+  ctx.strokeStyle='#8b5cf650';ctx.lineWidth=1;ctx.setLineDash([4,3]);
+  ctx.beginPath();ctx.moveTo(cx+110,y2);ctx.lineTo(cx+140,y2);ctx.stroke();ctx.setLineDash([]);
+}
+
 // ===== RISK & SENSITIVITY CHARTS =====
 
 function drawRiskHeatMap(){
@@ -2295,7 +2480,7 @@ function drawGpuB300Rev(){
   });
 }
 
-const sectionCharts={overview:[drawRiskHeatMap,drawRiskSensitivity,drawRiskDecay,drawRiskCashFlow],power:[drawPowerFlow,drawPowerBudget,drawEnergyMonthly,drawTariffDonut,drawEnergyStacked,drawEnergyUsd,drawEnergySavings],cooling:[],racks:[],network:[drawNetOpex2],facility:[],timeline:[drawGantt],financial:[],capex:[drawCapexWaterfall,drawCapexDonut],opex:[drawOpexPie,drawOpexTreemap,drawEnergyOpex,drawNetOpex],oem:[drawDellCost],gpuaas:[drawGpuPriceEvo,drawGpuDealVol,drawGpuTermDist,drawGpuSpread,drawGpuBuyerSupplier,drawGpuB300Rev],twin:[dtStartSim]};
+const sectionCharts={overview:[drawRiskHeatMap,drawRiskSensitivity,drawRiskDecay,drawRiskCashFlow],power:[drawPowerFlow,drawPowerBudget,drawEnergyMonthly,drawTariffDonut,drawEnergyStacked,drawEnergyUsd,drawEnergySavings],cooling:[],racks:[],network:[drawNetOpex2],facility:[],timeline:[drawGantt],financial:[],capex:[drawCapexWaterfall,drawCapexDonut],opex:[drawOpexPie,drawOpexTreemap,drawEnergyOpex,drawNetOpex],oem:[drawDellCost],gpuaas:[drawGpuPriceEvo,drawGpuDealVol,drawGpuTermDist,drawGpuSpread,drawGpuBuyerSupplier,drawGpuB300Rev],legal:[drawLegalOrgChart],twin:[dtStartSim]};
 
 // INIT - draw charts for the currently active section
 function drawActiveSection(){const active=document.querySelector('.nav-btn.active');if(!active)return;const sec=active.dataset.section;const fns=sectionCharts[sec];if(fns)fns.forEach(f=>f());}

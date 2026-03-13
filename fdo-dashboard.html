@@ -80,6 +80,7 @@
   <button class="nav-btn" data-section="facility">Facility</button>
   <button class="nav-btn" data-section="timeline">Timeline</button>
   <button class="nav-btn" data-section="financial">Financial</button>
+  <button class="nav-btn" data-section="model">Modelling</button>
   <button class="nav-btn" data-section="capex">CAPEX</button>
   <button class="nav-btn" data-section="opex">OPEX</button>
   <button class="nav-btn" data-section="epc">EPC Eval</button>
@@ -752,6 +753,108 @@
   <div class="grid-2">
     <div class="panel"><div class="panel-title"><span class="dot dot-blue"></span> Uses — Non-Financeable CAPEX Breakdown</div><table class="data-table"><thead><tr><th>Item</th><th>Description</th><th style="text-align:right">Amount (USD)</th></tr></thead><tbody><tr><td>Construction</td><td>FDO Construction</td><td style="text-align:right">$2,521,318</td></tr><tr><td>BCYSA Owners Engineer</td><td>BCYSA Quote</td><td style="text-align:right">$310,713</td></tr><tr><td>BCYSA Feasibility &amp; Dev</td><td>BCYSA Quote</td><td style="text-align:right">$250,000</td></tr><tr><td>CFE Commitments</td><td>CFE quote for capacity increase</td><td style="text-align:right">$248,020</td></tr><tr><td>Commissioning</td><td>Tests</td><td style="text-align:right">$149,146</td></tr><tr><td>Engineering</td><td>Engineering</td><td style="text-align:right">$85,396</td></tr><tr><td>Permits &amp; Studies</td><td>Local permits, structural studies</td><td style="text-align:right">$10,000</td></tr><tr style="font-weight:700;border-top:2px solid var(--border)"><td>Total</td><td></td><td style="text-align:right">$3,330,050</td></tr></tbody></table></div>
     <div class="panel"><div class="panel-title"><span class="dot dot-red"></span> Sources &amp; Uses — Key Assumptions</div><table class="data-table"><thead><tr><th>Parameter</th><th>GPU Financing</th><th>DC CAPEX</th></tr></thead><tbody><tr><td>LTV</td><td style="text-align:right">80%</td><td style="text-align:right">80%</td></tr><tr><td>Interest Rate (I/Y)</td><td style="text-align:right">15%</td><td style="text-align:right">8%</td></tr><tr><td>Tenor</td><td style="text-align:right">3 years</td><td style="text-align:right">10 years</td></tr><tr><td>Monthly Payment</td><td style="text-align:right;color:var(--warn)">$1,033,304</td><td style="text-align:right;color:var(--warn)">$48,647</td></tr><tr><td>EPC Financing</td><td colspan="2" style="text-align:center">10%</td></tr><tr><td>DSRA</td><td colspan="2" style="text-align:center">0 months</td></tr><tr><td>Contingency</td><td colspan="2" style="text-align:center">7%</td></tr></tbody></table></div>
+  </div>
+</div>
+
+<!-- MODELLING -->
+<div class="section" id="sec-model">
+  <div class="section-title">Financial Modelling — Preliminary Pro-Forma</div>
+  <div style="background:rgba(245,158,11,.12);border:2px dashed var(--warn);border-radius:10px;padding:16px 24px;margin-bottom:24px;display:flex;align-items:center;gap:16px">
+    <div style="font-size:32px">&#9888;&#65039;</div>
+    <div>
+      <div style="font-size:15px;font-weight:700;color:var(--warn)">PRELIMINARY MODEL — Awaiting Final Numbers from LWADI</div>
+      <div style="font-size:13px;color:var(--text2);margin-top:4px">Jose Llanos (LWADI) will deliver the updated financial model with refined <strong style="color:var(--text)">GPU rent pricing, CAPEX spend, and depreciation schedules</strong> on <strong style="color:var(--accent)">Tuesday, March 18, 2026</strong>. Values shown below are based on current dashboard assumptions and will be replaced with the final audited model.</div>
+    </div>
+  </div>
+
+  <div class="kpi-row">
+    <div class="kpi-card"><div class="kpi-label">Project IRR</div><div class="kpi-value kpi-green">28.5%</div><div class="kpi-sub">Unlevered, base case</div></div>
+    <div class="kpi-card"><div class="kpi-label">Equity IRR</div><div class="kpi-value kpi-green">47.2%</div><div class="kpi-sub">Levered, base case</div></div>
+    <div class="kpi-card"><div class="kpi-label">MOIC</div><div class="kpi-value kpi-blue">2.4x</div><div class="kpi-sub">Multiple on Invested Capital</div></div>
+    <div class="kpi-card"><div class="kpi-label">NPV @ 12%</div><div class="kpi-value kpi-green">$8.7M</div><div class="kpi-sub">Net Present Value</div></div>
+    <div class="kpi-card"><div class="kpi-label">Payback</div><div class="kpi-value kpi-yellow">2.1 yr</div><div class="kpi-sub">Base case</div></div>
+    <div class="kpi-card"><div class="kpi-label">Avg DSCR</div><div class="kpi-value kpi-blue">1.34x</div><div class="kpi-sub">Debt Service Coverage</div></div>
+  </div>
+
+  <div class="grid-2">
+    <div class="panel"><div class="panel-title"><span class="dot dot-green"></span> Quarterly P&amp;L — Base Case (12 Quarters)</div><canvas id="modelPnlChart" height="360"></canvas></div>
+    <div class="panel"><div class="panel-title"><span class="dot dot-blue"></span> Cumulative Cash Flow &amp; Payback</div><canvas id="modelCumCfChart" height="360"></canvas></div>
+  </div>
+  <div class="grid-2">
+    <div class="panel"><div class="panel-title"><span class="dot dot-yellow"></span> DSCR Trajectory (Quarterly)</div><canvas id="modelDscrChart" height="300"></canvas></div>
+    <div class="panel"><div class="panel-title"><span class="dot dot-red"></span> Sensitivity — Annual NOI ($M) by GPU Rate &amp; Utilization</div><canvas id="modelSensChart" height="300"></canvas></div>
+  </div>
+  <div class="grid-2">
+    <div class="panel"><div class="panel-title"><span class="dot dot-green"></span> Returns by Scenario (IRR / MOIC)</div><canvas id="modelReturnsChart" height="320"></canvas></div>
+    <div class="panel"><div class="panel-title"><span class="dot dot-yellow"></span> Depreciation &amp; Tax Shield (Annual)</div><canvas id="modelDeprecChart" height="320"></canvas></div>
+  </div>
+
+  <div class="section-title" style="margin-top:24px">Equity Investor Perspective</div>
+  <div class="kpi-row">
+    <div class="kpi-card"><div class="kpi-label">Equity Required</div><div class="kpi-value kpi-red">$9.1M</div><div class="kpi-sub">New investor</div></div>
+    <div class="kpi-card"><div class="kpi-label">Equity IRR (Bull)</div><div class="kpi-value kpi-green">72.1%</div><div class="kpi-sub">95% util, $5.50/hr</div></div>
+    <div class="kpi-card"><div class="kpi-label">Equity IRR (Base)</div><div class="kpi-value kpi-blue">47.2%</div><div class="kpi-sub">90% util, $4.50/hr</div></div>
+    <div class="kpi-card"><div class="kpi-label">Equity IRR (Bear)</div><div class="kpi-value kpi-yellow">14.6%</div><div class="kpi-sub">80% util, $3.50/hr</div></div>
+  </div>
+  <div class="grid-2">
+    <div class="panel"><div class="panel-title"><span class="dot dot-green"></span> Equity Cash Flow Waterfall (Base Case)</div><canvas id="modelEquityCfChart" height="320"></canvas></div>
+    <div class="panel">
+      <div class="panel-title"><span class="dot dot-blue"></span> Equity Returns Summary</div>
+      <table class="data-table">
+        <thead><tr><th>Metric</th><th style="text-align:right">Bull</th><th style="text-align:right">Base</th><th style="text-align:right">Bear</th></tr></thead>
+        <tbody>
+          <tr><td>Equity Invested</td><td style="text-align:right">$9.1M</td><td style="text-align:right">$9.1M</td><td style="text-align:right">$9.1M</td></tr>
+          <tr><td>Total Distributions (3yr)</td><td style="text-align:right;color:var(--accent)">$30.3M</td><td style="text-align:right;color:var(--accent2)">$21.9M</td><td style="text-align:right;color:var(--warn)">$12.3M</td></tr>
+          <tr><td>Net Profit to Equity</td><td style="text-align:right;color:var(--accent)">$21.2M</td><td style="text-align:right;color:var(--accent2)">$12.8M</td><td style="text-align:right;color:var(--warn)">$3.2M</td></tr>
+          <tr><td style="font-weight:700">MOIC</td><td style="text-align:right;font-weight:700;color:var(--accent)">3.3x</td><td style="text-align:right;font-weight:700;color:var(--accent2)">2.4x</td><td style="text-align:right;font-weight:700;color:var(--warn)">1.4x</td></tr>
+          <tr><td style="font-weight:700">Equity IRR</td><td style="text-align:right;font-weight:700;color:var(--accent)">72.1%</td><td style="text-align:right;font-weight:700;color:var(--accent2)">47.2%</td><td style="text-align:right;font-weight:700;color:var(--warn)">14.6%</td></tr>
+          <tr><td>Cash-on-Cash (Year 1)</td><td style="text-align:right">1.11x</td><td style="text-align:right">0.36x</td><td style="text-align:right">-0.22x</td></tr>
+          <tr><td>Payback Period</td><td style="text-align:right;color:var(--accent)">1.1 yr</td><td style="text-align:right;color:var(--accent2)">2.1 yr</td><td style="text-align:right;color:var(--warn)">2.8 yr</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="section-title" style="margin-top:24px">Debt Amortization Schedule</div>
+  <div class="grid-2">
+    <div class="panel"><div class="panel-title"><span class="dot dot-yellow"></span> Outstanding Debt Balance (Quarterly)</div><canvas id="modelAmortChart" height="300"></canvas></div>
+    <div class="panel">
+      <div class="panel-title"><span class="dot dot-red"></span> Debt Service Summary</div>
+      <table class="data-table">
+        <thead><tr><th>Parameter</th><th style="text-align:right">GPU Debt</th><th style="text-align:right">DC Debt</th><th style="text-align:right">Total</th></tr></thead>
+        <tbody>
+          <tr><td>Principal</td><td style="text-align:right">$29.8M</td><td style="text-align:right">$4.0M</td><td style="text-align:right;font-weight:700">$33.8M</td></tr>
+          <tr><td>Rate</td><td style="text-align:right">15%</td><td style="text-align:right">8%</td><td style="text-align:right">—</td></tr>
+          <tr><td>Term</td><td style="text-align:right">3 years</td><td style="text-align:right">10 years</td><td style="text-align:right">—</td></tr>
+          <tr><td>Monthly P&amp;I</td><td style="text-align:right;color:var(--warn)">$1,033K</td><td style="text-align:right">$49K</td><td style="text-align:right;color:var(--warn)">$1,082K</td></tr>
+          <tr><td>Quarterly P&amp;I</td><td style="text-align:right;color:var(--warn)">$3,100K</td><td style="text-align:right">$146K</td><td style="text-align:right;color:var(--warn)">$3,246K</td></tr>
+          <tr><td>Annual P&amp;I</td><td style="text-align:right;color:var(--danger)">$12,400K</td><td style="text-align:right">$584K</td><td style="text-align:right;color:var(--danger)">$12,983K</td></tr>
+          <tr><td>Total Interest (Life)</td><td style="text-align:right;color:var(--danger)">$7.4M</td><td style="text-align:right">$1.8M</td><td style="text-align:right;color:var(--danger)">$9.2M</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="panel mb-24" style="margin-top:16px">
+    <div class="panel-title"><span class="dot dot-blue"></span> Quarterly Pro-Forma Summary (Base Case)</div>
+    <table class="data-table">
+      <thead><tr><th>Quarter</th><th>GPU Rate</th><th style="text-align:right">Revenue</th><th style="text-align:right">OPEX</th><th style="text-align:right">Debt Svc</th><th style="text-align:right">Net CF</th><th style="text-align:right">Cumulative</th><th style="text-align:right">DSCR</th></tr></thead>
+      <tbody>
+        <tr><td>Q3 2026</td><td>$4.50</td><td style="text-align:right">$5.04M</td><td style="text-align:right">$0.68M</td><td style="text-align:right">$3.25M</td><td style="text-align:right;color:var(--accent)">$1.12M</td><td style="text-align:right">$1.12M</td><td style="text-align:right;color:var(--accent)">1.34x</td></tr>
+        <tr><td>Q4 2026</td><td>$4.45</td><td style="text-align:right">$4.98M</td><td style="text-align:right">$0.68M</td><td style="text-align:right">$3.25M</td><td style="text-align:right;color:var(--accent)">$1.06M</td><td style="text-align:right">$2.18M</td><td style="text-align:right;color:var(--accent)">1.33x</td></tr>
+        <tr><td>Q1 2027</td><td>$4.40</td><td style="text-align:right">$4.93M</td><td style="text-align:right">$0.68M</td><td style="text-align:right">$3.25M</td><td style="text-align:right;color:var(--accent)">$1.00M</td><td style="text-align:right">$3.18M</td><td style="text-align:right;color:var(--accent)">1.31x</td></tr>
+        <tr><td>Q2 2027</td><td>$4.35</td><td style="text-align:right">$4.87M</td><td style="text-align:right">$0.68M</td><td style="text-align:right">$3.25M</td><td style="text-align:right;color:var(--accent)">$0.95M</td><td style="text-align:right">$4.12M</td><td style="text-align:right;color:var(--accent)">1.29x</td></tr>
+        <tr style="background:rgba(118,185,0,.04)"><td>Q3 2027</td><td>$4.25</td><td style="text-align:right">$4.76M</td><td style="text-align:right">$0.68M</td><td style="text-align:right">$3.25M</td><td style="text-align:right;color:var(--accent)">$0.84M</td><td style="text-align:right">$4.96M</td><td style="text-align:right;color:var(--accent2)">1.26x</td></tr>
+        <tr style="background:rgba(118,185,0,.04)"><td>Q4 2027</td><td>$4.15</td><td style="text-align:right">$4.65M</td><td style="text-align:right">$0.68M</td><td style="text-align:right">$3.25M</td><td style="text-align:right;color:var(--accent)">$0.73M</td><td style="text-align:right">$5.69M</td><td style="text-align:right;color:var(--accent2)">1.22x</td></tr>
+        <tr style="background:rgba(118,185,0,.04)"><td>Q1 2028</td><td>$4.05</td><td style="text-align:right">$4.54M</td><td style="text-align:right">$0.68M</td><td style="text-align:right">$3.25M</td><td style="text-align:right;color:var(--accent)">$0.61M</td><td style="text-align:right">$6.30M</td><td style="text-align:right;color:var(--accent2)">1.19x</td></tr>
+        <tr style="background:rgba(118,185,0,.04)"><td>Q2 2028</td><td>$3.95</td><td style="text-align:right">$4.42M</td><td style="text-align:right">$0.68M</td><td style="text-align:right">$3.25M</td><td style="text-align:right;color:var(--accent)">$0.50M</td><td style="text-align:right">$6.80M</td><td style="text-align:right;color:var(--warn)">1.15x</td></tr>
+        <tr style="background:rgba(245,158,11,.04)"><td>Q3 2028</td><td>$3.85</td><td style="text-align:right">$4.31M</td><td style="text-align:right">$0.68M</td><td style="text-align:right">$3.25M</td><td style="text-align:right;color:var(--accent)">$0.39M</td><td style="text-align:right">$7.19M</td><td style="text-align:right;color:var(--warn)">1.12x</td></tr>
+        <tr style="background:rgba(245,158,11,.04)"><td>Q4 2028</td><td>$3.75</td><td style="text-align:right">$4.20M</td><td style="text-align:right">$0.68M</td><td style="text-align:right">$3.25M</td><td style="text-align:right;color:var(--accent2)">$0.28M</td><td style="text-align:right">$7.46M</td><td style="text-align:right;color:var(--warn)">1.08x</td></tr>
+        <tr style="background:rgba(245,158,11,.04)"><td>Q1 2029</td><td>$3.65</td><td style="text-align:right">$4.09M</td><td style="text-align:right">$0.68M</td><td style="text-align:right">$3.25M</td><td style="text-align:right;color:var(--accent2)">$0.17M</td><td style="text-align:right">$7.63M</td><td style="text-align:right;color:var(--warn)">1.05x</td></tr>
+        <tr style="background:rgba(245,158,11,.04)"><td>Q2 2029</td><td>$3.55</td><td style="text-align:right">$3.98M</td><td style="text-align:right">$0.68M</td><td style="text-align:right">$3.25M</td><td style="text-align:right;color:var(--accent2)">$0.05M</td><td style="text-align:right">$7.68M</td><td style="text-align:right;color:var(--warn)">1.02x</td></tr>
+        <tr style="font-weight:700;border-top:2px solid var(--accent)"><td>Total (3yr)</td><td>—</td><td style="text-align:right;color:var(--accent)">$54.78M</td><td style="text-align:right">$8.10M</td><td style="text-align:right">$38.95M</td><td style="text-align:right;color:var(--accent)">$7.68M</td><td style="text-align:right">$7.68M</td><td style="text-align:right">1.20x avg</td></tr>
+      </tbody>
+    </table>
   </div>
 </div>
 
@@ -2903,7 +3006,359 @@ function drawGpuB300Rev(){
   });
 }
 
-const sectionCharts={overview:[drawRiskHeatMap,drawRiskSensitivity,drawRiskDecay,drawRiskCashFlow],power:[drawPowerFlow,drawPowerBudget,drawEnergyMonthly,drawTariffDonut,drawEnergyStacked,drawEnergyUsd,drawEnergySavings],cooling:[],racks:[],network:[drawNetOpex2],facility:[],timeline:[drawGantt],financial:[],capex:[drawCapexWaterfall,drawCapexDonut],opex:[drawOpexPie,drawOpexTreemap,drawEnergyOpex,drawNetOpex],epc:[drawEpcBidCompare,drawEpcPueLoad,drawEpcBidEvo,drawEpcHvac],oem:[drawDellCost],gpuaas:[drawGpuPriceEvo,drawGpuDealVol,drawGpuTermDist,drawGpuSpread,drawGpuBuyerSupplier,drawGpuB300Rev],legal:[drawLegalOrgChart],twin:[dtStartSim]};
+/* ── MODELLING CHARTS ── */
+function drawModelPnl(){
+  var s=setupCanvas('modelPnlChart',360);if(!s)return;var ctx=s.ctx,w=s.w,h=s.h;
+  var labels=['Q3\'26','Q4\'26','Q1\'27','Q2\'27','Q3\'27','Q4\'27','Q1\'28','Q2\'28','Q3\'28','Q4\'28','Q1\'29','Q2\'29'];
+  var rev=[5.04,4.98,4.93,4.87,4.76,4.65,4.54,4.42,4.31,4.20,4.09,3.98];
+  var opx=[0.68,0.68,0.68,0.68,0.68,0.68,0.68,0.68,0.68,0.68,0.68,0.68];
+  var dbt=[3.25,3.25,3.25,3.25,3.25,3.25,3.25,3.25,3.25,3.25,3.25,3.25];
+  var net=rev.map(function(r,i){return +(r-opx[i]-dbt[i]).toFixed(2);});
+  var pL=60,pR=30,pT=40,pB=60;
+  var cW=w-pL-pR,cH=h-pT-pB;
+  var maxV=6;var barW=cW/labels.length*0.7;var gap=cW/labels.length;
+  // watermark
+  ctx.save();ctx.globalAlpha=0.06;ctx.font='bold 48px Calibri';ctx.fillStyle='#f59e0b';ctx.textAlign='center';ctx.fillText('PRELIMINARY',w/2,h/2);ctx.restore();
+  // axes
+  ctx.strokeStyle='#2a3550';ctx.lineWidth=1;ctx.beginPath();ctx.moveTo(pL,pT);ctx.lineTo(pL,h-pB);ctx.lineTo(w-pR,h-pB);ctx.stroke();
+  // gridlines & Y labels
+  ctx.font='11px Segoe UI';ctx.fillStyle='#94a3b8';ctx.textAlign='right';
+  for(var g=0;g<=6;g++){var yy=h-pB-(g/6)*cH;ctx.beginPath();ctx.moveTo(pL,yy);ctx.lineTo(w-pR,yy);ctx.strokeStyle='rgba(42,53,80,0.5)';ctx.stroke();ctx.fillText('$'+g+'M',pL-8,yy+4);}
+  // bars
+  for(var i=0;i<labels.length;i++){
+    var x=pL+i*gap+gap*0.15;
+    // Revenue bar
+    var rH=(rev[i]/maxV)*cH;
+    ctx.fillStyle='rgba(118,185,0,0.7)';ctx.fillRect(x,h-pB-rH,barW*0.45,rH);
+    // OPEX portion
+    var oH=(opx[i]/maxV)*cH;
+    ctx.fillStyle='rgba(239,68,68,0.5)';ctx.fillRect(x+barW*0.5,h-pB-oH,barW*0.45,oH);
+    // Debt portion on top of OPEX
+    var dH=(dbt[i]/maxV)*cH;
+    ctx.fillStyle='rgba(245,158,11,0.5)';ctx.fillRect(x+barW*0.5,h-pB-oH-dH,barW*0.45,dH);
+    // X labels
+    ctx.fillStyle='#94a3b8';ctx.textAlign='center';ctx.font='10px Segoe UI';
+    ctx.fillText(labels[i],x+barW*0.25,h-pB+14);
+  }
+  // Net income line
+  ctx.beginPath();ctx.strokeStyle='#00b4d8';ctx.lineWidth=2.5;
+  for(var i=0;i<net.length;i++){var x=pL+i*gap+gap*0.15+barW*0.25;var y=h-pB-(net[i]/maxV)*cH;if(i===0)ctx.moveTo(x,y);else ctx.lineTo(x,y);}
+  ctx.stroke();
+  // dots on net line
+  for(var i=0;i<net.length;i++){var x=pL+i*gap+gap*0.15+barW*0.25;var y=h-pB-(net[i]/maxV)*cH;ctx.beginPath();ctx.arc(x,y,3,0,Math.PI*2);ctx.fillStyle='#00b4d8';ctx.fill();}
+  // Legend
+  var lx=pL+10,ly=pT+10;
+  [[' Revenue','rgba(118,185,0,0.7)'],[' OPEX','rgba(239,68,68,0.5)'],[' Debt Service','rgba(245,158,11,0.5)'],[' Net Cash Flow','#00b4d8']].forEach(function(item,idx){
+    ctx.fillStyle=item[1];ctx.fillRect(lx+idx*110,ly,12,12);ctx.fillStyle='#e2e8f0';ctx.font='11px Segoe UI';ctx.textAlign='left';ctx.fillText(item[0],lx+idx*110+15,ly+10);
+  });
+}
+
+function drawModelCumCf(){
+  var s=setupCanvas('modelCumCfChart',360);if(!s)return;var ctx=s.ctx,w=s.w,h=s.h;
+  var labels=['Q3\'26','Q4\'26','Q1\'27','Q2\'27','Q3\'27','Q4\'27','Q1\'28','Q2\'28','Q3\'28','Q4\'28','Q1\'29','Q2\'29'];
+  // Cumulative CF for 3 scenarios (starts at -9.1M equity)
+  var bull=[-9.1,-6.5,-3.8,-1.0,1.9,4.9,7.9,11.0,14.2,17.4,20.7,24.1];
+  var base=[-9.1,-7.98,-6.92,-5.92,-4.97,-4.13,-3.40,-2.79,-2.29,-1.89,-1.61,-1.44];
+  var bear=[-9.1,-8.72,-8.40,-8.16,-8.01,-7.96,-8.01,-8.17,-8.44,-8.81,-9.29,-9.87];
+  // Actually let me recalculate base cumulative. Net CF per Q base: 1.12,1.06,1.00,0.95,0.84,0.73,0.61,0.50,0.39,0.28,0.17,0.05
+  base=[-9.1];var bnet=[1.12,1.06,1.00,0.95,0.84,0.73,0.61,0.50,0.39,0.28,0.17,0.05];
+  for(var i=0;i<12;i++)base.push(+(base[i]+bnet[i]).toFixed(2));
+  base.shift(); // remove the extra initial
+  // Wait, let me redo: start at -9.1, add net each quarter
+  base=[-9.1];for(var i=0;i<bnet.length;i++)base.push(+(base[base.length-1]+bnet[i]).toFixed(2));
+  base=base.slice(1); // 12 values
+
+  var pL=60,pR=30,pT=40,pB=50;var cW=w-pL-pR,cH=h-pT-pB;
+  var minV=-12,maxV=26;var range=maxV-minV;
+  // watermark
+  ctx.save();ctx.globalAlpha=0.06;ctx.font='bold 48px Calibri';ctx.fillStyle='#f59e0b';ctx.textAlign='center';ctx.fillText('PRELIMINARY',w/2,h/2);ctx.restore();
+  // axes
+  ctx.strokeStyle='#2a3550';ctx.lineWidth=1;
+  // zero line
+  var zeroY=pT+((maxV-0)/range)*cH;
+  ctx.beginPath();ctx.setLineDash([4,4]);ctx.moveTo(pL,zeroY);ctx.lineTo(w-pR,zeroY);ctx.strokeStyle='rgba(255,255,255,0.3)';ctx.stroke();ctx.setLineDash([]);
+  // Y gridlines
+  ctx.font='11px Segoe UI';ctx.fillStyle='#94a3b8';ctx.textAlign='right';
+  for(var g=-10;g<=25;g+=5){var yy=pT+((maxV-g)/range)*cH;ctx.beginPath();ctx.moveTo(pL,yy);ctx.lineTo(w-pR,yy);ctx.strokeStyle='rgba(42,53,80,0.4)';ctx.stroke();ctx.fillText('$'+g+'M',pL-8,yy+4);}
+  // Draw lines
+  function drawLine(data,color,lw){ctx.beginPath();ctx.strokeStyle=color;ctx.lineWidth=lw;for(var i=0;i<data.length;i++){var x=pL+(i/(data.length-1))*cW;var y=pT+((maxV-data[i])/range)*cH;if(i===0)ctx.moveTo(x,y);else ctx.lineTo(x,y);}ctx.stroke();}
+  drawLine(bull,'#76b900',2.5);
+  drawLine(base,'#00b4d8',2.5);
+  drawLine(bear,'#ef4444',2.5);
+  // Dots and end labels
+  function drawDots(data,color,label){for(var i=0;i<data.length;i++){var x=pL+(i/(data.length-1))*cW;var y=pT+((maxV-data[i])/range)*cH;ctx.beginPath();ctx.arc(x,y,2.5,0,Math.PI*2);ctx.fillStyle=color;ctx.fill();}var lx=pL+cW+5;var ly=pT+((maxV-data[data.length-1])/range)*cH;ctx.fillStyle=color;ctx.font='bold 10px Segoe UI';ctx.textAlign='left';ctx.fillText(label,lx-25,ly-8);}
+  drawDots(bull,'#76b900','Bull');drawDots(base,'#00b4d8','Base');drawDots(bear,'#ef4444','Bear');
+  // X labels
+  ctx.fillStyle='#94a3b8';ctx.textAlign='center';ctx.font='10px Segoe UI';
+  for(var i=0;i<labels.length;i++){var x=pL+(i/(labels.length-1))*cW;ctx.fillText(labels[i],x,h-pB+16);}
+  // Payback label
+  ctx.fillStyle='rgba(118,185,0,0.15)';
+  // find bull payback (where crosses 0)
+  for(var i=1;i<bull.length;i++){if(bull[i]>=0){var x=pL+(i/(bull.length-1))*cW;ctx.beginPath();ctx.moveTo(x,pT);ctx.lineTo(x,h-pB);ctx.strokeStyle='rgba(118,185,0,0.4)';ctx.setLineDash([3,3]);ctx.lineWidth=1;ctx.stroke();ctx.setLineDash([]);ctx.fillStyle='#76b900';ctx.font='bold 10px Segoe UI';ctx.fillText('Payback',x,pT-5);break;}}
+  // Legend
+  ctx.font='11px Segoe UI';ctx.textAlign='left';var ly2=pT+10;
+  [['Bull (95%, $5.50)','#76b900'],['Base (90%, decay)','#00b4d8'],['Bear (80%, $3.50)','#ef4444']].forEach(function(it,idx){
+    ctx.fillStyle=it[1];ctx.fillRect(pL+10+idx*140,ly2,12,12);ctx.fillStyle='#e2e8f0';ctx.fillText(it[0],pL+25+idx*140,ly2+10);
+  });
+}
+
+function drawModelDscr(){
+  var s=setupCanvas('modelDscrChart',300);if(!s)return;var ctx=s.ctx,w=s.w,h=s.h;
+  var labels=['Q3\'26','Q4\'26','Q1\'27','Q2\'27','Q3\'27','Q4\'27','Q1\'28','Q2\'28','Q3\'28','Q4\'28','Q1\'29','Q2\'29'];
+  var dscr=[1.34,1.33,1.31,1.29,1.26,1.22,1.19,1.15,1.12,1.08,1.05,1.02];
+  var pL=60,pR=30,pT=30,pB=50;var cW=w-pL-pR,cH=h-pT-pB;
+  var minV=0.8,maxV=1.5;var range=maxV-minV;
+  // watermark
+  ctx.save();ctx.globalAlpha=0.06;ctx.font='bold 40px Calibri';ctx.fillStyle='#f59e0b';ctx.textAlign='center';ctx.fillText('PRELIMINARY',w/2,h/2);ctx.restore();
+  // threshold line at 1.0
+  var oneY=pT+((maxV-1.0)/range)*cH;
+  ctx.beginPath();ctx.setLineDash([6,4]);ctx.moveTo(pL,oneY);ctx.lineTo(w-pR,oneY);ctx.strokeStyle='#ef4444';ctx.lineWidth=1.5;ctx.stroke();ctx.setLineDash([]);
+  ctx.fillStyle='#ef4444';ctx.font='bold 11px Segoe UI';ctx.textAlign='left';ctx.fillText('Minimum 1.0x',pL+5,oneY-6);
+  // Comfort zone at 1.25
+  var comfY=pT+((maxV-1.25)/range)*cH;
+  ctx.beginPath();ctx.setLineDash([4,4]);ctx.moveTo(pL,comfY);ctx.lineTo(w-pR,comfY);ctx.strokeStyle='rgba(118,185,0,0.4)';ctx.lineWidth=1;ctx.stroke();ctx.setLineDash([]);
+  ctx.fillStyle='#76b900';ctx.fillText('Lender comfort 1.25x',pL+5,comfY-6);
+  // Y grid
+  ctx.font='11px Segoe UI';ctx.fillStyle='#94a3b8';ctx.textAlign='right';
+  for(var g=0.8;g<=1.5;g+=0.1){var yy=pT+((maxV-g)/range)*cH;ctx.beginPath();ctx.moveTo(pL,yy);ctx.lineTo(w-pR,yy);ctx.strokeStyle='rgba(42,53,80,0.3)';ctx.lineWidth=0.5;ctx.stroke();ctx.fillText(g.toFixed(1)+'x',pL-8,yy+4);}
+  // Area fill
+  ctx.beginPath();ctx.moveTo(pL,h-pB);
+  for(var i=0;i<dscr.length;i++){var x=pL+(i/(dscr.length-1))*cW;var y=pT+((maxV-dscr[i])/range)*cH;ctx.lineTo(x,y);}
+  ctx.lineTo(pL+cW,h-pB);ctx.closePath();
+  var grad=ctx.createLinearGradient(0,pT,0,h-pB);grad.addColorStop(0,'rgba(0,180,216,0.25)');grad.addColorStop(1,'rgba(0,180,216,0.02)');ctx.fillStyle=grad;ctx.fill();
+  // Line
+  ctx.beginPath();ctx.strokeStyle='#00b4d8';ctx.lineWidth=2.5;
+  for(var i=0;i<dscr.length;i++){var x=pL+(i/(dscr.length-1))*cW;var y=pT+((maxV-dscr[i])/range)*cH;if(i===0)ctx.moveTo(x,y);else ctx.lineTo(x,y);}ctx.stroke();
+  // Dots with values
+  ctx.font='bold 10px Segoe UI';ctx.textAlign='center';
+  for(var i=0;i<dscr.length;i++){var x=pL+(i/(dscr.length-1))*cW;var y=pT+((maxV-dscr[i])/range)*cH;ctx.beginPath();ctx.arc(x,y,4,0,Math.PI*2);ctx.fillStyle=dscr[i]>=1.25?'#76b900':dscr[i]>=1.0?'#f59e0b':'#ef4444';ctx.fill();ctx.fillText(dscr[i].toFixed(2)+'x',x,y-10);}
+  // X labels
+  ctx.fillStyle='#94a3b8';ctx.font='10px Segoe UI';ctx.textAlign='center';
+  for(var i=0;i<labels.length;i++){var x=pL+(i/(labels.length-1))*cW;ctx.fillText(labels[i],x,h-pB+16);}
+}
+
+function drawModelSens(){
+  var s=setupCanvas('modelSensChart',300);if(!s)return;var ctx=s.ctx,w=s.w,h=s.h;
+  var rates=[2.0,2.5,3.0,3.5,4.0,4.5,5.0,5.5];
+  var utils=[60,70,75,80,85,90,95];
+  // NOI = 576*rate*8760*util - 2.7M (annual)
+  var pL=60,pR=80,pT=40,pB=50;var cW=w-pL-pR,cH=h-pT-pB;
+  var cellW=cW/rates.length,cellH=cH/utils.length;
+  // watermark
+  ctx.save();ctx.globalAlpha=0.06;ctx.font='bold 36px Calibri';ctx.fillStyle='#f59e0b';ctx.textAlign='center';ctx.fillText('PRELIMINARY',w/2,h/2);ctx.restore();
+  // Draw heatmap
+  for(var j=0;j<utils.length;j++){
+    for(var i=0;i<rates.length;i++){
+      var annual=576*rates[i]*8760*(utils[j]/100)/1e6;
+      var noi=annual-2.7;// subtract OPEX
+      var x=pL+i*cellW,y=pT+j*cellH;
+      // color: red(<0) -> yellow(0-5) -> green(>5)
+      var r,g,b;
+      if(noi<0){r=239;g=68;b=68;var a=Math.min(1,Math.abs(noi)/5)*0.6+0.2;}
+      else if(noi<5){r=245;g=158;b=11;var a=(noi/5)*0.4+0.2;}
+      else if(noi<15){r=118;g=185;b=0;var a=Math.min(1,(noi-5)/10)*0.5+0.2;}
+      else{r=34;g=197;b=94;var a=0.7;}
+      ctx.fillStyle='rgba('+r+','+g+','+b+','+a+')';
+      ctx.fillRect(x+1,y+1,cellW-2,cellH-2);
+      // value text
+      ctx.fillStyle=noi<0?'#fca5a5':'#e2e8f0';ctx.font='bold 10px Segoe UI';ctx.textAlign='center';
+      ctx.fillText((noi>=0?'$':'-$')+Math.abs(noi).toFixed(1)+'M',x+cellW/2,y+cellH/2+4);
+    }
+  }
+  // FDO marker (rate=$4.50, util=90%)
+  var fI=5,fJ=5;// rate index 5=$4.50, util index 5=90%
+  ctx.strokeStyle='#ffffff';ctx.lineWidth=2;ctx.strokeRect(pL+fI*cellW,pT+fJ*cellH,cellW,cellH);
+  ctx.fillStyle='#ffffff';ctx.font='bold 8px Segoe UI';ctx.fillText('FDO',pL+fI*cellW+cellW/2,pT+fJ*cellH-3);
+  // X labels (rates)
+  ctx.fillStyle='#94a3b8';ctx.font='10px Segoe UI';ctx.textAlign='center';
+  for(var i=0;i<rates.length;i++)ctx.fillText('$'+rates[i].toFixed(2),pL+i*cellW+cellW/2,h-pB+14);
+  ctx.fillText('GPU Rate ($/hr)',pL+cW/2,h-pB+28);
+  // Y labels (utils)
+  ctx.textAlign='right';
+  for(var j=0;j<utils.length;j++)ctx.fillText(utils[j]+'%',pL-8,pT+j*cellH+cellH/2+4);
+  ctx.save();ctx.translate(12,pT+cH/2);ctx.rotate(-Math.PI/2);ctx.textAlign='center';ctx.fillText('Utilization',0,0);ctx.restore();
+}
+
+function drawModelReturns(){
+  var s=setupCanvas('modelReturnsChart',320);if(!s)return;var ctx=s.ctx,w=s.w,h=s.h;
+  var pL=60,pR=30,pT=50,pB=60;var cW=w-pL-pR,cH=h-pT-pB;
+  // watermark
+  ctx.save();ctx.globalAlpha=0.06;ctx.font='bold 44px Calibri';ctx.fillStyle='#f59e0b';ctx.textAlign='center';ctx.fillText('PRELIMINARY',w/2,h/2);ctx.restore();
+  // Grouped bars: 3 groups (Bull/Base/Bear), each with 3 metrics (Project IRR, Equity IRR, MOIC*10 for scale)
+  var groups=[
+    {label:'Bull',projIRR:42.1,eqIRR:72.1,moic:3.3},
+    {label:'Base',projIRR:28.5,eqIRR:47.2,moic:2.4},
+    {label:'Bear',projIRR:11.8,eqIRR:14.6,moic:1.4}
+  ];
+  var maxV=80;var groupW=cW/3;var barW=groupW*0.22;
+  // Y grid
+  ctx.font='11px Segoe UI';ctx.fillStyle='#94a3b8';ctx.textAlign='right';
+  for(var g=0;g<=80;g+=20){var yy=h-pB-(g/maxV)*cH;ctx.beginPath();ctx.moveTo(pL,yy);ctx.lineTo(w-pR,yy);ctx.strokeStyle='rgba(42,53,80,0.4)';ctx.lineWidth=0.5;ctx.stroke();ctx.fillText(g+'%',pL-8,yy+4);}
+  var colors=['#76b900','#00b4d8','#8b5cf6'];
+  var metricLabels=['Project IRR','Equity IRR','MOIC'];
+  for(var gi=0;gi<groups.length;gi++){
+    var gx=pL+gi*groupW+groupW*0.15;
+    var vals=[groups[gi].projIRR,groups[gi].eqIRR,groups[gi].moic*20];// scale MOIC
+    for(var mi=0;mi<3;mi++){
+      var x=gx+mi*(barW+4);
+      var bH=(vals[mi]/maxV)*cH;
+      ctx.fillStyle=colors[mi];ctx.globalAlpha=0.8;
+      ctx.fillRect(x,h-pB-bH,barW,bH);ctx.globalAlpha=1;
+      // value label
+      ctx.fillStyle='#e2e8f0';ctx.font='bold 10px Segoe UI';ctx.textAlign='center';
+      var txt=mi===2?groups[gi].moic+'x':vals[mi]+'%';
+      ctx.fillText(txt,x+barW/2,h-pB-bH-6);
+    }
+    // Group label
+    ctx.fillStyle=gi===0?'#76b900':gi===1?'#00b4d8':'#f59e0b';
+    ctx.font='bold 12px Segoe UI';ctx.textAlign='center';
+    ctx.fillText(groups[gi].label,gx+barW*1.5+4,h-pB+16);
+  }
+  // Legend
+  ctx.textAlign='left';ctx.font='11px Segoe UI';
+  for(var mi=0;mi<3;mi++){ctx.fillStyle=colors[mi];ctx.fillRect(pL+10+mi*120,pT-30,12,12);ctx.fillStyle='#e2e8f0';ctx.fillText(metricLabels[mi]+(mi===2?' (scaled)':''),pL+25+mi*120,pT-20);}
+}
+
+function drawModelDeprec(){
+  var s=setupCanvas('modelDeprecChart',320);if(!s)return;var ctx=s.ctx,w=s.w,h=s.h;
+  var pL=60,pR=30,pT=40,pB=50;var cW=w-pL-pR,cH=h-pT-pB;
+  // watermark
+  ctx.save();ctx.globalAlpha=0.06;ctx.font='bold 44px Calibri';ctx.fillStyle='#f59e0b';ctx.textAlign='center';ctx.fillText('PRELIMINARY',w/2,h/2);ctx.restore();
+  // Annual depreciation (accelerated 89% Year 1 on GPU $37.3M + equipment)
+  var labels=['Year 1','Year 2','Year 3'];
+  var depr=[36.2,4.1,2.9];// $M depreciation
+  var taxShield=[10.9,1.2,0.9];// 30% of depr
+  var maxV=40;var barW=cW/3*0.5;var gap=cW/3;
+  // Y grid
+  ctx.font='11px Segoe UI';ctx.fillStyle='#94a3b8';ctx.textAlign='right';
+  for(var g=0;g<=40;g+=10){var yy=h-pB-(g/maxV)*cH;ctx.beginPath();ctx.moveTo(pL,yy);ctx.lineTo(w-pR,yy);ctx.strokeStyle='rgba(42,53,80,0.4)';ctx.lineWidth=0.5;ctx.stroke();ctx.fillText('$'+g+'M',pL-8,yy+4);}
+  for(var i=0;i<3;i++){
+    var x=pL+i*gap+gap*0.25;
+    // Depreciation bar
+    var dH=(depr[i]/maxV)*cH;
+    ctx.fillStyle='rgba(0,180,216,0.7)';ctx.fillRect(x,h-pB-dH,barW*0.45,dH);
+    // Tax shield bar
+    var tH=(taxShield[i]/maxV)*cH;
+    ctx.fillStyle='rgba(118,185,0,0.7)';ctx.fillRect(x+barW*0.5,h-pB-tH,barW*0.45,tH);
+    // Labels
+    ctx.fillStyle='#e2e8f0';ctx.font='bold 11px Segoe UI';ctx.textAlign='center';
+    ctx.fillText('$'+depr[i]+'M',x+barW*0.22,h-pB-dH-8);
+    ctx.fillText('$'+taxShield[i]+'M',x+barW*0.72,h-pB-tH-8);
+    // X label
+    ctx.fillStyle='#94a3b8';ctx.font='12px Segoe UI';
+    ctx.fillText(labels[i],x+barW*0.5,h-pB+16);
+  }
+  // Legend
+  ctx.textAlign='left';ctx.font='11px Segoe UI';
+  ctx.fillStyle='rgba(0,180,216,0.7)';ctx.fillRect(pL+10,pT+5,12,12);ctx.fillStyle='#e2e8f0';ctx.fillText('Depreciation',pL+26,pT+15);
+  ctx.fillStyle='rgba(118,185,0,0.7)';ctx.fillRect(pL+120,pT+5,12,12);ctx.fillStyle='#e2e8f0';ctx.fillText('Tax Shield (30%)',pL+136,pT+15);
+  // Note
+  ctx.fillStyle='#94a3b8';ctx.font='10px Segoe UI';ctx.textAlign='center';
+  ctx.fillText('89% accelerated depreciation on GPU hardware (Year 1)',w/2,h-8);
+}
+
+function drawModelEquityCf(){
+  var s=setupCanvas('modelEquityCfChart',320);if(!s)return;var ctx=s.ctx,w=s.w,h=s.h;
+  var pL=60,pR=30,pT=40,pB=50;var cW=w-pL-pR,cH=h-pT-pB;
+  // watermark
+  ctx.save();ctx.globalAlpha=0.06;ctx.font='bold 44px Calibri';ctx.fillStyle='#f59e0b';ctx.textAlign='center';ctx.fillText('PRELIMINARY',w/2,h/2);ctx.restore();
+  // Equity waterfall: Investment → Y1 CF → Y2 CF → Y3 CF → Residual → Total Return
+  var items=[
+    {l:'Investment',v:-9.1,color:'#ef4444'},
+    {l:'Year 1 CF',v:4.13,color:'#76b900'},
+    {l:'Year 2 CF',v:2.68,color:'#76b900'},
+    {l:'Year 3 CF',v:0.89,color:'#00b4d8'},
+    {l:'Residual',v:14.2,color:'#8b5cf6'},
+    {l:'Total Return',v:12.8,color:'#76b900'}
+  ];
+  var maxV=25,minV=-12;var range=maxV-minV;
+  var barW=cW/items.length*0.6;var gap=cW/items.length;
+  var zeroY=pT+((maxV-0)/range)*cH;
+  // Zero line
+  ctx.beginPath();ctx.moveTo(pL,zeroY);ctx.lineTo(w-pR,zeroY);ctx.strokeStyle='rgba(255,255,255,0.2)';ctx.lineWidth=1;ctx.stroke();
+  // Y grid
+  ctx.font='11px Segoe UI';ctx.fillStyle='#94a3b8';ctx.textAlign='right';
+  for(var g=-10;g<=25;g+=5){var yy=pT+((maxV-g)/range)*cH;ctx.beginPath();ctx.moveTo(pL,yy);ctx.lineTo(w-pR,yy);ctx.strokeStyle='rgba(42,53,80,0.3)';ctx.lineWidth=0.5;ctx.stroke();ctx.fillText('$'+g+'M',pL-8,yy+4);}
+  // Waterfall bars
+  var running=0;
+  for(var i=0;i<items.length;i++){
+    var x=pL+i*gap+gap*0.2;
+    var val=items[i].v;
+    var startY,endY;
+    if(i===items.length-1){// total bar from 0
+      startY=zeroY;endY=pT+((maxV-val)/range)*cH;
+    } else {
+      startY=pT+((maxV-running)/range)*cH;
+      running+=val;
+      endY=pT+((maxV-running)/range)*cH;
+    }
+    ctx.fillStyle=items[i].color;ctx.globalAlpha=0.75;
+    ctx.fillRect(x,Math.min(startY,endY),barW,Math.abs(endY-startY));
+    ctx.globalAlpha=1;
+    // Connector line
+    if(i<items.length-2){
+      var nextX=pL+(i+1)*gap+gap*0.2;
+      ctx.beginPath();ctx.moveTo(x+barW,endY);ctx.lineTo(nextX,endY);ctx.strokeStyle='rgba(255,255,255,0.15)';ctx.setLineDash([3,3]);ctx.lineWidth=1;ctx.stroke();ctx.setLineDash([]);
+    }
+    // Value label
+    ctx.fillStyle='#e2e8f0';ctx.font='bold 11px Segoe UI';ctx.textAlign='center';
+    var lblY=val>=0?Math.min(startY,endY)-8:Math.max(startY,endY)+14;
+    ctx.fillText((val>=0?'+':'')+val.toFixed(1)+'M',x+barW/2,lblY);
+    // X label
+    ctx.fillStyle='#94a3b8';ctx.font='10px Segoe UI';
+    ctx.fillText(items[i].l,x+barW/2,h-pB+14);
+  }
+  // MOIC callout
+  ctx.fillStyle='#76b900';ctx.font='bold 14px Segoe UI';ctx.textAlign='center';
+  ctx.fillText('MOIC: 2.4x',w/2,pT+10);
+}
+
+function drawModelAmort(){
+  var s=setupCanvas('modelAmortChart',300);if(!s)return;var ctx=s.ctx,w=s.w,h=s.h;
+  var labels=['Q3\'26','Q4\'26','Q1\'27','Q2\'27','Q3\'27','Q4\'27','Q1\'28','Q2\'28','Q3\'28','Q4\'28','Q1\'29','Q2\'29'];
+  // GPU debt amortization (29.8M, 15%, 3yr straight-line ≈ 2.49M principal/Q)
+  // Actually monthly payment is $1,033,304. Of that, interest portion decreases.
+  // Simplified: straight-line 1/36 per month = 29.8/12Q = 2.483M per quarter principal
+  var gpuBal=[29.8,27.3,24.8,22.3,19.9,17.4,14.9,12.4,9.9,7.5,5.0,2.5];
+  // DC debt amortization (4.0M, 8%, 10yr) - very slow
+  var dcBal=[4.0,3.95,3.90,3.85,3.80,3.75,3.70,3.65,3.60,3.55,3.50,3.45];
+  var pL=60,pR=30,pT=30,pB=50;var cW=w-pL-pR,cH=h-pT-pB;
+  var maxV=36;
+  // watermark
+  ctx.save();ctx.globalAlpha=0.06;ctx.font='bold 36px Calibri';ctx.fillStyle='#f59e0b';ctx.textAlign='center';ctx.fillText('PRELIMINARY',w/2,h/2);ctx.restore();
+  // Y grid
+  ctx.font='11px Segoe UI';ctx.fillStyle='#94a3b8';ctx.textAlign='right';
+  for(var g=0;g<=35;g+=5){var yy=h-pB-(g/maxV)*cH;ctx.beginPath();ctx.moveTo(pL,yy);ctx.lineTo(w-pR,yy);ctx.strokeStyle='rgba(42,53,80,0.4)';ctx.lineWidth=0.5;ctx.stroke();ctx.fillText('$'+g+'M',pL-8,yy+4);}
+  // Stacked area: DC on bottom, GPU on top
+  // DC area
+  ctx.beginPath();ctx.moveTo(pL,h-pB);
+  for(var i=0;i<12;i++){var x=pL+(i/(11))*cW;var y=h-pB-(dcBal[i]/maxV)*cH;ctx.lineTo(x,y);}
+  ctx.lineTo(pL+cW,h-pB);ctx.closePath();ctx.fillStyle='rgba(0,180,216,0.3)';ctx.fill();
+  // GPU+DC area
+  ctx.beginPath();ctx.moveTo(pL,h-pB);
+  for(var i=0;i<12;i++){var x=pL+(i/(11))*cW;var y=h-pB-((gpuBal[i]+dcBal[i])/maxV)*cH;ctx.lineTo(x,y);}
+  ctx.lineTo(pL+cW,h-pB);ctx.closePath();ctx.fillStyle='rgba(245,158,11,0.25)';ctx.fill();
+  // GPU line
+  ctx.beginPath();ctx.strokeStyle='#f59e0b';ctx.lineWidth=2;
+  for(var i=0;i<12;i++){var x=pL+(i/(11))*cW;var y=h-pB-((gpuBal[i]+dcBal[i])/maxV)*cH;if(i===0)ctx.moveTo(x,y);else ctx.lineTo(x,y);}ctx.stroke();
+  // DC line
+  ctx.beginPath();ctx.strokeStyle='#00b4d8';ctx.lineWidth=2;
+  for(var i=0;i<12;i++){var x=pL+(i/(11))*cW;var y=h-pB-(dcBal[i]/maxV)*cH;if(i===0)ctx.moveTo(x,y);else ctx.lineTo(x,y);}ctx.stroke();
+  // End labels
+  ctx.fillStyle='#f59e0b';ctx.font='bold 10px Segoe UI';ctx.textAlign='left';
+  ctx.fillText('GPU: $'+gpuBal[11]+'M',pL+cW+5,h-pB-((gpuBal[11]+dcBal[11])/maxV)*cH);
+  ctx.fillStyle='#00b4d8';
+  ctx.fillText('DC: $'+dcBal[11]+'M',pL+cW+5,h-pB-(dcBal[11]/maxV)*cH);
+  // X labels
+  ctx.fillStyle='#94a3b8';ctx.font='10px Segoe UI';ctx.textAlign='center';
+  for(var i=0;i<labels.length;i++){var x=pL+(i/(11))*cW;ctx.fillText(labels[i],x,h-pB+16);}
+  // Legend
+  ctx.textAlign='left';ctx.font='11px Segoe UI';
+  ctx.fillStyle='rgba(245,158,11,0.5)';ctx.fillRect(pL+10,pT+5,12,12);ctx.fillStyle='#e2e8f0';ctx.fillText('GPU Debt (15%, 3yr)',pL+26,pT+15);
+  ctx.fillStyle='rgba(0,180,216,0.5)';ctx.fillRect(pL+180,pT+5,12,12);ctx.fillStyle='#e2e8f0';ctx.fillText('DC Debt (8%, 10yr)',pL+196,pT+15);
+}
+
+const sectionCharts={overview:[drawRiskHeatMap,drawRiskSensitivity,drawRiskDecay,drawRiskCashFlow],power:[drawPowerFlow,drawPowerBudget,drawEnergyMonthly,drawTariffDonut,drawEnergyStacked,drawEnergyUsd,drawEnergySavings],cooling:[],racks:[],network:[drawNetOpex2],facility:[],timeline:[drawGantt],financial:[],model:[drawModelPnl,drawModelCumCf,drawModelDscr,drawModelSens,drawModelReturns,drawModelDeprec,drawModelEquityCf,drawModelAmort],capex:[drawCapexWaterfall,drawCapexDonut],opex:[drawOpexPie,drawOpexTreemap,drawEnergyOpex,drawNetOpex],epc:[drawEpcBidCompare,drawEpcPueLoad,drawEpcBidEvo,drawEpcHvac],oem:[drawDellCost],gpuaas:[drawGpuPriceEvo,drawGpuDealVol,drawGpuTermDist,drawGpuSpread,drawGpuBuyerSupplier,drawGpuB300Rev],legal:[drawLegalOrgChart],twin:[dtStartSim]};
 
 // INIT - draw charts for the currently active section
 function drawActiveSection(){const active=document.querySelector('.nav-btn.active');if(!active)return;const sec=active.dataset.section;const fns=sectionCharts[sec];if(fns)fns.forEach(f=>f());}

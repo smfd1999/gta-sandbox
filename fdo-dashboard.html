@@ -83,6 +83,7 @@
   <button class="nav-btn" data-section="capex">CAPEX</button>
   <button class="nav-btn" data-section="opex">OPEX</button>
   <button class="nav-btn" data-section="oem">OEM</button>
+  <button class="nav-btn" data-section="gpuaas">GPUaaS</button>
   <button class="nav-btn" data-section="twin">Digital Twin</button>
 </nav>
 <div class="main">
@@ -999,6 +1000,118 @@
 
 </div>
 
+<!-- GPUaaS -->
+<div class="section" id="sec-gpuaas">
+  <div class="section-title">GPU-as-a-Service — Hydra Host / Brokkr Marketplace</div>
+
+  <!-- HYDRA HOST OVERVIEW -->
+  <div class="panel mb-24" style="border:1px solid var(--accent);background:linear-gradient(135deg,#111827 0%,#1a2235 100%)">
+    <div style="display:flex;align-items:flex-start;gap:24px;flex-wrap:wrap">
+      <div style="flex:1;min-width:320px">
+        <div style="display:flex;align-items:center;gap:12px;margin-bottom:16px">
+          <div style="width:48px;height:48px;background:var(--accent);border-radius:10px;display:flex;align-items:center;justify-content:center;font-weight:900;font-size:22px;color:#000">H</div>
+          <div><h2 style="font-size:22px;font-weight:700;color:var(--text)">Hydra Host</h2><p style="font-size:13px;color:var(--accent)">Brokkr GPU Marketplace Platform</p></div>
+        </div>
+        <p style="font-size:13px;color:var(--text2);line-height:1.7;margin-bottom:16px">
+          Hydra Host operates <strong style="color:var(--text)">Brokkr</strong>, a GPU-as-a-Service marketplace that connects data center operators with enterprise GPU demand. The platform manages <strong style="color:var(--accent)">30,000+ GPUs</strong> across <strong style="color:var(--accent)">50+ data centers</strong> globally, maintaining <strong style="color:var(--accent)">&gt;90% utilization rates</strong> through an automated matching engine that pairs workloads with optimal GPU resources.
+        </p>
+        <p style="font-size:13px;color:var(--text2);line-height:1.7;margin-bottom:16px">
+          The commission-based distribution model allows DC operators like FDO to list GPU capacity on the marketplace without managing customer acquisition. Hydra Host handles billing, SLA enforcement, and workload orchestration while operators earn revenue on deployed compute hours.
+        </p>
+        <p style="font-size:13px;color:var(--text2);line-height:1.7">
+          <strong style="color:var(--warn)">FDO Revenue Path:</strong> 576 B300 GPUs at an estimated <strong style="color:var(--accent)">$5.50/GPU/hr</strong> buyer rate (current spot market) represent potential gross revenue of <strong style="color:var(--accent)">$76K/day</strong> at full utilization. Hydra Host's historical data shows B300 commands the highest per-GPU rate in their marketplace, with only 3 spot contracts recorded to date as supply remains extremely limited.
+        </p>
+      </div>
+      <div style="flex:0 0 280px;display:flex;flex-direction:column;gap:12px">
+        <div style="background:var(--surface2);border:1px solid var(--border);border-radius:8px;padding:14px;text-align:center">
+          <div style="font-size:11px;color:var(--text2);text-transform:uppercase;letter-spacing:.5px">Total Contracts Tracked</div>
+          <div style="font-size:32px;font-weight:800;color:var(--accent);margin:4px 0">1,817</div>
+          <div style="font-size:11px;color:var(--text2)">Nov 2024 — Feb 2026</div>
+        </div>
+        <div style="background:var(--surface2);border:1px solid var(--border);border-radius:8px;padding:14px;text-align:center">
+          <div style="font-size:11px;color:var(--text2);text-transform:uppercase;letter-spacing:.5px">Platform GPUs</div>
+          <div style="font-size:32px;font-weight:800;color:var(--accent2);margin:4px 0">30,000+</div>
+          <div style="font-size:11px;color:var(--text2)">Across 50+ Data Centers</div>
+        </div>
+        <div style="background:var(--surface2);border:1px solid var(--border);border-radius:8px;padding:14px;text-align:center">
+          <div style="font-size:11px;color:var(--text2);text-transform:uppercase;letter-spacing:.5px">Avg Utilization</div>
+          <div style="font-size:32px;font-weight:800;color:var(--success);margin:4px 0">&gt;90%</div>
+          <div style="font-size:11px;color:var(--text2)">Automated Matching Engine</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- KPI ROW -->
+  <div class="kpi-row">
+    <div class="kpi-card"><div class="kpi-label">B300 Spot Rate</div><div class="kpi-value kpi-green">$5.50</div><div class="kpi-sub">/GPU/hr buyer rate</div></div>
+    <div class="kpi-card"><div class="kpi-label">B300 Spread</div><div class="kpi-value kpi-yellow">$0.74</div><div class="kpi-sub">Avg buyer-supplier spread</div></div>
+    <div class="kpi-card"><div class="kpi-label">FDO Daily Rev (est)</div><div class="kpi-value kpi-green">$76K</div><div class="kpi-sub">576 GPUs x $5.50 x 24h</div></div>
+    <div class="kpi-card"><div class="kpi-label">H100 Rate (Latest)</div><div class="kpi-value kpi-blue">$1.42</div><div class="kpi-sub">/GPU/hr — Feb 2026</div></div>
+    <div class="kpi-card"><div class="kpi-label">B200 Rate (Latest)</div><div class="kpi-value kpi-blue">$3.98</div><div class="kpi-sub">/GPU/hr — Feb 2026</div></div>
+    <div class="kpi-card"><div class="kpi-label">Spot Contracts</div><div class="kpi-value kpi-yellow">1,049</div><div class="kpi-sub">57.7% of all deals</div></div>
+  </div>
+
+  <!-- CHARTS ROW 1: Price Evolution + Deal Volume -->
+  <div class="grid-2 mb-24">
+    <div class="panel">
+      <div class="panel-title"><span class="dot dot-green"></span>GPU Price Evolution — Buyer Rate ($/GPU/hr)</div>
+      <canvas id="gpuPriceEvo" height="300"></canvas>
+    </div>
+    <div class="panel">
+      <div class="panel-title"><span class="dot dot-blue"></span>Monthly Deal Volume by GPU Type</div>
+      <canvas id="gpuDealVol" height="300"></canvas>
+    </div>
+  </div>
+
+  <!-- CHARTS ROW 2: Term Distribution + Spread Analysis -->
+  <div class="grid-2 mb-24">
+    <div class="panel">
+      <div class="panel-title"><span class="dot dot-yellow"></span>Contract Term Distribution (1,817 Deals)</div>
+      <canvas id="gpuTermDist" height="300"></canvas>
+    </div>
+    <div class="panel">
+      <div class="panel-title"><span class="dot dot-red"></span>Avg Spread by GPU Type (Buyer - Supplier)</div>
+      <canvas id="gpuSpread" height="300"></canvas>
+    </div>
+  </div>
+
+  <!-- CHARTS ROW 3: Buyer vs Supplier + B300 Projection -->
+  <div class="grid-2 mb-24">
+    <div class="panel">
+      <div class="panel-title"><span class="dot dot-green"></span>Buyer vs Supplier Rate — H100 &amp; H200</div>
+      <canvas id="gpuBuyerSupplier" height="300"></canvas>
+    </div>
+    <div class="panel">
+      <div class="panel-title"><span class="dot dot-blue"></span>FDO B300 Revenue Projection ($/month)</div>
+      <canvas id="gpuB300Rev" height="300"></canvas>
+    </div>
+  </div>
+
+  <!-- DEAL BREAKDOWN TABLE -->
+  <div class="panel mb-24">
+    <div class="panel-title"><span class="dot dot-yellow"></span>Contract Data Summary — By GPU Type</div>
+    <table class="data-table">
+      <thead><tr>
+        <th>GPU Type</th><th>Deals</th><th>% Share</th><th>Avg Buyer Rate</th><th>Avg Supplier Rate</th><th>Avg Spread</th><th>Top Term</th>
+      </tr></thead>
+      <tbody>
+        <tr><td><span class="tag tag-green">H100</span></td><td>477</td><td>26.3%</td><td>$1.97</td><td>$1.72</td><td>$0.25</td><td>Spot (60%)</td></tr>
+        <tr><td><span class="tag tag-blue">H200</span></td><td>325</td><td>17.9%</td><td>$2.32</td><td>$2.05</td><td>$0.27</td><td>Spot (55%)</td></tr>
+        <tr><td><span class="tag tag-yellow">B200</span></td><td>280</td><td>15.4%</td><td>$3.41</td><td>$3.04</td><td>$0.37</td><td>Spot (48%)</td></tr>
+        <tr><td style="color:var(--accent);font-weight:700">B300</td><td>3</td><td>0.2%</td><td>$5.50</td><td>$4.76</td><td>$0.74</td><td>Spot (100%)</td></tr>
+        <tr><td><span class="tag tag-red">4090</span></td><td>205</td><td>11.3%</td><td>$0.52</td><td>$0.42</td><td>$0.10</td><td>Spot (72%)</td></tr>
+        <tr><td>L40S</td><td>168</td><td>9.2%</td><td>$0.91</td><td>$0.74</td><td>$0.17</td><td>Spot (58%)</td></tr>
+        <tr><td>A100</td><td>152</td><td>8.4%</td><td>$1.28</td><td>$1.09</td><td>$0.19</td><td>1 Month (40%)</td></tr>
+        <tr><td>5090</td><td>87</td><td>4.8%</td><td>$0.72</td><td>$0.58</td><td>$0.14</td><td>Spot (65%)</td></tr>
+        <tr><td>Other</td><td>120</td><td>6.6%</td><td>—</td><td>—</td><td>—</td><td>Mixed</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+</div>
+
+
 <!-- DIGITAL TWIN -->
 <div class="section" id="sec-twin">
   <div class="section-title">Digital Twin — Live Facility Simulation</div>
@@ -1616,7 +1729,232 @@ function dtStartSim(){
 }
 function dtStopSim(){DT.running=false;if(dtAnimId)cancelAnimationFrame(dtAnimId);dtAnimId=null;}
 
-const sectionCharts={overview:[],power:[drawPowerFlow,drawPowerBudget,drawEnergyMonthly,drawTariffDonut,drawEnergyStacked,drawEnergyUsd,drawEnergySavings],cooling:[],racks:[],network:[drawNetOpex2],facility:[],timeline:[drawGantt],financial:[],capex:[drawCapexWaterfall,drawCapexDonut],opex:[drawOpexPie,drawOpexTreemap,drawEnergyOpex,drawNetOpex],oem:[drawDellCost],twin:[dtStartSim]};
+// ===== GPUaaS CHARTS =====
+
+function drawGpuPriceEvo(){
+  var s=setupCanvas('gpuPriceEvo',300);if(!s)return;
+  var ctx=s.ctx,w=s.w,h=s.h;
+  var months=['Nov-24','Jan-25','Feb-25','Mar-25','Apr-25','May-25','Jun-25','Jul-25','Aug-25','Sep-25','Oct-25','Nov-25','Dec-25','Jan-26','Feb-26'];
+  var h100=[null,2.34,2.36,2.14,2.41,2.12,2.41,2.48,null,1.65,null,1.21,1.36,1.46,1.42];
+  var h200=[2.60,3.09,2.98,3.04,3.00,2.78,2.46,2.58,1.83,1.86,1.74,1.60,2.04,2.11,null];
+  var b200=[null,null,null,null,null,null,null,3.59,3.50,3.65,3.50,3.00,3.02,3.01,3.98];
+  var pL=55,pR=20,pT=30,pB=55,cW=w-pL-pR,cH=h-pT-pB;
+  var minY=0.5,maxY=5.5;
+  function yScale(v){return v===null?null:pT+cH-(v-minY)/(maxY-minY)*cH;}
+  function xScale(i){return pL+i/(months.length-1)*cW;}
+
+  // grid
+  ctx.fillStyle='#0d1320';ctx.fillRect(pL,pT,cW,cH);
+  ctx.strokeStyle='#1a2235';ctx.lineWidth=1;
+  for(var v=1;v<=5;v++){var y=yScale(v);ctx.beginPath();ctx.moveTo(pL,y);ctx.lineTo(pL+cW,y);ctx.stroke();
+    ctx.fillStyle='#94a3b8';ctx.font='10px Segoe UI';ctx.textAlign='right';ctx.fillText('$'+v+'.00',pL-6,y+3);
+  }
+  // B300 reference line
+  var b300y=yScale(5.50);
+  ctx.strokeStyle='#76b90050';ctx.lineWidth=1;ctx.setLineDash([6,4]);
+  ctx.beginPath();ctx.moveTo(pL,b300y);ctx.lineTo(pL+cW,b300y);ctx.stroke();ctx.setLineDash([]);
+  ctx.fillStyle='#76b900';ctx.font='bold 10px Segoe UI';ctx.textAlign='left';ctx.fillText('B300 Spot: $5.50',pL+6,b300y-5);
+
+  function drawLine(data,color,lw){
+    ctx.strokeStyle=color;ctx.lineWidth=lw;ctx.beginPath();var started=false;
+    data.forEach(function(v,i){if(v===null)return;var x=xScale(i),y2=yScale(v);
+      if(!started){ctx.moveTo(x,y2);started=true;}else{ctx.lineTo(x,y2);}
+    });ctx.stroke();
+    data.forEach(function(v,i){if(v===null)return;var x=xScale(i),y2=yScale(v);
+      ctx.beginPath();ctx.arc(x,y2,3,0,Math.PI*2);ctx.fillStyle=color;ctx.fill();
+    });
+  }
+  drawLine(h100,'#76b900',2.5);
+  drawLine(h200,'#00b4d8',2.5);
+  drawLine(b200,'#f59e0b',2.5);
+
+  ctx.fillStyle='#94a3b8';ctx.font='9px Segoe UI';ctx.textAlign='center';
+  months.forEach(function(m,i){if(i%2===0||i===months.length-1){ctx.save();ctx.translate(xScale(i),h-pB+14);ctx.rotate(-0.4);ctx.fillText(m,0,0);ctx.restore();}});
+
+  var lx=pL+10,ly=pT+10;
+  [{c:'#76b900',l:'H100'},{c:'#00b4d8',l:'H200'},{c:'#f59e0b',l:'B200'}].forEach(function(item,i){
+    ctx.fillStyle=item.c;ctx.fillRect(lx+i*70,ly,12,3);
+    ctx.fillStyle='#e2e8f0';ctx.font='10px Segoe UI';ctx.textAlign='left';ctx.fillText(item.l,lx+i*70+16,ly+4);
+  });
+}
+
+function drawGpuDealVol(){
+  var s=setupCanvas('gpuDealVol',300);if(!s)return;
+  var ctx=s.ctx,w=s.w,h=s.h;
+  var months=['Nov-24','Jan-25','Feb-25','Mar-25','Apr-25','May-25','Jun-25','Jul-25','Aug-25','Sep-25','Oct-25','Nov-25','Dec-25','Jan-26','Feb-26'];
+  var h100d=[0,27,55,30,45,44,64,30,0,5,0,15,17,12,3];
+  var h200d=[1,18,29,27,24,31,35,36,18,7,2,1,4,2,0];
+  var b200d=[0,0,0,0,0,0,0,3,6,10,28,48,55,31,13];
+  var otherd=[0,5,8,12,10,15,18,22,14,20,25,30,28,18,10];
+  var pL=50,pR=20,pT=25,pB=55,cW=w-pL-pR,cH=h-pT-pB;
+  var maxStack=0;
+  for(var i=0;i<months.length;i++){var t=h100d[i]+h200d[i]+b200d[i]+otherd[i];if(t>maxStack)maxStack=t;}
+  var barW=cW/months.length*0.7;
+
+  ctx.fillStyle='#0d1320';ctx.fillRect(pL,pT,cW,cH);
+  ctx.strokeStyle='#1a2235';ctx.lineWidth=1;
+  for(var g=0;g<=4;g++){var gy=pT+cH/4*g;ctx.beginPath();ctx.moveTo(pL,gy);ctx.lineTo(pL+cW,gy);ctx.stroke();
+    ctx.fillStyle='#94a3b8';ctx.font='10px Segoe UI';ctx.textAlign='right';ctx.fillText(Math.round(maxStack*(4-g)/4),pL-6,gy+3);
+  }
+
+  var colors=['#76b900','#00b4d8','#f59e0b','#64748b'];
+  for(var mi=0;mi<months.length;mi++){
+    var x=pL+mi/months.length*cW+cW/months.length*0.15;
+    var vals=[h100d[mi],h200d[mi],b200d[mi],otherd[mi]];
+    var cy=pT+cH;
+    for(var j=0;j<vals.length;j++){
+      var bh=vals[j]/maxStack*cH;
+      ctx.fillStyle=colors[j];ctx.fillRect(x,cy-bh,barW,bh);
+      cy-=bh;
+    }
+  }
+
+  ctx.fillStyle='#94a3b8';ctx.font='9px Segoe UI';ctx.textAlign='center';
+  months.forEach(function(m,i){if(i%2===0||i===months.length-1){var xp=pL+i/months.length*cW+cW/months.length*0.5;ctx.save();ctx.translate(xp,h-pB+14);ctx.rotate(-0.4);ctx.fillText(m,0,0);ctx.restore();}});
+
+  var lx=pL+10,ly=pT+8;
+  [{c:'#76b900',l:'H100'},{c:'#00b4d8',l:'H200'},{c:'#f59e0b',l:'B200'},{c:'#64748b',l:'Other'}].forEach(function(item,i){
+    ctx.fillStyle=item.c;ctx.fillRect(lx+i*65,ly,10,3);
+    ctx.fillStyle='#e2e8f0';ctx.font='10px Segoe UI';ctx.textAlign='left';ctx.fillText(item.l,lx+i*65+14,ly+4);
+  });
+}
+
+function drawGpuTermDist(){
+  var labels=['Spot','1 Month','12 Month','3 Month','Misc','NA','6 Month','24 Month','9 Month','Other'];
+  var values=[1049,167,102,83,158,176,45,10,8,19];
+  var colors=['#76b900','#00b4d8','#f59e0b','#ef4444','#8b5cf6','#64748b','#06b6d4','#ec4899','#14b8a6','#a3a3a3'];
+  drawDonut('gpuTermDist',labels,values,colors,'1,817','Total');
+}
+
+function drawGpuSpread(){
+  var s=setupCanvas('gpuSpread',300);if(!s)return;
+  var ctx=s.ctx,w=s.w,h=s.h;
+  var data=[
+    {gpu:'B300',buyer:5.50,supplier:4.76,spread:0.74,color:'#76b900'},
+    {gpu:'B200',buyer:3.41,supplier:3.04,spread:0.37,color:'#f59e0b'},
+    {gpu:'H200',buyer:2.32,supplier:2.05,spread:0.27,color:'#00b4d8'},
+    {gpu:'H100',buyer:1.97,supplier:1.72,spread:0.25,color:'#22c55e'},
+    {gpu:'A100',buyer:1.28,supplier:1.09,spread:0.19,color:'#8b5cf6'},
+    {gpu:'L40S',buyer:0.91,supplier:0.74,spread:0.17,color:'#06b6d4'},
+    {gpu:'5090',buyer:0.72,supplier:0.58,spread:0.14,color:'#ec4899'},
+    {gpu:'4090',buyer:0.52,supplier:0.42,spread:0.10,color:'#ef4444'}
+  ];
+  var pL=55,pR=30,pT=25,pB=30,cW=w-pL-pR,cH=h-pT-pB;
+  var barH=cH/data.length*0.7;
+  var gap=cH/data.length*0.3;
+  var maxV=6;
+
+  ctx.fillStyle='#0d1320';ctx.fillRect(pL,pT,cW,cH);
+  ctx.strokeStyle='#1a2235';ctx.lineWidth=1;
+  for(var v=1;v<=6;v++){var x=pL+v/maxV*cW;ctx.beginPath();ctx.moveTo(x,pT);ctx.lineTo(x,pT+cH);ctx.stroke();
+    ctx.fillStyle='#94a3b8';ctx.font='9px Segoe UI';ctx.textAlign='center';ctx.fillText('$'+v,x,h-pB+12);
+  }
+
+  data.forEach(function(d,i){
+    var y=pT+i*(barH+gap)+gap/2;
+    var bW=d.buyer/maxV*cW;
+    ctx.fillStyle=d.color+'40';ctx.fillRect(pL,y,bW,barH);
+    var sW=d.spread/maxV*cW;
+    ctx.fillStyle=d.color;ctx.fillRect(pL+bW-sW,y,sW,barH);
+    ctx.fillStyle='#94a3b8';ctx.font='11px Segoe UI';ctx.textAlign='right';ctx.fillText(d.gpu,pL-6,y+barH/2+4);
+    ctx.fillStyle='#e2e8f0';ctx.font='bold 10px Segoe UI';ctx.textAlign='left';
+    ctx.fillText('$'+d.buyer.toFixed(2)+' (spread: $'+d.spread.toFixed(2)+')',pL+bW+6,y+barH/2+4);
+  });
+}
+
+function drawGpuBuyerSupplier(){
+  var s=setupCanvas('gpuBuyerSupplier',300);if(!s)return;
+  var ctx=s.ctx,w=s.w,h=s.h;
+  var months=['Jan-25','Feb-25','Mar-25','Apr-25','May-25','Jun-25','Jul-25','Sep-25','Nov-25','Dec-25','Jan-26','Feb-26'];
+  var h100b=[2.34,2.36,2.14,2.41,2.12,2.41,2.48,1.65,1.21,1.36,1.46,1.42];
+  var h100s=[2.16,2.13,2.04,2.14,1.83,2.13,2.26,1.50,1.04,1.18,1.26,1.25];
+  var h200b=[3.09,2.98,3.04,3.00,2.78,2.46,2.58,1.86,1.60,2.04,2.11,null];
+  var h200s=[2.70,2.63,2.71,2.65,2.38,2.20,2.30,1.62,1.38,1.72,1.82,null];
+
+  var pL=55,pR=20,pT=30,pB=55,cW=w-pL-pR,cH=h-pT-pB;
+  var minY=0.5,maxY=3.5;
+  function yScale(v){return v===null?null:pT+cH-(v-minY)/(maxY-minY)*cH;}
+  function xScale(i){return pL+i/(months.length-1)*cW;}
+
+  ctx.fillStyle='#0d1320';ctx.fillRect(pL,pT,cW,cH);
+  ctx.strokeStyle='#1a2235';ctx.lineWidth=1;
+  for(var v=1;v<=3;v++){var y=yScale(v);ctx.beginPath();ctx.moveTo(pL,y);ctx.lineTo(pL+cW,y);ctx.stroke();
+    ctx.fillStyle='#94a3b8';ctx.font='10px Segoe UI';ctx.textAlign='right';ctx.fillText('$'+v+'.00',pL-6,y+3);
+  }
+
+  function drawPair(buyer,supplier,cBuy,cSup){
+    ctx.beginPath();var started=false;
+    buyer.forEach(function(v,i){if(v===null||supplier[i]===null)return;var x=xScale(i),y2=yScale(v);if(!started){ctx.moveTo(x,y2);started=true;}else ctx.lineTo(x,y2);});
+    for(var i2=buyer.length-1;i2>=0;i2--){if(buyer[i2]===null||supplier[i2]===null)continue;ctx.lineTo(xScale(i2),yScale(supplier[i2]));}
+    ctx.closePath();ctx.fillStyle=cBuy+'15';ctx.fill();
+    ctx.strokeStyle=cBuy;ctx.lineWidth=2;ctx.beginPath();started=false;
+    buyer.forEach(function(v,i){if(v===null)return;var x=xScale(i),y2=yScale(v);if(!started){ctx.moveTo(x,y2);started=true;}else ctx.lineTo(x,y2);});ctx.stroke();
+    ctx.strokeStyle=cSup;ctx.lineWidth=1.5;ctx.setLineDash([4,3]);ctx.beginPath();started=false;
+    supplier.forEach(function(v,i){if(v===null)return;var x=xScale(i),y2=yScale(v);if(!started){ctx.moveTo(x,y2);started=true;}else ctx.lineTo(x,y2);});ctx.stroke();ctx.setLineDash([]);
+  }
+  drawPair(h100b,h100s,'#76b900','#76b900');
+  drawPair(h200b,h200s,'#00b4d8','#00b4d8');
+
+  ctx.fillStyle='#94a3b8';ctx.font='9px Segoe UI';ctx.textAlign='center';
+  months.forEach(function(m,i){if(i%2===0||i===months.length-1){ctx.save();ctx.translate(xScale(i),h-pB+14);ctx.rotate(-0.4);ctx.fillText(m,0,0);ctx.restore();}});
+
+  var lx=pL+8,ly=pT+8;
+  var items=[{c:'#76b900',l:'H100 Buyer',d:false},{c:'#76b900',l:'H100 Supplier',d:true},{c:'#00b4d8',l:'H200 Buyer',d:false},{c:'#00b4d8',l:'H200 Supplier',d:true}];
+  items.forEach(function(item,i){
+    ctx.strokeStyle=item.c;ctx.lineWidth=item.d?1.5:2;if(item.d)ctx.setLineDash([4,3]);else ctx.setLineDash([]);
+    ctx.beginPath();ctx.moveTo(lx+i*100,ly);ctx.lineTo(lx+i*100+14,ly);ctx.stroke();ctx.setLineDash([]);
+    ctx.fillStyle='#e2e8f0';ctx.font='9px Segoe UI';ctx.textAlign='left';ctx.fillText(item.l,lx+i*100+18,ly+3);
+  });
+}
+
+function drawGpuB300Rev(){
+  var s=setupCanvas('gpuB300Rev',300);if(!s)return;
+  var ctx=s.ctx,w=s.w,h=s.h;
+  var scenarios=[
+    {label:'Bull ($5.50, 95%)',rate:5.50,util:0.95,color:'#76b900'},
+    {label:'Base ($4.50, 90%)',rate:4.50,util:0.90,color:'#00b4d8'},
+    {label:'Bear ($3.50, 80%)',rate:3.50,util:0.80,color:'#f59e0b'}
+  ];
+  var gpus=576;
+  var monthLabels=['M1','M2','M3','M4','M5','M6','M7','M8','M9','M10','M11','M12'];
+  var pL=65,pR=25,pT=30,pB=45,cW=w-pL-pR,cH=h-pT-pB;
+  var maxRev=scenarios[0].rate*gpus*24*30*scenarios[0].util;
+
+  ctx.fillStyle='#0d1320';ctx.fillRect(pL,pT,cW,cH);
+  ctx.strokeStyle='#1a2235';ctx.lineWidth=1;
+  var gridSteps=[500000,1000000,1500000,2000000];
+  gridSteps.forEach(function(v){
+    var y=pT+cH-v/maxRev*cH;if(y<pT)return;
+    ctx.beginPath();ctx.moveTo(pL,y);ctx.lineTo(pL+cW,y);ctx.stroke();
+    ctx.fillStyle='#94a3b8';ctx.font='10px Segoe UI';ctx.textAlign='right';
+    ctx.fillText('$'+(v/1e6).toFixed(1)+'M',pL-6,y+3);
+  });
+
+  scenarios.forEach(function(sc){
+    var monthlyRev=sc.rate*gpus*24*30*sc.util;
+    ctx.strokeStyle=sc.color;ctx.lineWidth=2.5;ctx.beginPath();
+    monthLabels.forEach(function(_,i){
+      var x=pL+i/(monthLabels.length-1)*cW;
+      var ramp=i===0?0.6:i===1?0.8:i===2?0.9:1;
+      var y=pT+cH-monthlyRev*ramp/maxRev*cH;
+      i===0?ctx.moveTo(x,y):ctx.lineTo(x,y);
+    });ctx.stroke();
+    var ex=pL+cW+4;var ey=pT+cH-monthlyRev/maxRev*cH;
+    ctx.fillStyle=sc.color;ctx.font='bold 9px Segoe UI';ctx.textAlign='left';
+    ctx.fillText('$'+(monthlyRev/1e6).toFixed(1)+'M/mo',ex,ey+3);
+  });
+
+  ctx.fillStyle='#94a3b8';ctx.font='10px Segoe UI';ctx.textAlign='center';
+  monthLabels.forEach(function(m,i){ctx.fillText(m,pL+i/(monthLabels.length-1)*cW,h-pB+14);});
+
+  var lx=pL+10,ly=pT+8;
+  scenarios.forEach(function(sc,i){
+    ctx.fillStyle=sc.color;ctx.fillRect(lx+i*145,ly,12,3);
+    ctx.fillStyle='#e2e8f0';ctx.font='10px Segoe UI';ctx.textAlign='left';ctx.fillText(sc.label,lx+i*145+16,ly+4);
+  });
+}
+
+const sectionCharts={overview:[],power:[drawPowerFlow,drawPowerBudget,drawEnergyMonthly,drawTariffDonut,drawEnergyStacked,drawEnergyUsd,drawEnergySavings],cooling:[],racks:[],network:[drawNetOpex2],facility:[],timeline:[drawGantt],financial:[],capex:[drawCapexWaterfall,drawCapexDonut],opex:[drawOpexPie,drawOpexTreemap,drawEnergyOpex,drawNetOpex],oem:[drawDellCost],gpuaas:[drawGpuPriceEvo,drawGpuDealVol,drawGpuTermDist,drawGpuSpread,drawGpuBuyerSupplier,drawGpuB300Rev],twin:[dtStartSim]};
 
 // INIT - draw charts for the currently active section
 function drawActiveSection(){const active=document.querySelector('.nav-btn.active');if(!active)return;const sec=active.dataset.section;const fns=sectionCharts[sec];if(fns)fns.forEach(f=>f());}

@@ -232,6 +232,66 @@
   </div>
 
   <div class="panel mb-24"><div class="panel-title"><span class="dot dot-yellow"></span> System Summary</div><div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:16px"><div><h4 style="font-size:13px;color:var(--warn);margin-bottom:8px">Electrical</h4><ul class="info-list"><li><span class="il-label">Utility Feed</span><span class="il-value">CFE 23kV</span></li><li><span class="il-label">Transformer</span><span class="il-value">2 MVA dry (23kV/480V)</span></li><li><span class="il-label">Generators</span><span class="il-value">3x 800kW diesel (N+1)</span></li><li><span class="il-label">UPS</span><span class="il-value">2x 1,250 kVA Li-ion (N+1)</span></li><li><span class="il-label">UPS Autonomy</span><span class="il-value">10 minutes</span></li><li><span class="il-label">PDUs</span><span class="il-value">4 units</span></li></ul></div><div><h4 style="font-size:13px;color:var(--accent2);margin-bottom:8px">Cooling</h4><ul class="info-list"><li><span class="il-label">Chillers</span><span class="il-value">2x Schneider 134.4 TR (N+1)</span></li><li><span class="il-label">CRAC Units</span><span class="il-value">4x 3T</span></li><li><span class="il-label">Cooling Type</span><span class="il-value">Chilled water, closed-loop</span></li><li><span class="il-label">Water Flow/Cab</span><span class="il-value">36.4 GPM</span></li><li><span class="il-label">Noise Target</span><span class="il-value">60 dB (ultra quiet)</span></li></ul></div><div><h4 style="font-size:13px;color:var(--accent);margin-bottom:8px">IT Load</h4><ul class="info-list"><li><span class="il-label">Cabinets</span><span class="il-value">17x DDC S-Series v4</span></li><li><span class="il-label">GPU Nodes</span><span class="il-value">72 (14 cabs x 5 + 1 cab x 2)</span></li><li><span class="il-label">GPUs Total</span><span class="il-value">576x NVIDIA B300 (8/node)</span></li><li><span class="il-label">Per-Cabinet Load</span><span class="il-value">~68.7 kW (57.9 IT + 10.8 HVAC)</span></li><li><span class="il-label">Cabinet Rating</span><span class="il-value">50-85 kW</span></li></ul></div></div></div>
+
+  <!-- RISK MATRIX & SENSITIVITY ANALYSIS -->
+  <div class="section-title" style="margin-top:24px">Risk Matrix &amp; Sensitivity Analysis</div>
+
+  <!-- Risk KPIs -->
+  <div class="kpi-row">
+    <div class="kpi-card"><div class="kpi-label">Key Risks Tracked</div><div class="kpi-value kpi-red">12</div><div class="kpi-sub">3 high, 5 medium, 4 low</div></div>
+    <div class="kpi-card"><div class="kpi-label">Breakeven Util.</div><div class="kpi-value kpi-yellow">38%</div><div class="kpi-sub">At $5.50/GPU/hr spot rate</div></div>
+    <div class="kpi-card"><div class="kpi-label">Breakeven Rate</div><div class="kpi-value kpi-yellow">$1.06</div><div class="kpi-sub">/GPU/hr at 90% utilization</div></div>
+    <div class="kpi-card"><div class="kpi-label">Monthly Burn</div><div class="kpi-value kpi-red">$1.2M</div><div class="kpi-sub">Debt service + OPEX (zero rev)</div></div>
+  </div>
+
+  <!-- Risk Heat Map + Sensitivity Chart -->
+  <div class="grid-2 mb-24">
+    <div class="panel">
+      <div class="panel-title"><span class="dot dot-red"></span> Risk Heat Map — Probability vs Impact</div>
+      <canvas id="riskHeatMap" height="380"></canvas>
+    </div>
+    <div class="panel">
+      <div class="panel-title"><span class="dot dot-yellow"></span> Revenue Sensitivity — Rate vs Utilization</div>
+      <canvas id="riskSensitivity" height="380"></canvas>
+    </div>
+  </div>
+
+  <!-- GPU Price Decay Scenario -->
+  <div class="grid-2 mb-24">
+    <div class="panel">
+      <div class="panel-title"><span class="dot dot-blue"></span> B300 Price Decay Scenario (based on H100 trajectory)</div>
+      <canvas id="riskDecay" height="320"></canvas>
+    </div>
+    <div class="panel">
+      <div class="panel-title"><span class="dot dot-green"></span> Cumulative Cash Flow — Bull / Base / Bear</div>
+      <canvas id="riskCashFlow" height="320"></canvas>
+    </div>
+  </div>
+
+  <!-- Risk Register Table -->
+  <div class="panel mb-24">
+    <div class="panel-title"><span class="dot dot-red"></span> Risk Register</div>
+    <table class="data-table">
+      <thead><tr>
+        <th>Risk</th><th>Category</th><th>Probability</th><th>Impact</th><th>Severity</th><th>Mitigation</th>
+      </tr></thead>
+      <tbody>
+        <tr><td style="font-weight:600">GPU price decay</td><td>Market</td><td><span class="tag tag-red">High</span></td><td><span class="tag tag-red">High</span></td><td style="color:var(--danger);font-weight:700">Critical</td><td>Brokkr long-term contracts, diversified GPU mix in expansion, hedged revenue via PPA-style deals</td></tr>
+        <tr><td style="font-weight:600">Construction delay</td><td>Execution</td><td><span class="tag tag-yellow">Medium</span></td><td><span class="tag tag-red">High</span></td><td style="color:var(--danger);font-weight:700">High</td><td>Fixed-price EPC with ATN, weekly milestone tracking, pre-ordered long-lead equipment</td></tr>
+        <tr><td style="font-weight:600">CFE supply interruption</td><td>Infrastructure</td><td><span class="tag tag-yellow">Medium</span></td><td><span class="tag tag-red">High</span></td><td style="color:var(--danger);font-weight:700">High</td><td>3x 800kW diesel generators (N+1), 10-min UPS bridge, ATS auto-transfer &lt;10s</td></tr>
+        <tr><td style="font-weight:600">Equity gap not closed</td><td>Financial</td><td><span class="tag tag-yellow">Medium</span></td><td><span class="tag tag-yellow">Medium</span></td><td style="color:var(--warn);font-weight:700">Medium</td><td>Multiple prospects (Olayan, ERA, Sourofim, Macquarie), bridge financing in place via Metaversal</td></tr>
+        <tr><td style="font-weight:600">MXN/USD volatility</td><td>Financial</td><td><span class="tag tag-yellow">Medium</span></td><td><span class="tag tag-yellow">Medium</span></td><td style="color:var(--warn);font-weight:700">Medium</td><td>Dollarized revenue via Brokkr, USD-denominated debt (USD.AI), natural hedge on energy (MXN costs vs USD revenue)</td></tr>
+        <tr><td style="font-weight:600">Low initial utilization</td><td>Market</td><td><span class="tag tag-yellow">Medium</span></td><td><span class="tag tag-yellow">Medium</span></td><td style="color:var(--warn);font-weight:700">Medium</td><td>Brokkr pre-connected demand, &gt;90% platform utilization history, B300 scarcity drives demand</td></tr>
+        <tr><td style="font-weight:600">Interest rate increase</td><td>Financial</td><td><span class="tag tag-green">Low</span></td><td><span class="tag tag-yellow">Medium</span></td><td style="color:var(--warn);font-weight:700">Medium</td><td>Fixed-rate GPU debt (15%), DC debt (8%), bridge at 10% — all locked terms</td></tr>
+        <tr><td style="font-weight:600">Cooling system failure</td><td>Technical</td><td><span class="tag tag-green">Low</span></td><td><span class="tag tag-red">High</span></td><td style="color:var(--warn);font-weight:700">Medium</td><td>N+1 chiller redundancy, DDC DCIM real-time monitoring, ASHRAE A1 compliance</td></tr>
+        <tr><td style="font-weight:600">Regulatory change</td><td>Political</td><td><span class="tag tag-green">Low</span></td><td><span class="tag tag-yellow">Medium</span></td><td style="color:var(--accent2);font-weight:700">Low</td><td>SEDECO backing, Plan Mexico alignment, NVIDIA Sovereign AI enrollment</td></tr>
+        <tr><td style="font-weight:600">Seismic event (Zone D)</td><td>Environmental</td><td><span class="tag tag-green">Low</span></td><td><span class="tag tag-yellow">Medium</span></td><td style="color:var(--accent2);font-weight:700">Low</td><td>Seismic Zone D design standards, DDC NEMA 3R cabinets, structural engineering by BCYSA</td></tr>
+        <tr><td style="font-weight:600">Cybersecurity breach</td><td>Technical</td><td><span class="tag tag-green">Low</span></td><td><span class="tag tag-yellow">Medium</span></td><td style="color:var(--accent2);font-weight:700">Low</td><td>Hydra Edge Routers with DDoS protection, network segmentation, NOC 24/7 monitoring</td></tr>
+        <tr><td style="font-weight:600">Key person dependency</td><td>Organizational</td><td><span class="tag tag-green">Low</span></td><td><span class="tag tag-green">Low</span></td><td style="color:var(--accent2);font-weight:700">Low</td><td>Fermaca Dreams Group 60+ yr track record, institutional operations, ATN/BCYSA external partners</td></tr>
+      </tbody>
+    </table>
+  </div>
+
 </div>
 
 <!-- POWER & ENERGY (merged) -->
@@ -1743,6 +1803,273 @@ function dtStartSim(){
 }
 function dtStopSim(){DT.running=false;if(dtAnimId)cancelAnimationFrame(dtAnimId);dtAnimId=null;}
 
+// ===== RISK & SENSITIVITY CHARTS =====
+
+function drawRiskHeatMap(){
+  var s=setupCanvas('riskHeatMap',380);if(!s)return;
+  var ctx=s.ctx,w=s.w,h=s.h;
+  var pL=70,pR=20,pT=20,pB=50,cW=w-pL-pR,cH=h-pT-pB;
+  // 3x3 grid background
+  var cellW=cW/3,cellH=cH/3;
+  var bgColors=[
+    ['#f59e0b30','#ef444440','#ef444470'],
+    ['#22c55e30','#f59e0b30','#ef444440'],
+    ['#22c55e20','#22c55e30','#f59e0b30']
+  ];
+  for(var r=0;r<3;r++)for(var c=0;c<3;c++){
+    ctx.fillStyle=bgColors[r][c];ctx.fillRect(pL+c*cellW,pT+r*cellH,cellW,cellH);
+    ctx.strokeStyle='#2a3550';ctx.lineWidth=1;ctx.strokeRect(pL+c*cellW,pT+r*cellH,cellW,cellH);
+  }
+  // axis labels
+  ctx.fillStyle='#94a3b8';ctx.font='10px Segoe UI';ctx.textAlign='center';
+  var xLabels=['Low','Medium','High'];
+  xLabels.forEach(function(l,i){ctx.fillText(l,pL+i*cellW+cellW/2,h-pB+16);});
+  ctx.fillText('Impact',pL+cW/2,h-pB+32);
+  ctx.save();ctx.translate(16,pT+cH/2);ctx.rotate(-Math.PI/2);ctx.fillText('Probability',0,0);ctx.restore();
+  var yLabels=['High','Medium','Low'];
+  yLabels.forEach(function(l,i){ctx.fillStyle='#94a3b8';ctx.font='10px Segoe UI';ctx.textAlign='right';ctx.fillText(l,pL-8,pT+i*cellH+cellH/2+4);});
+
+  // risks as dots: [impact 0-2, prob 0-2 (0=high), label, color]
+  var risks=[
+    [2,0,'GPU Price Decay','#ef4444'],
+    [2,1,'Construction Delay','#ef4444'],
+    [2,1,'CFE Supply','#f59e0b'],
+    [1,1,'Equity Gap','#f59e0b'],
+    [1,1,'FX Volatility','#f59e0b'],
+    [1,1,'Low Utilization','#f59e0b'],
+    [1,2,'Interest Rate','#22c55e'],
+    [2,2,'Cooling Failure','#f59e0b'],
+    [1,2,'Regulatory','#00b4d8'],
+    [1,2,'Seismic Event','#00b4d8'],
+    [1,2,'Cybersecurity','#00b4d8'],
+    [0,2,'Key Person','#22c55e']
+  ];
+  // scatter with jitter to avoid overlap
+  risks.forEach(function(rk,idx){
+    var cx2=pL+rk[0]*cellW+cellW/2+((idx%3)-1)*18;
+    var cy2=pT+rk[1]*cellH+cellH/2+((idx%4)-1.5)*12;
+    ctx.beginPath();ctx.arc(cx2,cy2,8,0,Math.PI*2);ctx.fillStyle=rk[3];ctx.fill();
+    ctx.strokeStyle='#0a0e17';ctx.lineWidth=2;ctx.stroke();
+    ctx.fillStyle='#e2e8f0';ctx.font='bold 9px Segoe UI';ctx.textAlign='center';
+    ctx.fillText(rk[2],cx2,cy2+20);
+  });
+}
+
+function drawRiskSensitivity(){
+  var s=setupCanvas('riskSensitivity',380);if(!s)return;
+  var ctx=s.ctx,w=s.w,h=s.h;
+  var pL=60,pR=20,pT=30,pB=50,cW=w-pL-pR,cH=h-pT-pB;
+  // X axis: rate ($1-$6), Y axis: utilization (40%-100%)
+  // contour: monthly net income = (rate * 576 * 24 * 30 * util) - $1.2M (OPEX+debt)
+  var monthlyFixed=1200000;
+  var minRate=1,maxRate=6,minUtil=0.3,maxUtil=1.0;
+  var cols=40,rows=30;
+  var dw=cW/cols,dh=cH/rows;
+  for(var ri=0;ri<rows;ri++){
+    for(var ci=0;ci<cols;ci++){
+      var rate=minRate+(ci/cols)*(maxRate-minRate);
+      var util=maxUtil-(ri/rows)*(maxUtil-minUtil);
+      var rev=rate*576*24*30*util;
+      var net=rev-monthlyFixed;
+      var color;
+      if(net>2000000)color='#76b90060';
+      else if(net>1000000)color='#76b90040';
+      else if(net>500000)color='#22c55e30';
+      else if(net>0)color='#f59e0b25';
+      else if(net>-500000)color='#ef444425';
+      else color='#ef444445';
+      ctx.fillStyle=color;ctx.fillRect(pL+ci*dw,pT+ri*dh,dw+1,dh+1);
+    }
+  }
+  // breakeven line
+  ctx.strokeStyle='#e2e8f0';ctx.lineWidth=2;ctx.setLineDash([6,3]);ctx.beginPath();
+  for(var ci2=0;ci2<cols;ci2++){
+    var rate2=minRate+(ci2/cols)*(maxRate-minRate);
+    var beUtil=monthlyFixed/(rate2*576*24*30);
+    if(beUtil>maxUtil||beUtil<minUtil)continue;
+    var x=pL+ci2*dw;var y=pT+cH-(beUtil-minUtil)/(maxUtil-minUtil)*cH;
+    ci2===0?ctx.moveTo(x,y):ctx.lineTo(x,y);
+  }
+  ctx.stroke();ctx.setLineDash([]);
+  ctx.fillStyle='#e2e8f0';ctx.font='bold 10px Segoe UI';ctx.textAlign='left';
+  ctx.fillText('Breakeven',pL+cW*0.65,pT+cH*0.72);
+  // FDO marker
+  var fdoX=pL+((5.50-minRate)/(maxRate-minRate))*cW;
+  var fdoY=pT+cH-((0.90-minUtil)/(maxUtil-minUtil))*cH;
+  ctx.beginPath();ctx.arc(fdoX,fdoY,7,0,Math.PI*2);ctx.fillStyle='#76b900';ctx.fill();
+  ctx.strokeStyle='#fff';ctx.lineWidth=2;ctx.stroke();
+  ctx.fillStyle='#76b900';ctx.font='bold 10px Segoe UI';ctx.textAlign='left';
+  ctx.fillText('FDO Base',fdoX+12,fdoY+4);
+  // bear marker
+  var bearX=pL+((3.50-minRate)/(maxRate-minRate))*cW;
+  var bearY=pT+cH-((0.80-minUtil)/(maxUtil-minUtil))*cH;
+  ctx.beginPath();ctx.arc(bearX,bearY,6,0,Math.PI*2);ctx.fillStyle='#f59e0b';ctx.fill();
+  ctx.strokeStyle='#fff';ctx.lineWidth=2;ctx.stroke();
+  ctx.fillStyle='#f59e0b';ctx.font='bold 10px Segoe UI';ctx.textAlign='left';
+  ctx.fillText('Bear',bearX+12,bearY+4);
+  // axes
+  ctx.fillStyle='#94a3b8';ctx.font='10px Segoe UI';ctx.textAlign='center';
+  for(var v=1;v<=6;v++){var ax=pL+((v-minRate)/(maxRate-minRate))*cW;ctx.fillText('$'+v,ax,h-pB+16);}
+  ctx.fillText('GPU Rate ($/hr)',pL+cW/2,h-pB+34);
+  ctx.textAlign='right';
+  for(var u=40;u<=100;u+=20){var ay=pT+cH-((u/100-minUtil)/(maxUtil-minUtil))*cH;ctx.fillText(u+'%',pL-8,ay+4);}
+  ctx.save();ctx.translate(14,pT+cH/2);ctx.rotate(-Math.PI/2);ctx.textAlign='center';ctx.fillText('Utilization',0,0);ctx.restore();
+  // legend
+  var lx=pL+8,ly=pT+6;
+  [{c:'#76b90060',l:'Net >$2M/mo'},{c:'#76b90040',l:'>$1M'},{c:'#22c55e30',l:'>$500K'},{c:'#f59e0b25',l:'Marginal'},{c:'#ef444445',l:'Loss'}].forEach(function(item,i){
+    ctx.fillStyle=item.c;ctx.fillRect(lx+i*80,ly,10,10);
+    ctx.fillStyle='#e2e8f0';ctx.font='9px Segoe UI';ctx.textAlign='left';ctx.fillText(item.l,lx+i*80+14,ly+9);
+  });
+}
+
+function drawRiskDecay(){
+  var s=setupCanvas('riskDecay',320);if(!s)return;
+  var ctx=s.ctx,w=s.w,h=s.h;
+  var pL=55,pR=20,pT=30,pB=50,cW=w-pL-pR,cH=h-pT-pB;
+  // H100 actual trajectory (normalized): started ~$2.34 Jan-25, now $1.42 Feb-26 = -39% in 13 months
+  // B300 projection: start $5.50 at COD (month 0 = Jul 2026), apply same decay pattern
+  var months=['Jul-26','Oct-26','Jan-27','Apr-27','Jul-27','Oct-27','Jan-28','Apr-28'];
+  // H100 decay pattern: month multipliers from peak (relative decline)
+  var h100decay=[1.00,0.89,0.83,0.71,0.68,0.61,0.52,0.58]; // actual H100 from Jan-25
+  // B300 scenarios
+  var b300start=5.50;
+  var scen=[
+    {label:'Optimistic (slower decay)',mult:[1.00,0.95,0.90,0.85,0.82,0.78,0.74,0.72],color:'#76b900'},
+    {label:'H100-mirrored decay',mult:h100decay,color:'#f59e0b'},
+    {label:'Aggressive decay',mult:[1.00,0.85,0.72,0.60,0.52,0.45,0.40,0.38],color:'#ef4444'}
+  ];
+  var minY=0,maxY=6;
+  function yScale(v){return pT+cH-(v-minY)/(maxY-minY)*cH;}
+  function xScale(i){return pL+i/(months.length-1)*cW;}
+
+  ctx.fillStyle='#0d1320';ctx.fillRect(pL,pT,cW,cH);
+  ctx.strokeStyle='#1a2235';ctx.lineWidth=1;
+  for(var v=1;v<=6;v++){var y=yScale(v);ctx.beginPath();ctx.moveTo(pL,y);ctx.lineTo(pL+cW,y);ctx.stroke();
+    ctx.fillStyle='#94a3b8';ctx.font='10px Segoe UI';ctx.textAlign='right';ctx.fillText('$'+v,pL-6,y+3);
+  }
+  // breakeven line at $1.06
+  var beY=yScale(1.06);
+  ctx.strokeStyle='#ef444460';ctx.lineWidth=1;ctx.setLineDash([4,4]);
+  ctx.beginPath();ctx.moveTo(pL,beY);ctx.lineTo(pL+cW,beY);ctx.stroke();ctx.setLineDash([]);
+  ctx.fillStyle='#ef4444';ctx.font='9px Segoe UI';ctx.textAlign='left';ctx.fillText('Breakeven $1.06/hr',pL+4,beY+12);
+
+  scen.forEach(function(sc){
+    ctx.strokeStyle=sc.color;ctx.lineWidth=2.5;ctx.beginPath();
+    sc.mult.forEach(function(m,i){
+      var x=xScale(i),y2=yScale(b300start*m);
+      i===0?ctx.moveTo(x,y2):ctx.lineTo(x,y2);
+    });ctx.stroke();
+    sc.mult.forEach(function(m,i){
+      var x=xScale(i),y2=yScale(b300start*m);
+      ctx.beginPath();ctx.arc(x,y2,2.5,0,Math.PI*2);ctx.fillStyle=sc.color;ctx.fill();
+    });
+    // end label
+    var endVal=b300start*sc.mult[sc.mult.length-1];
+    ctx.fillStyle=sc.color;ctx.font='bold 9px Segoe UI';ctx.textAlign='left';
+    ctx.fillText('$'+endVal.toFixed(2),xScale(months.length-1)+8,yScale(endVal)+3);
+  });
+
+  ctx.fillStyle='#94a3b8';ctx.font='9px Segoe UI';ctx.textAlign='center';
+  months.forEach(function(m,i){ctx.save();ctx.translate(xScale(i),h-pB+14);ctx.rotate(-0.4);ctx.fillText(m,0,0);ctx.restore();});
+
+  var lx=pL+8,ly=pT+8;
+  scen.forEach(function(sc,i){
+    ctx.fillStyle=sc.color;ctx.fillRect(lx+i*140,ly,12,3);
+    ctx.fillStyle='#e2e8f0';ctx.font='9px Segoe UI';ctx.textAlign='left';ctx.fillText(sc.label,lx+i*140+16,ly+4);
+  });
+}
+
+function drawRiskCashFlow(){
+  var s=setupCanvas('riskCashFlow',320);if(!s)return;
+  var ctx=s.ctx,w=s.w,h=s.h;
+  var pL=65,pR=80,pT=30,pB=45,cW=w-pL-pR,cH=h-pT-pB;
+  // 24-month cumulative cash flow: revenue - OPEX ($225K/mo) - debt service ($975K/mo) = net
+  // 6mo construction (no revenue, $0 opex, interest only on bridge ~$220K/mo)
+  // Then 18mo operations
+  var monthlyDebt=975000,monthlyOpex=225000,bridgeInterest=220000;
+  var totalFixed=monthlyDebt+monthlyOpex; // $1.2M/mo during operations
+  var scenarios=[
+    {label:'Bull ($5.50, 95%)',rate:5.50,util:0.95,color:'#76b900'},
+    {label:'Base ($4.50, 90%)',rate:4.50,util:0.90,color:'#00b4d8'},
+    {label:'Bear ($3.50, 80%)',rate:3.50,util:0.80,color:'#f59e0b'}
+  ];
+  var gpus=576;
+  var months24=[];for(var i=0;i<24;i++)months24.push(i+1);
+  var maxCum=0,minCum=-5000000;
+
+  // pre-compute ranges
+  scenarios.forEach(function(sc){
+    var cum=0;
+    months24.forEach(function(_,i){
+      if(i<6){cum-=bridgeInterest;}
+      else{
+        var ramp=i===6?0.6:i===7?0.8:i===8?0.9:1;
+        var rev=sc.rate*gpus*24*30*sc.util*ramp;
+        cum+=rev-totalFixed;
+      }
+      if(cum>maxCum)maxCum=cum;
+      if(cum<minCum)minCum=cum;
+    });
+  });
+  maxCum=Math.ceil(maxCum/5e6)*5e6;
+  minCum=Math.floor(minCum/1e6)*1e6;
+  var range=maxCum-minCum;
+
+  ctx.fillStyle='#0d1320';ctx.fillRect(pL,pT,cW,cH);
+  // zero line
+  var zeroY=pT+cH-(0-minCum)/range*cH;
+  ctx.strokeStyle='#94a3b850';ctx.lineWidth=1;ctx.beginPath();ctx.moveTo(pL,zeroY);ctx.lineTo(pL+cW,zeroY);ctx.stroke();
+  ctx.fillStyle='#94a3b8';ctx.font='9px Segoe UI';ctx.textAlign='right';ctx.fillText('$0',pL-6,zeroY+3);
+  // grid
+  ctx.strokeStyle='#1a2235';ctx.lineWidth=1;
+  var gridVals=[-2000000,0,5000000,10000000,15000000,20000000,25000000];
+  gridVals.forEach(function(v){
+    if(v<minCum||v>maxCum)return;
+    var gy=pT+cH-(v-minCum)/range*cH;
+    ctx.beginPath();ctx.moveTo(pL,gy);ctx.lineTo(pL+cW,gy);ctx.stroke();
+    ctx.fillStyle='#94a3b8';ctx.font='9px Segoe UI';ctx.textAlign='right';
+    ctx.fillText('$'+(v/1e6).toFixed(0)+'M',pL-6,gy+3);
+  });
+
+  // construction shading
+  var consEndX=pL+(6/24)*cW;
+  ctx.fillStyle='#ef444410';ctx.fillRect(pL,pT,consEndX-pL,cH);
+  ctx.fillStyle='#94a3b8';ctx.font='9px Segoe UI';ctx.textAlign='center';
+  ctx.fillText('Construction',pL+(consEndX-pL)/2,pT+14);
+
+  scenarios.forEach(function(sc){
+    ctx.strokeStyle=sc.color;ctx.lineWidth=2.5;ctx.beginPath();
+    var cum=0;
+    months24.forEach(function(_,i){
+      if(i<6){cum-=bridgeInterest;}
+      else{
+        var ramp=i===6?0.6:i===7?0.8:i===8?0.9:1;
+        var rev=sc.rate*gpus*24*30*sc.util*ramp;
+        cum+=rev-totalFixed;
+      }
+      var x=pL+i/(months24.length-1)*cW;
+      var y=pT+cH-(cum-minCum)/range*cH;
+      i===0?ctx.moveTo(x,y):ctx.lineTo(x,y);
+    });ctx.stroke();
+    // end label
+    var endCum=cum;
+    var ex=pL+cW+6;var ey=pT+cH-(endCum-minCum)/range*cH;
+    ctx.fillStyle=sc.color;ctx.font='bold 9px Segoe UI';ctx.textAlign='left';
+    ctx.fillText('$'+(endCum/1e6).toFixed(1)+'M',ex,ey+3);
+  });
+
+  // x labels
+  ctx.fillStyle='#94a3b8';ctx.font='10px Segoe UI';ctx.textAlign='center';
+  [0,6,12,18,23].forEach(function(i){ctx.fillText('M'+(i+1),pL+i/23*cW,h-pB+14);});
+  ctx.fillText('Month',pL+cW/2,h-pB+30);
+
+  var lx=pL+8,ly=pT+8;
+  scenarios.forEach(function(sc,i){
+    ctx.fillStyle=sc.color;ctx.fillRect(lx+i*130,ly,12,3);
+    ctx.fillStyle='#e2e8f0';ctx.font='9px Segoe UI';ctx.textAlign='left';ctx.fillText(sc.label,lx+i*130+16,ly+4);
+  });
+}
+
 // ===== GPUaaS CHARTS =====
 
 function drawGpuPriceEvo(){
@@ -1968,7 +2295,7 @@ function drawGpuB300Rev(){
   });
 }
 
-const sectionCharts={overview:[],power:[drawPowerFlow,drawPowerBudget,drawEnergyMonthly,drawTariffDonut,drawEnergyStacked,drawEnergyUsd,drawEnergySavings],cooling:[],racks:[],network:[drawNetOpex2],facility:[],timeline:[drawGantt],financial:[],capex:[drawCapexWaterfall,drawCapexDonut],opex:[drawOpexPie,drawOpexTreemap,drawEnergyOpex,drawNetOpex],oem:[drawDellCost],gpuaas:[drawGpuPriceEvo,drawGpuDealVol,drawGpuTermDist,drawGpuSpread,drawGpuBuyerSupplier,drawGpuB300Rev],twin:[dtStartSim]};
+const sectionCharts={overview:[drawRiskHeatMap,drawRiskSensitivity,drawRiskDecay,drawRiskCashFlow],power:[drawPowerFlow,drawPowerBudget,drawEnergyMonthly,drawTariffDonut,drawEnergyStacked,drawEnergyUsd,drawEnergySavings],cooling:[],racks:[],network:[drawNetOpex2],facility:[],timeline:[drawGantt],financial:[],capex:[drawCapexWaterfall,drawCapexDonut],opex:[drawOpexPie,drawOpexTreemap,drawEnergyOpex,drawNetOpex],oem:[drawDellCost],gpuaas:[drawGpuPriceEvo,drawGpuDealVol,drawGpuTermDist,drawGpuSpread,drawGpuBuyerSupplier,drawGpuB300Rev],twin:[dtStartSim]};
 
 // INIT - draw charts for the currently active section
 function drawActiveSection(){const active=document.querySelector('.nav-btn.active');if(!active)return;const sec=active.dataset.section;const fns=sectionCharts[sec];if(fns)fns.forEach(f=>f());}
